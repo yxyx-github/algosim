@@ -1,6 +1,9 @@
 <template>
-    HomeView
+    SortingAlgorithmsView
 </template>
 
 <script setup lang="ts">
 </script>
+
+<style scoped>
+</style>
