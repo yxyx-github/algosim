@@ -1,7 +1,7 @@
 <template>
     <FColumn class="relative z-0 bg-bg h-screen">
         <MainNavigation/>
-        <FColumn :is="ContentBox">
+        <FColumn :is="ContentBox" :grow="true">
             <RouterView/>
         </FColumn>
     </FColumn>
