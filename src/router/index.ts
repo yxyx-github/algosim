@@ -12,11 +12,11 @@ const router = createRouter({
             component: HomeView,
         }, {
             path: '/sort',
-            name: 'sortingAlgorithms',
+            name: 'sort',
             component: SortingAlgorithmsView,
         }, {
             path: '/search',
-            name: 'searchAlgorithms',
+            name: 'search',
             component: SearchAlgorithmsView,
         },
     ],
