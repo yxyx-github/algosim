@@ -1,6 +1,5 @@
 import './assets/tailwind.css'
 import 'primevue/resources/themes/lara-light-blue/theme.css'
-// import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

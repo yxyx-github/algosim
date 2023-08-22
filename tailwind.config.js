@@ -1,5 +1,3 @@
-const colors = require('tailwindcss/colors')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -18,19 +16,7 @@ module.exports = {
         },
     ],
     theme: {
-        extend: {
-            colors: {
-                primary: colors.amber,
-                secondary: colors.stone,
-                font: colors.gray,
-                zero: colors.white,
-                error: colors.red,
-                warning: colors.yellow,
-                success: colors.green,
-                bg: colors.white,
-                fg: colors.black,
-            },
-        },
+        extend: {},
         screens: {
             'mobile': '0px',
             '2sm': '480px',

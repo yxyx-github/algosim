@@ -22,7 +22,6 @@ const items: NavMenuItem[] = [
     }, {
         label: 'Search Algorithms',
         name: 'search',
-        // class: 'p-highlight',
     }
 ]
 
