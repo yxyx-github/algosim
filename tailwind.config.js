@@ -1,11 +1,20 @@
-// const colors = require('tailwindcss/colors')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
         './src/**/*.{html,js,ts,vue}',
+        './node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}',
     ],
-    safelist: [],
+    safelist: [
+        {
+            pattern: /items-.+/,
+        },
+        {
+            pattern: /justify-.+/,
+        },
+        {
+            pattern: /gap-[0-9]+/,
+        },
+    ],
     theme: {
         extend: {},
         screens: {
