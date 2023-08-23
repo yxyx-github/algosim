@@ -50,15 +50,37 @@ const value = computed({
     set: (val) => emit('update:modelValue', val)
 })
 const status: Ref<PlaybackStatus> = ref('stopped')
+const timeout: Ref<ReturnType<typeof setTimeout> | null> = ref(null)
 
 const playButtonLabel = computed(() => status.value === 'running' ? 'Pause' : 'Play')
 
 function play() {
-    status.value = status.value === 'running' ? 'paused' : 'running'
+    if (status.value === 'running') {
+        status.value = 'paused'
+        timeout.value = null
+    } else {
+        status.value = 'running'
+        initTimeout()
+    }
 }
 
 function stop() {
     status.value = 'stopped'
+    value.value = props.min
+}
+
+function continuePlayback() {
+    timeout.value = null
+    if (status.value === 'running') {
+        value.value++
+        initTimeout()
+    }
+}
+
+function initTimeout() {
+    if (timeout.value === null) {
+        timeout.value = setTimeout(continuePlayback, 500)
+    }
 }
 </script>
 
