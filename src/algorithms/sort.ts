@@ -1,4 +1,4 @@
-import type { SimulationResult, SimulationStep } from '@/simulation'
+import type { Simulation, SimulationResult, SimulationStep } from '@/simulation'
 
 export interface SortSimulationStep extends SimulationStep {
     sortedValues: number[]
@@ -8,3 +8,5 @@ export interface SortSimulationStep extends SimulationStep {
 export interface SortSimulationResult extends SimulationResult {
     sortedValues: number[]
 }
+
+export interface SortSimulation extends Simulation<SortSimulationStep, SortSimulationResult> {}

@@ -1,16 +1,26 @@
 <template>
     <FColumn>
-        <slot name="step" :data="[]"/>
-        <PlaybackControl v-model="playbackValue" :max="10"/>
+        <slot v-if="currentSimulationStep !== null" name="step" :stepData="currentSimulationStep"/>
+        <PlaybackControl v-model="playbackValue" :min="1" :max="props.simulation.steps.length"/>
     </FColumn>
 </template>
 
 <script setup lang="ts">
 import FColumn from '@/components/lib/layout/FColumn.vue'
 import PlaybackControl from '@/components/lib/controls/PlaybackControl.vue'
-import { ref } from 'vue'
+import type { ComputedRef } from 'vue'
+import { computed, ref } from 'vue'
+import type { Simulation, SimulationResult, SimulationStep } from '@/simulation'
 
-const playbackValue = ref(0)
+interface Props {
+    simulation: Simulation<SimulationStep, SimulationResult>
+}
+
+const props = defineProps<Props>()
+
+const playbackValue = ref(1)
+
+const currentSimulationStep: ComputedRef<SimulationStep | null> = computed(() => props.simulation.steps[playbackValue.value - 1] ?? null)
 </script>
 
 <style scoped>
