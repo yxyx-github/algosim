@@ -11,7 +11,7 @@
                 <Button @click="backward" size="small" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
             </FRow>
             <FColumn class="mb-2" justifyItems="center" :gap="0" :grow="true">
-                <div class="text-center">{{ value }}</div>
+                <div class="text-center">{{ labelText }}</div>
                 <Slider :min="props.min" :max="props.max" v-model="value"/>
             </FColumn>
             <FRow :gap="0" class="p-buttonset">
@@ -35,14 +35,18 @@ interface Props {
     min?: number
     max?: number
     modelValue: number
+    label?: (value: number) => string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     min: 0,
     max: 100,
+    label: (value) => `${value}`,
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const labelText = computed(() => props.label(value.value))
 
 const value = computed({
     get: () => props.modelValue,

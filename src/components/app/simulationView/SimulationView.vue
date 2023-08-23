@@ -1,7 +1,7 @@
 <template>
     <FColumn>
         <slot v-if="currentSimulationStep !== null" name="step" :stepData="currentSimulationStep"/>
-        <PlaybackControl v-model="playbackValue" :min="1" :max="props.simulation.steps.length"/>
+        <PlaybackControl v-model="playbackValue" :min="1" :max="numberOfSteps" :label="createPlaybackLabel"/>
     </FColumn>
 </template>
 
@@ -19,6 +19,12 @@ interface Props {
 const props = defineProps<Props>()
 
 const playbackValue = ref(1)
+
+const numberOfSteps = computed(() => props.simulation.steps.length)
+
+function createPlaybackLabel(value: number) {
+    return `Step: ${value}/${numberOfSteps.value}`
+}
 
 const currentSimulationStep: ComputedRef<SimulationStep | null> = computed(() => props.simulation.steps[playbackValue.value - 1] ?? null)
 </script>
