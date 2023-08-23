@@ -71,9 +71,11 @@ function stop() {
 
 function continuePlayback() {
     timeout.value = null
-    if (status.value === 'running') {
-        value.value++ // TODO: check limits
+    if (status.value === 'running' && value.value < props.max) {
+        value.value++
         initTimeout()
+    } else {
+        status.value = 'stopped'
     }
 }
 
@@ -92,11 +94,15 @@ function toEnd() {
 }
 
 function backward() {
-    value.value-- // TODO: check limits
+    if (value.value > props.min) {
+        value.value--
+    }
 }
 
 function forward() {
-    value.value++ // TODO: check limits
+    if (value.value < props.max) {
+        value.value++
+    }
 }
 </script>
 
