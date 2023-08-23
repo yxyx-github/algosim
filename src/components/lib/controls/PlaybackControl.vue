@@ -1,22 +1,22 @@
 <template>
     <FRow>
         <FRow :gap="0" class="p-buttonset">
-            <Button size="small" @click="play" :icon="`pi pi-${status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
-            <Button size="small" @click="stop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
+            <Button @click="play" size="small" :icon="`pi pi-${status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
+            <Button @click="stop" size="small" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
         </FRow>
 
         <FRow :grow="true" :gap="3">
             <FRow :gap="0" class="p-buttonset">
-                <Button size="small" icon="pi pi-fast-backward" aria-label="Fast Backward" v-tooltip.top="'Fast Backward'"/>
-                <Button size="small" icon="pi pi-step-backward" aria-label="Step Backward" v-tooltip.top="'Step Backward'"/>
+                <Button @click="toBegin" size="small" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
+                <Button @click="backward" size="small" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
             </FRow>
             <FColumn class="mb-2" justifyItems="center" :gap="0" :grow="true">
                 <div class="text-center">{{ value }}</div>
-                <Slider :min="0" :max="100" v-model="value"/>
+                <Slider :min="props.min" :max="props.max" v-model="value"/>
             </FColumn>
             <FRow :gap="0" class="p-buttonset">
-                <Button size="small" icon="pi pi-step-forward" aria-label="Step Forward" v-tooltip.top="'Step Forward'"/>
-                <Button size="small" icon="pi pi-fast-forward" aria-label="Fast Forward" v-tooltip.top="'Fast Forward'"/>
+                <Button @click="forward" size="small" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
+                <Button @click="toEnd" size="small" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
             </FRow>
         </FRow>
     </FRow>
@@ -72,7 +72,7 @@ function stop() {
 function continuePlayback() {
     timeout.value = null
     if (status.value === 'running') {
-        value.value++
+        value.value++ // TODO: check limits
         initTimeout()
     }
 }
@@ -81,6 +81,22 @@ function initTimeout() {
     if (timeout.value === null) {
         timeout.value = setTimeout(continuePlayback, 500)
     }
+}
+
+function toBegin() {
+    value.value = props.min
+}
+
+function toEnd() {
+    value.value = props.max
+}
+
+function backward() {
+    value.value-- // TODO: check limits
+}
+
+function forward() {
+    value.value++ // TODO: check limits
 }
 </script>
 
