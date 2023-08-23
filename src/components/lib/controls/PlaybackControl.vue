@@ -1,7 +1,7 @@
 <template>
     <FRow>
         <FRow :gap="0" class="p-buttonset">
-            <Button @click="play" size="small" :icon="`pi pi-${status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
+            <Button @click="play" size="small" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
             <Button @click="stop" size="small" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
         </FRow>
 
@@ -27,8 +27,7 @@ import FColumn from '@/components/lib/layout/FColumn.vue'
 import FRow from '@/components/lib/layout/FRow.vue'
 import Button from 'primevue/button'
 import Slider from 'primevue/slider'
-import type { Ref } from 'vue'
-import { computed, ref } from 'vue'
+import { computed, reactive } from 'vue'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 
@@ -49,39 +48,48 @@ const value = computed({
     get: () => props.modelValue,
     set: (val) => emit('update:modelValue', val)
 })
-const status: Ref<PlaybackStatus> = ref('stopped')
-const timeout: Ref<ReturnType<typeof setTimeout> | null> = ref(null)
 
-const playButtonLabel = computed(() => status.value === 'running' ? 'Pause' : 'Play')
+const playback = reactive<{
+    status: PlaybackStatus
+    timeout: ReturnType<typeof setTimeout>
+}>({
+    status: 'stopped',
+    timeout: null,
+})
+
+const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' : 'Play')
 
 function play() {
-    if (status.value === 'running') {
-        status.value = 'paused'
-        timeout.value = null
+    if (playback.status === 'running') {
+        playback.status = 'paused'
+        playback.timeout = null
     } else {
-        status.value = 'running'
+        if (playback.status === 'stopped' && value.value === props.max) {
+            value.value = props.min
+        }
+        playback.status = 'running'
         initTimeout()
     }
 }
 
 function stop() {
-    status.value = 'stopped'
+    playback.status = 'stopped'
     value.value = props.min
 }
 
 function continuePlayback() {
-    timeout.value = null
-    if (status.value === 'running' && value.value < props.max) {
+    playback.timeout = null
+    if (playback.status === 'running' && value.value < props.max) {
         value.value++
         initTimeout()
     } else {
-        status.value = 'stopped'
+        playback.status = 'stopped'
     }
 }
 
 function initTimeout() {
-    if (timeout.value === null) {
-        timeout.value = setTimeout(continuePlayback, 500)
+    if (playback.timeout === null) {
+        playback.timeout = setTimeout(continuePlayback, 500)
     }
 }
 
