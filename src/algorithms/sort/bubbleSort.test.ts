@@ -16,8 +16,8 @@ describe('bubbleSort', () => {
             ],
             result: { sortedValues: [2, 3, 4, 7] }
         }
+
         const result = bubbleSort(input)
-        // result.steps.forEach(step => console.log(`sv: ${step.sortedValues} | ${step.highlightedIndices}`))
         expect(result).toEqual(expected)
     })
 })

@@ -9,6 +9,7 @@ describe('protocolBuilder', () => {
             result: 'result',
         }
         const pB: IProtocolBuilder<string, string> = new ProtocolBuilder()
+
         expectTypeOf(pB.step('step a')).toBeVoid()
         expectTypeOf(pB.step('step b')).toBeVoid()
         expect(pB.buildFromResult('result')).toEqual(expected)

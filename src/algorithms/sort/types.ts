@@ -1,5 +1,4 @@
 import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
-import { ProtocolBuilder } from '@/simulation/protocolBuilder'
 
 export interface SortSimulationStep extends SimulationStep {
     sortedValues: number[]
