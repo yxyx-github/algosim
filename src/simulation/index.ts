@@ -1,10 +1,7 @@
-export interface SimulationStep {
+export interface Simulation<S extends SimulationStep, R extends SimulationResult> {
+    steps: S[]
+    result: R
 }
 
-export interface SimulationResult {
-}
-
-export interface Simulation {
-    steps: SimulationStep[]
-    result: SimulationResult
-}
+export interface SimulationStep {}
+export interface SimulationResult {}
