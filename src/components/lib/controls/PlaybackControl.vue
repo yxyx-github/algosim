@@ -5,7 +5,7 @@
             <Button @click="stop" size="small" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
         </FRow>
 
-        <FRow :grow="true" :gap="3">
+<!--        <FRow :grow="true" :gap="3">
             <FRow :gap="0" class="p-buttonset">
                 <Button @click="toBegin" size="small" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
                 <Button @click="backward" size="small" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
@@ -18,7 +18,7 @@
                 <Button @click="forward" size="small" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
                 <Button @click="toEnd" size="small" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
             </FRow>
-        </FRow>
+        </FRow>-->
     </FRow>
 </template>
 

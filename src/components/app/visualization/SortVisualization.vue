@@ -30,7 +30,7 @@ const width = computed(() => props.step.sortedValues.length)
 const height = computed(() => maxValue.value)
 
 function isHighlighted(index: number): boolean {
-    return props.step.highlightedIndices.indexOf(index) !== -1
+    return props.step.highlightedIndices.includes(index)
 }
 </script>
 

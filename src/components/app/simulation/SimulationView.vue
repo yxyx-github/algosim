@@ -1,6 +1,8 @@
 <template>
-    <FColumn>
-        <slot v-if="currentSimulationStep !== null" name="step" :index="playbackValue - 1" :stepData="currentSimulationStep"/>
+    <FColumn :grow="true">
+        <FRow :grow="true" alignItems="end" class="max-h-[calc(100%-18px)]">
+            <slot v-if="currentSimulationStep !== null" name="step" :index="playbackValue - 1" :stepData="currentSimulationStep"/>
+        </FRow>
         <PlaybackControl v-model="playbackValue" :min="1" :max="numberOfSteps" :label="createPlaybackLabel"/>
     </FColumn>
 </template>
@@ -11,6 +13,7 @@ import PlaybackControl from '@/components/lib/controls/PlaybackControl.vue'
 import type { ComputedRef } from 'vue'
 import { computed, ref } from 'vue'
 import type { Simulation, SimulationResult, SimulationStep } from '@/simulation'
+import FRow from '@/components/lib/layout/FRow.vue'
 
 interface Props {
     simulation: Simulation<SimulationStep, SimulationResult>

@@ -5,9 +5,8 @@
         </template>
         <template #simulation>
             <SimulationView :simulation="simulation">
-                <template #step="{ stepData, index }">
-                    <SortVisualizationAlt :simulation="simulation" :step="index"/>
-                    <SortVisualization :step="stepData" style="max-height: 80vh"/>
+                <template #step="{ stepData }">
+                    <SortVisualization :step="stepData" class="h-full max-h-[calc(100vh-137px)]"/>
                 </template>
             </SimulationView>
         </template>
@@ -18,10 +17,8 @@
 import SimulationLayout from '@/components/app/SimulationLayout.vue'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import { ref } from 'vue'
-import type { SortSimulation, SortSimulationStep } from '@/algorithms/sort'
-import { SortVisualiser } from '@/visualisation/sortVisualiser'
+import type { SortSimulation } from '@/algorithms/sort'
 import SortVisualization from '@/components/app/visualization/SortVisualization.vue'
-import SortVisualizationAlt from '@/components/app/visualization/SortVisualizationAlt.vue'
 
 const simulation = ref({
     steps: [
