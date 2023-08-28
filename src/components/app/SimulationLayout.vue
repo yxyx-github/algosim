@@ -1,5 +1,5 @@
 <template>
-    <FRow :grow="true">
+    <FRow>
         <FColumn>
             <slot name="form"/>
         </FColumn>
