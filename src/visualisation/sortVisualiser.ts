@@ -1,5 +1,5 @@
-import type {SortSimulation, SortSimulationStep} from "@/algorithms/sort"
-import type {Visualisation, Visualiser} from "@/visualisation/visualisation";
+import type { SortSimulation, SortSimulationStep } from "@/algorithms/sort"
+import type { Visualisation, Visualiser } from "@/visualisation/visualisation";
 
 export class SortVisualiser implements Visualiser<SortSimulation> {
 
@@ -17,7 +17,7 @@ export class SortVisualiser implements Visualiser<SortSimulation> {
     visualise(simulation: SortSimulation): Visualisation {
         let steps: SVGElement[] = new Array<SVGElement>()
         simulation.steps.forEach(step => steps.push(this.visualiseStep(step)))
-        return {steps};
+        return { steps };
     }
 
     private visualiseStep(step: SortSimulationStep): SVGElement {
