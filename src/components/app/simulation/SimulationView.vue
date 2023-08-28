@@ -1,8 +1,6 @@
 <template>
     <FColumn :grow="true">
-        <FRow :grow="true" alignItems="end" class="max-h-[calc(100%-18px)]">
-            <slot v-if="currentSimulationStep !== null" name="step" :index="playbackValue - 1" :stepData="currentSimulationStep"/>
-        </FRow>
+        <slot v-if="currentSimulationStep !== null" name="step" :index="playbackValue - 1" :stepData="currentSimulationStep"/>
         <PlaybackControl v-model="playbackValue" :min="1" :max="numberOfSteps" :label="createPlaybackLabel"/>
     </FColumn>
 </template>
