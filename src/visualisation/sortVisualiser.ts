@@ -27,12 +27,8 @@ export class SortVisualiser implements Visualiser<SortSimulation> {
 
         step.sortedValues
             .forEach((num: number, index: number) => {
-                if (!step.highlightedIndices.includes(index)) {
-                    svg.appendChild(this.visualiseNumber(index, num, false))
-                }
+                svg.appendChild(this.visualiseNumber(index, num, step.highlightedIndices.includes(index)))
             })
-
-        step.highlightedIndices.forEach((index: number) => svg.appendChild(this.visualiseNumber(index, step.sortedValues[index], true)))
 
         return svg;
     }
