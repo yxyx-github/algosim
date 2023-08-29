@@ -1,5 +1,5 @@
 import { ProtocolBuilder } from '@/simulation/protocolBuilder'
-import type { SortSimulation, SortSimulationResult, SortSimulationStep } from '@/algorithms/sort/types'
+import type { HighlightedIndex, SortSimulation, SortSimulationResult, SortSimulationStep } from '@/algorithms/sort/types'
 
 export function bubbleSort(numbers: number[]): SortSimulation {
     const pB = new ProtocolBuilder<SortSimulationStep, SortSimulationResult>()
@@ -16,8 +16,8 @@ export function bubbleSort(numbers: number[]): SortSimulation {
                 highlightedIndices: [
                     { type: 'current', index: pointer },
                     { type: 'current', index: pointer + 1 },
-                    { type: 'threshold', index: lastElement },
-                ],
+                    ...((pointer + 1) === lastElement ? [] : [{ type: 'threshold', index: lastElement }]),
+                ] as HighlightedIndex[],
             })
         }
     }
