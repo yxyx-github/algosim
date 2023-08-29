@@ -7,12 +7,12 @@ describe('bubbleSort', () => {
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
             steps: [
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [0, 1] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [1, 2] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [2, 3] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [0, 1] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [1, 2] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [0, 1] },
+                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
+                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 3 }] },
+                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }, { type: 'current', index: 3 }, { type: 'threshold', index: 3 }] },
+                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 2 }] },
+                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 2 }] },
+                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 1 }] },
             ],
             result: { sortedValues: [2, 3, 4, 7] }
         }

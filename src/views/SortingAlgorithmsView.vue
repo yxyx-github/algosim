@@ -22,14 +22,14 @@ import SortVisualization from '@/components/app/visualization/SortVisualization.
 
 const simulation = ref({
     steps: [
-        { sortedValues: [3, 4, 2, 20], highlightedIndices: [0, 1, 3] },
-        { sortedValues: [3, 2, 4, 20], highlightedIndices: [1, 2, 3] },
-        { sortedValues: [3, 2, 4, 20], highlightedIndices: [2, 3, 3] },
-        { sortedValues: [2, 3, 4, 20], highlightedIndices: [0, 1, 2] },
-        { sortedValues: [2, 3, 4, 20], highlightedIndices: [1, 2, 2] },
-        { sortedValues: [2, 3, 4, 20], highlightedIndices: [0, 1, 1] },
+        { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
+        { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 3 }] },
+        { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }, { type: 'current', index: 3 }, { type: 'threshold', index: 3 }] },
+        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 2 }] },
+        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 2 }] },
+        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 1 }] },
     ],
-    result: { sortedValues: [2, 3, 4, 20] }
+    result: { sortedValues: [2, 3, 4, 7] }
 } as SortSimulation)
 </script>
 

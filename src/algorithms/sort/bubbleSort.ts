@@ -13,7 +13,11 @@ export function bubbleSort(numbers: number[]): SortSimulation {
             }
             pB.step({
                 sortedValues: numbers,
-                highlightedIndices: [pointer, pointer + 1],
+                highlightedIndices: [
+                    { type: 'current', index: pointer },
+                    { type: 'current', index: pointer + 1 },
+                    { type: 'threshold', index: lastElement },
+                ],
             })
         }
     }
