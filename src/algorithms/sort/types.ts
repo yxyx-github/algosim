@@ -12,6 +12,14 @@ export interface HighlightedIndex {
     index: number
 }
 
+export enum SortAlgorithms {
+    BUBBLE
+}
+
+export interface SortAlgorithm {
+    sort: (values: number[]) => SortSimulation,
+}
+
 export interface SortSimulationStep extends SimulationStep {
     sortedValues: number[]
     highlightedIndices: HighlightedIndex[]

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import type { SortSimulation } from '@/algorithms/sort/types'
-import { bubbleSort } from '@/algorithms/sort/bubbleSort'
+import { BubbleSort } from '@/algorithms/sort/bubbleSort'
 
 describe('bubbleSort', () => {
     test('sort numbers with protocol', () => {
@@ -17,7 +17,7 @@ describe('bubbleSort', () => {
             result: { sortedValues: [2, 3, 4, 7] }
         }
 
-        const result = bubbleSort(input)
+        const result = new BubbleSort().sort(input)
         expect(result).toEqual(expected)
     })
 })
