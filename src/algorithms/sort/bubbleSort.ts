@@ -24,4 +24,8 @@ export class BubbleSort implements SortAlgorithm {
         }
         return pB.buildFromResult({ sortedValues: values })
     }
+
+    description(): string {
+        return 'BubbleSort description'
+    }
 }

@@ -18,6 +18,7 @@ export enum SortAlgorithms {
 
 export interface SortAlgorithm {
     sort: (values: number[]) => SortSimulation,
+    description: () => string,
 }
 
 export interface SortSimulationStep extends SimulationStep {
