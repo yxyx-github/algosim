@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import { BubbleSort } from '@/algorithms/sort/bubbleSort'
 
-describe('bubbleSort', () => {
+describe('BubbleSort', () => {
     test('sort numbers with protocol', () => {
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {

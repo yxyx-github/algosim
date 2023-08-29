@@ -40,7 +40,6 @@ const mergedColors = computed(() => ({
 
 function fill(index: number): string {
     const highlightType: HighlightColor = props.step.highlightedIndices.find(highlightedIndex => highlightedIndex.index === index)?.type ?? 'neutral'
-    console.log('i:', index, 'hT:', highlightType)
     return mergedColors.value[highlightType]
 }
 </script>
