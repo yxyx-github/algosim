@@ -1,5 +1,5 @@
 <template>
-    <FRow>
+    <FRow :gap="1">
         <FRow :gap="0" class="p-buttonset">
             <Button @click="play" size="small" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
             <Button @click="stop" size="small" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>

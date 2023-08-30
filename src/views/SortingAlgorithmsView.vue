@@ -1,7 +1,7 @@
 <template>
     <SimulationLayout>
         <template #form>
-            Form to configure algorithm
+            <SortSimulationForm/>
         </template>
         <template #simulation>
             <SimulationView :simulation="simulation">
@@ -14,11 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import SimulationLayout from '@/components/app/SimulationLayout.vue'
+import SimulationLayout from '@/components/app/simulation/SimulationLayout.vue'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import { ref } from 'vue'
 import type { SortSimulation, SortSimulationStep } from '@/algorithms/sort'
-import SortVisualization from '@/components/app/visualization/SortVisualization.vue'
+import SortVisualization from '@/components/app/simulation/visualization/SortVisualization.vue'
+import SortSimulationForm from '@/components/app/simulation/sort/SortSimulationForm.vue'
 
 const simulation = ref({
     steps: [

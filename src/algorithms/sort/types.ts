@@ -13,7 +13,8 @@ export interface HighlightedIndex {
 }
 
 export enum SortAlgorithms {
-    BUBBLE
+    BUBBLE,
+    SELECTION,
 }
 
 export interface SortAlgorithm {

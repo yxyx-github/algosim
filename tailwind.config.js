@@ -6,13 +6,20 @@ module.exports = {
     ],
     safelist: [
         {
+            pattern: /flex-(col|row).+/,
+            variants: ['mobile', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'],
+        },
+        {
             pattern: /items-.+/,
+            variants: ['mobile', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'],
         },
         {
             pattern: /justify-.+/,
+            variants: ['mobile', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'],
         },
         {
             pattern: /gap-[0-9]+/,
+            variants: ['mobile', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'],
         },
     ],
     theme: {
