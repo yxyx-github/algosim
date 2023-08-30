@@ -1,9 +1,9 @@
 <template>
-    <Form @submit.prevent>
+    <Form @submit.prevent x-class="@container/form">
         <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
 <!--        TODO: remove "true ||"-->
         <template v-if="true || values.algorithm !== undefined">
-            <Input label="Number of items:">
+            <Input label="Number of items:" x-class="@lg/form:flex-row @lg/form:bg-blue-300">
                 <InputNumber v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"/>
             </Input>
         </template>
