@@ -43,7 +43,6 @@ const containerClass = computed(() => `
 
 function buildClass(data: { [key in Threshold]: any } | any, buildSingle: (value: any) => string) {
     if (typeof data === 'object') {
-        console.log(typeof data)
         let className = ''
         for (const [key, value] of Object.entries(data)) {
             className += ` ${key}:${buildSingle(value)}`
