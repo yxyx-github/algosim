@@ -8,7 +8,7 @@ describe('protocolBuilder', () => {
             steps: ['step a', 'step b'],
             result: 'result',
         }
-        const pB: IProtocolBuilder<string, string> = new ProtocolBuilder()
+        const pB: ProtocolBuilder<string, string> = new ProtocolBuilder()
 
         expectTypeOf(pB.step('step a')).toBeVoid()
         expectTypeOf(pB.step('step b')).toBeVoid()
@@ -20,7 +20,7 @@ describe('protocolBuilder', () => {
             steps: [{ val: 'step a' }, { val: 'step b' }],
             result: 'result',
         }
-        const pB: IProtocolBuilder<string, string> = new ProtocolBuilder()
+        const pB: ProtocolBuilder<{ val: string }, string> = new ProtocolBuilder()
 
         let stepValue: { val: string } = { val: '' }
         stepValue.val = 'step a'
