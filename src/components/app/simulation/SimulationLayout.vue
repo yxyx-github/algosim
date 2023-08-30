@@ -1,5 +1,5 @@
 <template>
-    <FContainer :direction="{ mobile: 'col', md: 'row' }">
+    <FContainer :direction="{ mb: 'col', md: 'row' }">
         <FColumn>
             <slot name="form"/>
         </FColumn>
