@@ -13,12 +13,12 @@ type AlignItems = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
 type JustifyItems = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 
 export interface FlexProps {
-    direction?: { [key in Threshold]: Direction } | Direction
-    alignItems?: { [key in Threshold]: AlignItems } | AlignItems
-    justifyItems?: { [key in Threshold]: JustifyItems } | JustifyItems
-    gap?: { [key in Threshold]: number } | number
-    wrap?: { [key in Threshold]: boolean } | boolean
-    grow?: { [key in Threshold]: boolean } | boolean
+    direction?: { [key in Threshold]?: Direction } | Direction
+    alignItems?: { [key in Threshold]?: AlignItems } | AlignItems
+    justifyItems?: { [key in Threshold]?: JustifyItems } | JustifyItems
+    gap?: { [key in Threshold]?: number } | number
+    wrap?: { [key in Threshold]?: boolean } | boolean
+    grow?: { [key in Threshold]?: boolean } | boolean
     container?: string
     is?: any
 }
