@@ -1,4 +1,4 @@
-import type { Simulation, SimulationResult, SimulationStep } from '@/simulation'
+import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
 
 interface SearchSimulationStep extends SimulationStep {
 }
