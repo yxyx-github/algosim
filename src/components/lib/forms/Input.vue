@@ -1,11 +1,16 @@
 <template>
-    <FRow>
-        Input.vue
-    </FRow>
+    <FColumn :gap="0">
+        <label class="p-1"><slot name="label">{{ props.label || '' }}</slot></label>
+        <slot name="default"/>
+    </FColumn>
 </template>
 
 <script setup lang="ts">
-import FRow from '@/components/lib/layout/FRow.vue'
+import FColumn from '@/components/lib/layout/FColumn.vue'
+
+const props = defineProps<{
+    label?: string
+}>()
 </script>
 
 <style scoped>

@@ -3,7 +3,9 @@
         <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
 <!--        TODO: remove "true ||"-->
         <template v-if="true || values.algorithm !== undefined">
-            <InputNumber v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"/>
+            <Input label="Number of items:">
+                <InputNumber v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"/>
+            </Input>
         </template>
     </Form>
 </template>
@@ -14,6 +16,7 @@ import Dropdown from 'primevue/dropdown'
 import { reactive } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
 import InputNumber from 'primevue/inputnumber'
+import Input from '@/components/lib/forms/Input.vue'
 
 const emit = defineEmits(['submit'])
 
