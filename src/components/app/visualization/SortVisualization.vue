@@ -13,16 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import type { SortSimulationStep } from '@/algorithms/sort'
+import type { SortSimulationStep, HighlightColor, SortColors } from '@/algorithms/sort/types'
 import { computed } from 'vue'
-import type { HighlightColor, SortColors } from '@/algorithms/sort/types'
 
 const props = withDefaults(defineProps<{
     step: SortSimulationStep
     scale?: number
     colors?: SortColors
 }>(), {
-    colors: {},
+    colors: () => ({}),
     scale: 1,
 })
 
