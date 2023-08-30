@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { computed, h } from 'vue'
 
-type Threshold = 'mb' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
+type Threshold = 'mb' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 type Direction = 'row' | 'col'
 type AlignItems = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
 type JustifyItems = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
@@ -19,7 +19,6 @@ export interface FlexProps {
     gap?: { [key in Threshold]?: number } | number
     wrap?: { [key in Threshold]?: boolean } | boolean
     grow?: { [key in Threshold]?: boolean } | boolean
-    container?: string
     is?: any
 }
 
@@ -47,9 +46,8 @@ function buildClass(data: { [key in Threshold]: any } | any, buildSingle: (value
         console.log(typeof data)
         let className = ''
         for (const [key, value] of Object.entries(data)) {
-            className += ` ${props.container ? '@' : ''}${key}:${buildSingle(value)}`
+            className += ` ${key}:${buildSingle(value)}`
         }
-        console.log(className.trim()) // TODO: remove
         return className.trim()
     } else {
         return buildSingle(data)

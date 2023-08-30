@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const mediaQueryVariants = ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl']
+
 module.exports = {
     content: [
         './src/**/*.{html,js,ts,vue}',
@@ -7,19 +10,19 @@ module.exports = {
     safelist: [
         {
             pattern: /flex-(col|row)/,
-            variants: ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'/*, '@mb', '@xs', '@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'*/],
+            variants: mediaQueryVariants,
         },
         {
             pattern: /items-.+/,
-            variants: ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'/*, '@mb', '@xs', '@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'*/],
+            variants: mediaQueryVariants,
         },
         {
             pattern: /justify-.+/,
-            variants: ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'/*, '@mb', '@xs', '@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'*/],
+            variants: mediaQueryVariants,
         },
         {
             pattern: /gap-[0-9]+/,
-            variants: ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl'/*, '@mb', '@xs', '@sm', '@md', '@lg', '@xl', '@2xl', '@3xl', '@4xl', '@5xl', '@6xl', '@7xl'*/],
+            variants: mediaQueryVariants,
         },
     ],
     theme: {
