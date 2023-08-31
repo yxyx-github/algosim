@@ -1,4 +1,4 @@
-import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
+import type { Simulation, SimulationStep } from '@/simulation/types'
 
 export type HighlightType = 'current' | 'threshold'
 export type HighlightColor = HighlightType | 'neutral'
@@ -32,9 +32,5 @@ export interface SortSimulationStep extends SimulationStep {
     highlightedIndices: HighlightedIndex[]
 }
 
-export interface SortSimulationResult extends SimulationResult {
-    sortedValues: number[]
-}
-
-export interface SortSimulation extends Simulation<SortSimulationStep, SortSimulationResult> {
+export interface SortSimulation extends Simulation<SortSimulationStep> {
 }

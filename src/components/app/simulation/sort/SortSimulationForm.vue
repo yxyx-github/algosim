@@ -32,7 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { SortAlgorithms, SortInputMode, SortSimulation } from '@/algorithms/sort/types'
+import { SortAlgorithms, SortInputMode } from '@/algorithms/sort/types'
+import type { SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
 import { reactive } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
@@ -59,9 +60,9 @@ const values = reactive<{
 }>({
     algorithm: undefined,
     mode: SortInputMode.GENERATE,
-    count: undefined,
-    minVal: undefined,
-    maxVal: undefined,
+    count: 0,
+    minVal: 0,
+    maxVal: 0,
     customInput: '',
 })
 
@@ -95,11 +96,17 @@ function reset() {
 reset()
 
 function submit() {
+    if (values.algorithm === undefined) {
+        return
+    }
     let numbersToSort = []
     if (values.mode === SortInputMode.GENERATE) {
         numbersToSort = generateNumbers(values.count, values.minVal, values.maxVal)
     } else {
-        numbersToSort = values.customInput.replace(' ', '').split(',')
+        numbersToSort = values.customInput
+            .replace(' ', '')
+            .split(',')
+            .map(number => parseInt(number))
     }
     const sorted = SortFactory.create(values.algorithm).sort(numbersToSort)
     emit('submit', sorted)
