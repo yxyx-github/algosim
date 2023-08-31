@@ -17,6 +17,11 @@ export enum SortAlgorithms {
     SELECTION,
 }
 
+export enum SortInputMode {
+    GENERATE,
+    CUSTOM,
+}
+
 export interface SortAlgorithm {
     sort: (values: number[]) => SortSimulation,
     description: () => string,
