@@ -41,7 +41,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     min: 0,
     max: 100,
-    label: (value) => `${value}`,
+    label: (value: number) => `${value}`,
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -55,7 +55,7 @@ const value = computed({
 
 const playback = reactive<{
     status: PlaybackStatus
-    timeout: ReturnType<typeof setTimeout>
+    timeout: ReturnType<typeof setTimeout> | null
 }>({
     status: 'stopped',
     timeout: null,
