@@ -1,5 +1,5 @@
-import type {SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep} from "@/algorithms/sort/types";
-import {ProtocolBuilder} from "@/simulation/protocolBuilder";
+import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/algorithms/sort/types";
+import { ProtocolBuilder } from '@/simulation/protocolBuilder'
 
 export class SelectionSort implements SortAlgorithmImplementation {
 
@@ -11,9 +11,9 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 pB.step({
                     sortedValues: numbers,
                     highlightedIndices: [
-                        {type: 'current', index: minIndex},
-                        {type: 'current', index: j},
-                        ...((i) === minIndex ? [] : [{type: 'threshold', index: i}]),
+                        { type: 'current', index: minIndex },
+                        { type: 'current', index: j },
+                        ...((i) === minIndex ? [] : [{ type: 'threshold', index: i }]),
                     ] as HighlightedIndex[],
                 })
 
@@ -28,8 +28,8 @@ export class SelectionSort implements SortAlgorithmImplementation {
             pB.step({
                 sortedValues: numbers,
                 highlightedIndices: [
-                    {type: 'current', index: i},
-                    ...((i) === minIndex ? [] : [{type: 'current', index: minIndex}]),
+                    { type: 'current', index: i },
+                    ...((i) === minIndex ? [] : [{ type: 'current', index: minIndex }]),
                 ] as HighlightedIndex[],
             })
         }

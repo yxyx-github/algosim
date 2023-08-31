@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import {SelectionSort} from "@/algorithms/sort/selectionSort";
+import { SelectionSort } from '@/algorithms/sort/selectionSort'
 import type { SortSimulation } from '@/algorithms/sort/types'
 
 describe('selectionSort', () => {
@@ -16,7 +16,7 @@ describe('selectionSort', () => {
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }] },
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }, { type: 'current', index: 3 }] },
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 3}] },
+                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 3 }] },
             ]
         }
 
