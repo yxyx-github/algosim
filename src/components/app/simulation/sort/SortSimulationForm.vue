@@ -15,16 +15,16 @@
                 <Input label="Maximum value:">
                     <InputNumber inputClass="w-20" v-model="values.maxVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="1"/>
                 </Input>
-                <ButtonBar>
-                    <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
-                    <Button type="submit" aria-label="Sort" label="Sort"/>
-                </ButtonBar>
             </template>
             <template v-else>
                 <Input label="Numbers to sort (comma separated):">
                     <Textarea v-model="values.customInput" placeholder="e.g.: 5, 3, 4, 0, 1, 2, ..." autoResize/>
                 </Input>
             </template>
+            <ButtonBar>
+                <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
+                <Button type="submit" aria-label="Sort" label="Sort"/>
+            </ButtonBar>
         </template>
     </Form>
 </template>
@@ -87,12 +87,20 @@ function reset() {
     values.count = 100
     values.minVal = 0
     values.maxVal = 100
+    values.customInput = ''
     emit('reset')
 }
 reset()
 
 function submit() {
-    const sorted = SortFactory.create(values.algorithm).sort(generateNumbers(values.count, values.minVal, values.maxVal))
+    let numbersToSort = []
+    if (values.mode === SortInputMode.GENERATE) {
+        numbersToSort = generateNumbers(values.count, values.minVal, values.maxVal)
+    } else {
+        numbersToSort = values.customInput.replace(' ', '').split(',')
+    }
+    console.log(numbersToSort)
+    const sorted = SortFactory.create(values.algorithm).sort(numbersToSort)
     emit('submit', sorted)
 }
 </script>
