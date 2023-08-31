@@ -18,6 +18,6 @@ describe('BubbleSort', () => {
         }
 
         const result = new BubbleSort().sort(input)
-        expect(result).toEqual(expected)
+        expect(result).to.deep.equal(expected)
     })
 })

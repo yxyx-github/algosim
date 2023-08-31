@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<FlexProps>(), {
     direction: 'row',
     alignItems: 'stretch',
     justifyItems: 'start',
-    gap: 2,
+    gap: 4,
     wrap: false,
     grow: false,
     is: h('div'),

@@ -1,6 +1,6 @@
 <template>
-    <FColumn :gap="0">
-        <label class="p-1"><slot name="label">{{ props.label || '' }}</slot></label>
+    <FColumn :gap="1">
+        <label><slot name="label">{{ props.label || '' }}</slot></label>
         <slot name="default"/>
     </FColumn>
 </template>

@@ -1,31 +1,51 @@
 <template>
-    <Form @submit.prevent>
-        <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
-<!--        TODO: remove "true ||"-->
-        <template v-if="true || values.algorithm !== undefined">
+    <Form @submit.prevent="submit">
+        <Input label="Algorithm:">
+            <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
+        </Input>
+        <template v-if="values.algorithm !== undefined">
             <Input label="Number of items:">
-                <InputNumber v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"/>
+                <InputNumber v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="10"/>
             </Input>
+            <Input label="Minimum value:">
+                <InputNumber v-model="values.minVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="1"/>
+            </Input>
+            <Input label="Maximum value:">
+                <InputNumber v-model="values.maxVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="1"/>
+            </Input>
+            <ButtonBar>
+                <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
+                <Button type="submit" aria-label="Sort" label="Sort"/>
+            </ButtonBar>
         </template>
     </Form>
 </template>
 
 <script setup lang="ts">
-import { SortAlgorithms } from '@/algorithms/sort/types'
+import { SortAlgorithms, SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
 import { reactive } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
 import InputNumber from 'primevue/inputnumber'
 import Input from '@/components/lib/forms/Input.vue'
+import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
+import Button from 'primevue/button'
+import { generateNumbers, SortFactory } from '@/algorithms/sort'
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits<{
+    (event: 'submit', simulation: SortSimulation): void
+}>()
 
 const values = reactive<{
     algorithm: undefined | SortAlgorithms,
     count: number
+    minVal: number
+    maxVal: number
 }>({
     algorithm: undefined,
-    count: 100,
+    count: undefined,
+    minVal: undefined,
+    maxVal: undefined,
 })
 
 const algorithms = [
@@ -37,6 +57,18 @@ const algorithms = [
         value: SortAlgorithms.SELECTION,
     }
 ]
+
+function reset() {
+    values.count = 100
+    values.minVal = 0
+    values.maxVal = 100
+}
+reset()
+
+function submit() {
+    const sorted = SortFactory.create(values.algorithm).sort(generateNumbers(values.count, values.minVal, values.maxVal))
+    emit('submit', sorted)
+}
 </script>
 
 <style scoped>

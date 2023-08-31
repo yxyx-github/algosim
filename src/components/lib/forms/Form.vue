@@ -1,5 +1,5 @@
 <template>
-    <FColumn :is="h('form')" :gap="1" class="w-full">
+    <FColumn :is="h('form')" :gap="2" class="w-full">
         <slot/>
     </FColumn>
 </template>

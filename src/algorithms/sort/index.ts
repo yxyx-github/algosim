@@ -10,3 +10,17 @@ export class SortFactory {
         }
     }
 }
+
+export function generateNumbers(count: number, min: number, max: number): number[] {
+    const numbers: number[] = []
+    for (let i = 0; i < count; i++) {
+        numbers.push(getRandomIntBetween(min, max))
+    }
+    return numbers
+}
+
+function getRandomIntBetween(min: number, max: number): number {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.ceil(Math.random() * (max - min) + min)
+}

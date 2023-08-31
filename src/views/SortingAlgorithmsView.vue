@@ -1,10 +1,11 @@
 <template>
     <SimulationLayout>
         <template #form>
-            <SortSimulationForm/>
+            <SortSimulationForm @submit="updateSimulation"/>
         </template>
         <template #simulation>
-            <SimulationView :simulation="simulation">
+            <div v-if="simulation === null" class="self-center">Please sort some numbers first.</div>
+            <SimulationView v-else :simulation="simulation">
                 <template #step="{ stepData }">
                     <SortVisualization :step="(stepData as SortSimulationStep)" class="h-full max-h-[calc(100vh-137px)]"/>
                 </template>
@@ -17,21 +18,16 @@
 import SimulationLayout from '@/components/app/simulation/SimulationLayout.vue'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import { ref } from 'vue'
+import type { Ref } from 'vue'
 import type { SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
 import SortVisualization from '@/components/app/simulation/visualization/SortVisualization.vue'
 import SortSimulationForm from '@/components/app/simulation/sort/SortSimulationForm.vue'
 
-const simulation = ref({
-    steps: [
-        { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
-        { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 3 }] },
-        { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }, { type: 'current', index: 3 }, { type: 'threshold', index: 3 }] },
-        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 2 }] },
-        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 2 }] },
-        { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 1 }] },
-    ],
-    result: { sortedValues: [2, 3, 4, 7] }
-} as SortSimulation)
+const simulation: Ref<SortSimulation | null> = ref(null)
+
+function updateSimulation(sim: SortSimulation) {
+    simulation.value = sim
+}
 </script>
 
 <style scoped>
