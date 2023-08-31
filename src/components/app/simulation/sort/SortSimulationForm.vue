@@ -29,13 +29,17 @@
             </ButtonBar>
         </template>
     </Form>
+    <div>
+        {{ algorithmDescription }}
+    </div>
 </template>
 
 <script setup lang="ts">
 import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
+import type { ComputedRef } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
 import InputNumber from 'primevue/inputnumber'
 import Input from '@/components/lib/forms/Input.vue'
@@ -65,6 +69,8 @@ const values = reactive<{
     maxVal: 0,
     customInput: '',
 })
+
+const algorithmDescription: ComputedRef<string> = computed(() => (values.algorithm === undefined ? '' : SortFactory.create(values.algorithm).description()))
 
 const algorithms = [
     {
