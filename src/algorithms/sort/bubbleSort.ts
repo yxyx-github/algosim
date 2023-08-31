@@ -28,7 +28,6 @@ export class BubbleSort implements SortAlgorithmImplementation {
     }
 
     description(): string {
-        console.log('desc()')
         return 'BubbleSort description'
     }
 
