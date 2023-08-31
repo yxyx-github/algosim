@@ -4,6 +4,10 @@ import type { HighlightedIndex, SortAlgorithm, SortSimulation, SortSimulationRes
 export class BubbleSort implements SortAlgorithm {
     sort(values: number[]): SortSimulation {
         const pB = new ProtocolBuilder<SortSimulationStep, SortSimulationResult>()
+        pB.step({
+            sortedValues: values,
+            highlightedIndices: [],
+        })
         let item = -1
         for (let lastElement = values.length - 1; lastElement > 0; lastElement--) {
             for (let pointer = 0; pointer < lastElement; pointer++) {
