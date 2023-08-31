@@ -9,8 +9,10 @@ describe('BubbleSort', () => {
             steps: [
                 { sortedValues: [3, 4, 2, 7], highlightedIndices: [] },
                 { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
+                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 3 }] },
                 { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }, { type: 'threshold', index: 3 }] },
                 { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 2 }, { type: 'current', index: 3 }] },
+                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 2 }] },
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 2 }] },
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 2 }] },
                 { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }] },
