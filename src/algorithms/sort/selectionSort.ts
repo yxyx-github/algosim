@@ -1,36 +1,43 @@
-import type {HighlightedIndex, SortSimulation, SortSimulationResult, SortSimulationStep} from "@/algorithms/sort/types";
+import type {SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep} from "@/algorithms/sort/types";
 import {ProtocolBuilder} from "@/simulation/protocolBuilder";
 
-export function selectionSort(numbers: number[]): SortSimulation {
-    const pB = new ProtocolBuilder<SortSimulationStep, SortSimulationResult>()
-    for (let i= 0; i < numbers.length; i++) {
-        let minIndex = i
-        for (let j= i + 1; j < numbers.length; j++) {
+export class SelectionSort implements SortAlgorithmImplementation {
+
+    sort(numbers: number[]): SortSimulation {
+        const pB = new ProtocolBuilder<SortSimulationStep>()
+        for (let i = 0; i < numbers.length; i++) {
+            let minIndex = i
+            for (let j = i + 1; j < numbers.length; j++) {
+                pB.step({
+                    sortedValues: numbers,
+                    highlightedIndices: [
+                        {type: 'current', index: minIndex},
+                        {type: 'current', index: j},
+                        ...((i) === minIndex ? [] : [{type: 'threshold', index: i}]),
+                    ] as HighlightedIndex[],
+                })
+
+                if (numbers[minIndex] > numbers[j]) {
+                    minIndex = j
+                }
+            }
+            let temp = numbers[minIndex]
+            numbers[minIndex] = numbers[i]
+            numbers[i] = temp
+
             pB.step({
                 sortedValues: numbers,
                 highlightedIndices: [
-                    { type: 'current', index: minIndex },
-                    { type: 'current', index: j  },
-                    ...((i) === minIndex ? [] : [{ type: 'threshold', index: i }]),
+                    {type: 'current', index: i},
+                    ...((i) === minIndex ? [] : [{type: 'current', index: minIndex}]),
                 ] as HighlightedIndex[],
             })
-
-            if (numbers[i] > numbers[j]) {
-                minIndex = j
-            }
         }
-        let temp = numbers[minIndex]
-        numbers[minIndex] = numbers[i]
-        numbers[i] = temp
 
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [
-                { type: 'current', index: i },
-                ...((i) === minIndex ? [] : [{ type: 'current', index: minIndex }]),
-            ] as HighlightedIndex[],
-        })
+        return pB.build()
     }
 
-    return pB.buildFromResult({ sortedValues: numbers })
+    description(): string {
+        return 'Selectionsort description'
+    }
 }
