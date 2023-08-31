@@ -4,23 +4,21 @@ import { ProtocolBuilder } from '@/simulation/protocolBuilder'
 
 describe('protocolBuilder', () => {
     test('can be created with steps', () => {
-        const expected: Simulation<string, string> = {
+        const expected: Simulation<string> = {
             steps: ['step a', 'step b'],
-            result: 'result',
         }
-        const pB: ProtocolBuilder<string, string> = new ProtocolBuilder()
+        const pB: ProtocolBuilder<string> = new ProtocolBuilder()
 
         expectTypeOf(pB.step('step a')).toBeVoid()
         expectTypeOf(pB.step('step b')).toBeVoid()
-        expect(pB.buildFromResult('result')).toEqual(expected)
+        expect(pB.build()).toEqual(expected)
     })
 
     test('steps should be passed as deep copy', () => {
-        const expected: Simulation<{ val: string }, string> = {
+        const expected: Simulation<{ val: string }> = {
             steps: [{ val: 'step a' }, { val: 'step b' }],
-            result: 'result',
         }
-        const pB: ProtocolBuilder<{ val: string }, string> = new ProtocolBuilder()
+        const pB: ProtocolBuilder<{ val: string }> = new ProtocolBuilder()
 
         let stepValue: { val: string } = { val: '' }
         stepValue.val = 'step a'
@@ -28,6 +26,6 @@ describe('protocolBuilder', () => {
         stepValue.val = 'step b'
         pB.step(stepValue)
 
-        expect(pB.buildFromResult('result')).toEqual(expected)
+        expect(pB.build()).toEqual(expected)
     })
 })

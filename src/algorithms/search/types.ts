@@ -1,9 +1,6 @@
-import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
+import type { Simulation, SimulationStep } from '@/simulation/types'
 
 interface SearchSimulationStep extends SimulationStep {
 }
 
-interface SearchSimulationResult extends SimulationResult {
-}
-
-export interface SearchSimulation extends Simulation<SearchSimulationStep, SearchSimulationResult> {}
+export interface SearchSimulation extends Simulation<SearchSimulationStep> {}

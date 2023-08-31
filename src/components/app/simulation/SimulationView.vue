@@ -10,10 +10,10 @@ import FColumn from '@/components/lib/layout/FColumn.vue'
 import PlaybackControl from '@/components/lib/controls/PlaybackControl.vue'
 import type { ComputedRef } from 'vue'
 import { computed, ref } from 'vue'
-import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
+import type { Simulation, SimulationStep } from '@/simulation/types'
 
 interface Props {
-    simulation: Simulation<SimulationStep, SimulationResult>
+    simulation: Simulation<SimulationStep>
 }
 
 const props = defineProps<Props>()

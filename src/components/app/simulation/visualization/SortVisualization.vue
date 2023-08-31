@@ -1,5 +1,5 @@
 <template>
-    <svg :style="`max-height: ${maxHeight}rem;`" :viewBox="`0 0 ${viewBoxWidth} ${viewBoxHeight}`">
+    <svg :style="`height: ${maxHeight}rem;`" :viewBox="`0 0 ${viewBoxWidth} ${viewBoxHeight}`">
         <rect
                 v-for="(value, index) in props.step.sortedValues"
                 :key="index"
