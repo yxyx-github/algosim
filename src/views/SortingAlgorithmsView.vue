@@ -7,7 +7,7 @@
             <div v-if="simulation === null" class="self-center">Please sort some numbers first.</div>
             <SimulationView v-else :simulation="simulation">
                 <template #step="{ stepData }">
-                    <SortVisualization :step="(stepData as SortSimulationStep)" class="h-full max-h-[calc(100vh-143px-1rem)]"/>
+                    <SortVisualization :step="(stepData as SortSimulationStep)" class="h-full max-h-[calc(100vh-9.9375rem)]"/>
                 </template>
             </SimulationView>
         </template>

@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        font-size: 95%
+    }
+
     * {
         @apply text-base
     }
