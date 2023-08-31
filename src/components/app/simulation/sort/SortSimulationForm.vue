@@ -99,7 +99,6 @@ function submit() {
     } else {
         numbersToSort = values.customInput.replace(' ', '').split(',')
     }
-    console.log(numbersToSort)
     const sorted = SortFactory.create(values.algorithm).sort(numbersToSort)
     emit('submit', sorted)
 }
