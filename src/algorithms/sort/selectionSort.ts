@@ -1,4 +1,4 @@
-import {SortSimulation, SortSimulationResult, SortSimulationStep} from "@/algorithms/sort/types";
+import type {HighlightedIndex, SortSimulation, SortSimulationResult, SortSimulationStep} from "@/algorithms/sort/types";
 import {ProtocolBuilder} from "@/simulation/protocolBuilder";
 
 export function selectionSort(numbers: number[]): SortSimulation {
@@ -8,7 +8,11 @@ export function selectionSort(numbers: number[]): SortSimulation {
         for (let j= i + 1; j < numbers.length; j++) {
             pB.step({
                 sortedValues: numbers,
-                highlightedIndices: minIndex != i ? [i, minIndex, j] : [minIndex, j],
+                highlightedIndices: [
+                    { type: 'current', index: minIndex },
+                    { type: 'current', index: j  },
+                    ...((i) === minIndex ? [] : [{ type: 'threshold', index: i }]),
+                ] as HighlightedIndex[],
             })
 
             if (numbers[i] > numbers[j]) {
@@ -21,9 +25,11 @@ export function selectionSort(numbers: number[]): SortSimulation {
 
         pB.step({
             sortedValues: numbers,
-            highlightedIndices: minIndex != i ? [i, minIndex] : [i],
+            highlightedIndices: [
+                { type: 'current', index: i },
+                ...((i) === minIndex ? [] : [{ type: 'current', index: minIndex }]),
+            ] as HighlightedIndex[],
         })
-
     }
 
     return pB.buildFromResult({ sortedValues: numbers })
