@@ -17,7 +17,7 @@
 import SimulationLayout from '@/components/app/SimulationLayout.vue'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import { ref } from 'vue'
-import type { SortSimulation, SortSimulationStep } from '@/algorithms/sort'
+import type { SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
 import SortVisualization from '@/components/app/visualization/SortVisualization.vue'
 
 const simulation = ref({
