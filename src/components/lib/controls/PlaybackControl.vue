@@ -1,25 +1,25 @@
 <template>
-    <FRow>
-        <FRow :gap="0" class="p-buttonset">
-            <Button @click="play" size="small" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
-            <Button @click="stop" size="small" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
-        </FRow>
+    <ButtonBar>
+        <ButtonGroup>
+            <Button @click="play" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
+            <Button @click="stop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
+        </ButtonGroup>
 
         <FRow :grow="true" :gap="3">
-            <FRow :gap="0" class="p-buttonset">
-                <Button @click="toBegin" size="small" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
-                <Button @click="backward" size="small" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
-            </FRow>
-            <FColumn class="mb-2" justifyItems="center" :gap="0" :grow="true">
+            <ButtonGroup>
+                <Button @click="toBegin" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
+                <Button @click="backward" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
+            </ButtonGroup>
+            <FColumn class="mb-2" justifyItems="around" :gap="0" :grow="true">
                 <div class="text-center">{{ labelText }}</div>
                 <Slider :min="props.min" :max="props.max" v-model="value"/>
             </FColumn>
-            <FRow :gap="0" class="p-buttonset">
-                <Button @click="forward" size="small" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
-                <Button @click="toEnd" size="small" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
-            </FRow>
+            <ButtonGroup>
+                <Button @click="forward" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
+                <Button @click="toEnd" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
+            </ButtonGroup>
         </FRow>
-    </FRow>
+    </ButtonBar>
 </template>
 
 <script setup lang="ts">
@@ -28,6 +28,8 @@ import FRow from '@/components/lib/layout/FRow.vue'
 import Button from 'primevue/button'
 import Slider from 'primevue/slider'
 import { computed, reactive } from 'vue'
+import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
+import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 

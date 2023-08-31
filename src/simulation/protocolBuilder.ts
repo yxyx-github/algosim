@@ -1,13 +1,13 @@
-import type { Simulation, SimulationResult, SimulationStep } from '@/simulation/types'
+import type { Simulation, SimulationStep } from '@/simulation/types'
 
-export class ProtocolBuilder<S extends SimulationStep, R extends SimulationResult> {
+export class ProtocolBuilder<S extends SimulationStep> {
     private steps: S[] = []
 
     step(step: S): void {
         this.steps.push(structuredClone(step))
     }
 
-    buildFromResult(result: R): Simulation<S, R> {
-        return { steps: this.steps, result: result }
+    build(): Simulation<S> {
+        return { steps: this.steps }
     }
 }
