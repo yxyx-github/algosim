@@ -96,19 +96,19 @@ function reset() {
 reset()
 
 function submit() {
-    if (values.algorithm === undefined) {
-        return
-    }
+    if (values.algorithm === undefined) return
     let numbersToSort = []
     if (values.mode === SortInputMode.GENERATE) {
         numbersToSort = generateNumbers(values.count, values.minVal, values.maxVal)
     } else {
         numbersToSort = values.customInput
-            .replace(' ', '')
             .split(',')
+            .map(part => part.replace(/[^0-9]/g, ''))
+            .filter(part => part !== '')
             .map(number => parseInt(number))
+        if (numbersToSort.length === 0) return
     }
-    const sorted = SortFactory.create(values.algorithm).sort(numbersToSort)
+    const sorted = SortFactory.create(values.algorithm as SortAlgorithms).sort(numbersToSort)
     emit('submit', sorted)
 }
 </script>
