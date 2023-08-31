@@ -15,7 +15,7 @@ describe('generateNumbers', () => {
         const count = 10
         const min = 5
         const max = 10
-        const numbers = generateNumbers(count, min, max)
+        const numbers: number[] = generateNumbers(count, min, max)
         console.log(numbers)
         expect(numbers).toHaveLength(count)
         numbers.forEach(number =>
