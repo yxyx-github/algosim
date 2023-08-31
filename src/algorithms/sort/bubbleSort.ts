@@ -1,7 +1,7 @@
 import { ProtocolBuilder } from '@/simulation/protocolBuilder'
-import type { HighlightedIndex, SortAlgorithm, SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
+import type { HighlightedIndex, SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
 
-export class BubbleSort implements SortAlgorithm {
+export class BubbleSort implements SortAlgorithmImplementation {
     sort(values: number[]): SortSimulation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step({

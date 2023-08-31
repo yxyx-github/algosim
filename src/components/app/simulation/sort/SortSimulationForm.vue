@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { SortAlgorithms, SortInputMode } from '@/algorithms/sort/types'
+import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
 import { reactive } from 'vue'
@@ -51,7 +51,7 @@ const emit = defineEmits<{
 }>()
 
 const values = reactive<{
-    algorithm: undefined | SortAlgorithms
+    algorithm: undefined | SortAlgorithm
     mode: SortInputMode
     count: number
     minVal: number
@@ -69,10 +69,10 @@ const values = reactive<{
 const algorithms = [
     {
         label: 'Bubblesort',
-        value: SortAlgorithms.BUBBLE,
+        value: SortAlgorithm.BUBBLE,
     }, {
         label: 'Selectionsort',
-        value: SortAlgorithms.SELECTION,
+        value: SortAlgorithm.SELECTION,
     }
 ]
 
@@ -108,7 +108,7 @@ function submit() {
             .map(number => parseInt(number))
         if (numbersToSort.length === 0) return
     }
-    const sorted = SortFactory.create(values.algorithm as SortAlgorithms).sort(numbersToSort)
+    const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
     emit('submit', sorted)
 }
 </script>

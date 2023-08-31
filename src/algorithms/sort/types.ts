@@ -12,7 +12,7 @@ export interface HighlightedIndex {
     index: number
 }
 
-export enum SortAlgorithms {
+export enum SortAlgorithm {
     BUBBLE,
     SELECTION,
 }
@@ -22,7 +22,7 @@ export enum SortInputMode {
     CUSTOM,
 }
 
-export interface SortAlgorithm {
+export interface SortAlgorithmImplementation {
     sort: (values: number[]) => SortSimulation,
     description: () => string,
 }

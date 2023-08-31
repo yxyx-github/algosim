@@ -1,11 +1,11 @@
-import { SortAlgorithms } from '@/algorithms/sort/types'
+import { SortAlgorithm } from '@/algorithms/sort/types'
 import { BubbleSort } from '@/algorithms/sort/bubbleSort'
 
 export class SortFactory {
-    static create(algorithm: SortAlgorithms) {
+    static create(algorithm: SortAlgorithm) {
         switch (algorithm) {
             default:
-            case SortAlgorithms.BUBBLE:
+            case SortAlgorithm.BUBBLE:
                 return new BubbleSort()
         }
     }
