@@ -34,6 +34,7 @@ import { generateNumbers, SortFactory } from '@/algorithms/sort'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
+    (event: 'reset'): void
 }>()
 
 const values = reactive<{
@@ -62,6 +63,7 @@ function reset() {
     values.count = 100
     values.minVal = 0
     values.maxVal = 100
+    emit('reset')
 }
 reset()
 

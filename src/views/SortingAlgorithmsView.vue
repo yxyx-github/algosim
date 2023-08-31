@@ -1,7 +1,7 @@
 <template>
     <SimulationLayout>
         <template #form>
-            <SortSimulationForm @submit="updateSimulation"/>
+            <SortSimulationForm @submit="updateSimulation" @reset="() => simulation = null"/>
         </template>
         <template #simulation>
             <div v-if="simulation === null" class="self-center">Please sort some numbers first.</div>
