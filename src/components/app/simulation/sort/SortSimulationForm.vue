@@ -21,7 +21,9 @@
                 </ButtonBar>
             </template>
             <template v-else>
-                custom
+                <Input label="Numbers to sort (comma separated):">
+                    <Textarea v-model="values.customInput" placeholder="e.g.: 5, 3, 4, 0, 1, 2, ..." autoResize/>
+                </Input>
             </template>
         </template>
     </Form>
@@ -38,6 +40,7 @@ import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import Button from 'primevue/button'
 import { generateNumbers, SortFactory } from '@/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
+import Textarea from 'primevue/textarea'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -45,17 +48,19 @@ const emit = defineEmits<{
 }>()
 
 const values = reactive<{
-    algorithm: undefined | SortAlgorithms,
-    mode: SortInputMode,
+    algorithm: undefined | SortAlgorithms
+    mode: SortInputMode
     count: number
     minVal: number
     maxVal: number
+    customInput: string
 }>({
     algorithm: undefined,
     mode: SortInputMode.GENERATE,
     count: undefined,
     minVal: undefined,
     maxVal: undefined,
+    customInput: '',
 })
 
 const algorithms = [
