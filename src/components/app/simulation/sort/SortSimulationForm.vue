@@ -25,7 +25,7 @@
             </template>
             <ButtonBar>
                 <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
-                <Button type="submit" aria-label="Sort" label="Sort"/>
+                <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
             </ButtonBar>
         </template>
     </Form>
@@ -38,7 +38,8 @@
 import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import type { Ref } from 'vue'
 import type { ComputedRef } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
 import InputNumber from 'primevue/inputnumber'
@@ -93,6 +94,8 @@ const sortInputModes = [
     }
 ]
 
+const sortWorker: Ref<SortWorker | null> = ref(null)
+
 function reset() {
     values.count = 100
     values.minVal = 0
@@ -116,14 +119,13 @@ function submit() {
         if (numbersToSort.length === 0) return
     }
 
-    const sortWorker = new SortWorker()
-    sortWorker.onmessage = (e: { data: SortSimulation }) => {
+    sortWorker.value = new SortWorker()
+    sortWorker.value.onmessage = (e: { data: SortSimulation }) => {
         emit('submit', e.data)
+        sortWorker.value.terminate()
+        sortWorker.value = null
     }
-    sortWorker.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort })
-
-    // const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
-    // emit('submit', sorted)
+    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort })
 }
 </script>
 
