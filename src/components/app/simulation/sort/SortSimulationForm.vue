@@ -26,6 +26,7 @@
             <ButtonBar>
                 <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
+                <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
         </template>
     </Form>
@@ -95,6 +96,11 @@ const sortInputModes = [
 ]
 
 const sortWorker: Ref<SortWorker | null> = ref(null)
+
+function terminate() {
+    sortWorker.value.terminate()
+    sortWorker.value = null
+}
 
 function reset() {
     values.count = 100
