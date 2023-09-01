@@ -28,9 +28,6 @@
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
                 <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
-<!--            <ProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">
-                {{ progress.current }}/{{ progress.overall }}
-            </ProgressBar>-->
             <FProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">{{ progress.current }}/{{ progress.overall }}</FProgressBar>
         </template>
     </Form>
@@ -55,7 +52,6 @@ import { generateNumbers, SortFactory } from '@/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
 import SortWorker from '@/algorithms/sort/sortWorker?worker'
-import ProgressBar from 'primevue/progressbar'
 import type { ProgressProvider } from '@/progressTracker/types'
 import { Progress } from '@/progressTracker/progress'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
