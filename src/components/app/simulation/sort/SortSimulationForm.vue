@@ -48,7 +48,7 @@ import Button from 'primevue/button'
 import { generateNumbers, SortFactory } from '@/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
-import Worker from '@/algorithms/worker?worker'
+import SortWorker from '@/algorithms/sort/sortWorker?worker'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -116,12 +116,14 @@ function submit() {
         if (numbersToSort.length === 0) return
     }
 
-    const worker = new Worker()
-    worker.onmessage = (e: { data: string }) => console.log(e.data)
-    worker.postMessage('name')
+    const sortWorker = new SortWorker()
+    sortWorker.onmessage = (e: { data: SortSimulation }) => {
+        emit('submit', e.data)
+    }
+    sortWorker.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort })
 
-    const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
-    emit('submit', sorted)
+    // const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
+    // emit('submit', sorted)
 }
 </script>
 
