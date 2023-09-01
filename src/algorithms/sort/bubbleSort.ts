@@ -22,7 +22,7 @@ export class BubbleSort implements SortAlgorithmImplementation {
                 }
                 pB.step(this.createStep(values, pointer, lastElement))
                 progress++
-                console.log('track:', progress)
+                // console.log('track:', progress)
                 progressTracker?.track(progress)
             }
         }

@@ -28,7 +28,7 @@
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
                 <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
-            <ProgressBar v-if="sortWorker !== null" :value="100 / progress.overall * progress.current">
+            <ProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">
                 {{ progress.current }}/{{ progress.overall }}
             </ProgressBar>
         </template>
@@ -55,7 +55,8 @@ import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
 import SortWorker from '@/algorithms/sort/sortWorker?worker'
 import ProgressBar from 'primevue/progressbar'
-import type { Progress } from '@/progressTracker/types'
+import type { ProgressProvider } from '@/progressTracker/types'
+import { Progress } from '@/progressTracker/progress'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -100,7 +101,7 @@ const sortInputModes = [
     }
 ]
 
-const progress: Ref<Progress> = ref({ current: 0, overall: 0 })
+const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
 
 const sortWorker: Ref<Worker | null> = ref(null)
 
@@ -135,11 +136,11 @@ function submit() {
     }
 
     sortWorker.value = new SortWorker()
-    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: SortSimulation } | { name: 'progress', value: Progress } }) => {
+    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: SortSimulation } | { name: 'progress', value: ProgressProvider } }) => {
         if (e.data.name === 'sorted') {
             emit('submit', e.data.value)
             terminate()
-            progress.value = { current: 0, overall: 0 }
+            progress.value = new Progress(0, 0)
         } else {
             // console.log('pg:', e.data.value)
             progress.value = e.data.value
