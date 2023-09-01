@@ -19,7 +19,6 @@ export class ProgressTracker implements TrackableProgress {
 
     track(current: number, overall: number = this.overall): void {
         const currentInterval = Math.floor(this.intervalCount / overall * current)
-        // console.log(currentInterval, '>', this.currentInterval)
         if (currentInterval > this.currentInterval) {
             this.currentInterval = currentInterval
             this.currentInterval = currentInterval

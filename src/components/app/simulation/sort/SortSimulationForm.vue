@@ -28,9 +28,10 @@
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
                 <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
-            <ProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">
+<!--            <ProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">
                 {{ progress.current }}/{{ progress.overall }}
-            </ProgressBar>
+            </ProgressBar>-->
+            <FProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">{{ progress.current }}/{{ progress.overall }}</FProgressBar>
         </template>
     </Form>
     <div>
@@ -57,6 +58,7 @@ import SortWorker from '@/algorithms/sort/sortWorker?worker'
 import ProgressBar from 'primevue/progressbar'
 import type { ProgressProvider } from '@/progressTracker/types'
 import { Progress } from '@/progressTracker/progress'
+import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -142,7 +144,6 @@ function submit() {
             terminate()
             progress.value = new Progress(0, 0)
         } else {
-            // console.log('pg:', e.data.value)
             progress.value = e.data.value
         }
     }
