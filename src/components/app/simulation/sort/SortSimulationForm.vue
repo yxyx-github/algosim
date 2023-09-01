@@ -95,11 +95,13 @@ const sortInputModes = [
     }
 ]
 
-const sortWorker: Ref<SortWorker | null> = ref(null)
+const sortWorker: Ref<Worker | null> = ref(null)
 
 function terminate() {
-    sortWorker.value.terminate()
-    sortWorker.value = null
+    if (sortWorker.value !== null) {
+        sortWorker.value.terminate()
+        sortWorker.value = null
+    }
 }
 
 function reset() {
@@ -128,8 +130,7 @@ function submit() {
     sortWorker.value = new SortWorker()
     sortWorker.value.onmessage = (e: { data: SortSimulation }) => {
         emit('submit', e.data)
-        sortWorker.value.terminate()
-        sortWorker.value = null
+        terminate()
     }
     sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort })
 }
