@@ -1,8 +1,13 @@
 import { ProtocolBuilder } from '@/simulation/protocolBuilder'
 import type { HighlightedIndex, SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
+import Worker from '../worker.ts?worker'
 
 export class BubbleSort implements SortAlgorithmImplementation {
     sort(values: number[]): SortSimulation {
+        const worker = new Worker()
+        worker.onmessage = (e: { data: string }) => console.log(e.data)
+        worker.postMessage('hi')
+
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step({
             sortedValues: values,
