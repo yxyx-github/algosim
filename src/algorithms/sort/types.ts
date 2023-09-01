@@ -1,4 +1,5 @@
 import type { Simulation, SimulationStep } from '@/simulation/types'
+import type { TrackableProgress } from '@/progressTracker/types'
 
 export type HighlightType = 'current' | 'threshold'
 export type HighlightColor = HighlightType | 'neutral'
@@ -23,7 +24,7 @@ export enum SortInputMode {
 }
 
 export interface SortAlgorithmImplementation {
-    sort: (values: number[]) => SortSimulation,
+    sort: (values: number[], progressTracker?: TrackableProgress) => SortSimulation,
     description: () => string,
 }
 

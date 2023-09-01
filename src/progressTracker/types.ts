@@ -4,4 +4,9 @@ export interface TrackableProgress {
     onTrack: (handler: ProgressHandler) => void
 }
 
-export type ProgressHandler = (current: number, overall: number) => void
+export type ProgressHandler = (progress: Progress) => void
+
+export type Progress = {
+    current: number
+    overall: number
+}

@@ -1,8 +1,11 @@
 import { ProtocolBuilder } from '@/simulation/protocolBuilder'
 import type { HighlightedIndex, SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/algorithms/sort/types'
+import type { TrackableProgress } from '@/progressTracker/types'
 
 export class BubbleSort implements SortAlgorithmImplementation {
-    sort(values: number[]): SortSimulation {
+    sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
+        progressTracker?.init(values.length * ((values.length - 1) / 2))
+        let progress: number = 0
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step({
             sortedValues: values,
@@ -18,6 +21,9 @@ export class BubbleSort implements SortAlgorithmImplementation {
                     values[pointer + 1] = item
                 }
                 pB.step(this.createStep(values, pointer, lastElement))
+                progress++
+                console.log('track:', progress)
+                progressTracker?.track(progress)
             }
         }
         pB.step({

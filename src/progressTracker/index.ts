@@ -13,7 +13,7 @@ export class ProgressTracker implements TrackableProgress {
     }
 
     track(current: number, overall: number = this.overall): void {
-        this.handler(current, overall)
+        this.handler({ current, overall })
     }
 
 }

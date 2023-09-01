@@ -1,9 +1,11 @@
 import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/algorithms/sort/types";
 import { ProtocolBuilder } from '@/simulation/protocolBuilder'
+import type { TrackableProgress } from '@/progressTracker/types'
 
 export class SelectionSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[]): SortSimulation {
+    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+        // TODO: implement progress tracker
         const pB = new ProtocolBuilder<SortSimulationStep>()
         for (let i = 0; i < numbers.length; i++) {
             let minIndex = i
