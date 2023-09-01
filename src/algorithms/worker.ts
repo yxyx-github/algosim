@@ -1,3 +1,5 @@
+import { greet } from '@/algorithms/test'
+
 self.onmessage = e => {
-    self.postMessage('return: ' + e.data)
+    self.postMessage(greet(e.data))
 }

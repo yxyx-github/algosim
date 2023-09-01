@@ -118,7 +118,7 @@ function submit() {
 
     const worker = new Worker()
     worker.onmessage = (e: { data: string }) => console.log(e.data)
-    worker.postMessage('hi')
+    worker.postMessage('name')
 
     const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
     emit('submit', sorted)
