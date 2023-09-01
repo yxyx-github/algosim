@@ -18,11 +18,15 @@ export class ProgressTracker implements TrackableProgress {
     }
 
     track(current: number, overall: number = this.overall): void {
-        const currentInterval = Math.floor(this.intervalCount / overall * current)
-        if (currentInterval > this.currentInterval) {
-            this.currentInterval = currentInterval
-            this.currentInterval = currentInterval
-            this.handler(new Progress(current, overall, currentInterval, this.intervalCount))
+        if (this.intervalCount !== undefined) {
+            const currentInterval = Math.floor(this.intervalCount / overall * current)
+            if (currentInterval > this.currentInterval) {
+                this.currentInterval = currentInterval
+                this.currentInterval = currentInterval
+                this.handler(new Progress(current, overall, currentInterval, this.intervalCount))
+            }
+        } else {
+            this.handler(new Progress(current, overall))
         }
     }
 
