@@ -135,21 +135,10 @@ function submit() {
     }
 
     sortWorker.value = new SortWorker()
-    /*sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: any } | { name: 'progress', value: ProgressProvider } }) => {
-        if (e.data.name === 'sorted') {
-            emit('submit', { steps: e.data.value } as SortSimulation)
-            terminate()
-            progress.value = new Progress(0, 0)
-        } else {
-            progress.value = e.data.value
-        }
-    }*/
     sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } }) => {
         if (e.data.name === 'progress') {
             progress.value = e.data.value
         } else {
-            // emit('submit', e.data.value)
-            // emit('submit', { steps: e.data } as SortSimulation)
             const steps: SortSimulationStep[] = []
             function handleStep({ done, value }: { done: boolean, value: SortSimulationStep }) {
                 if (done) {
@@ -158,7 +147,6 @@ function submit() {
                     progress.value = new Progress(0, 0)
                     return
                 } else {
-                    // console.log(value)
                     steps.push(value)
                     stepReader.read().then(handleStep)
                 }

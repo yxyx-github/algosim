@@ -17,6 +17,4 @@ self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[]
         }
     })
     self.postMessage({ name: 'sorted', value: stepReader }, [stepReader])
-    // self.postMessage({ name: 'sorted', value: sorted.steps }, [sorted.steps.buffer])
-    // self.postMessage(sorted.steps, [sorted.steps.buffer])
 }
