@@ -4,8 +4,9 @@ import { Progress } from '@/progressTracker/progress'
 export class ProgressTracker implements TrackableProgress {
     private handler: ProgressHandler
     private intervalCount: number | undefined
-    private overall: number
     private currentInterval: number = 0
+    private overall: number
+    private lastCurrent: number = 0
 
     init(overall: number): void {
         this.overall = overall
@@ -18,6 +19,7 @@ export class ProgressTracker implements TrackableProgress {
     }
 
     track(current: number, overall: number = this.overall): void {
+        this.lastCurrent = current
         if (this.intervalCount !== undefined) {
             const currentInterval = Math.floor(this.intervalCount / overall * current)
             if (currentInterval > this.currentInterval) {
@@ -28,6 +30,10 @@ export class ProgressTracker implements TrackableProgress {
         } else {
             this.handler(new Progress(current, overall))
         }
+    }
+
+    trackNext() {
+        this.track(this.lastCurrent + 1)
     }
 
 }

@@ -101,6 +101,10 @@ const sortInputModes = [
 ]
 
 const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
+/*const progress = ref<{
+    value: ProgressProvider
+    label: ''
+}>()*/
 
 const sortWorker: Ref<Worker | null> = ref(null)
 

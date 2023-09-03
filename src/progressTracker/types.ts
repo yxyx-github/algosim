@@ -1,6 +1,7 @@
 export interface TrackableProgress {
     init: (overall: number) => void
     track: (current: number, overall?: number) => void
+    trackNext: () => void
     onTrack: (handler: ProgressHandler, intervalCount?: number) => void
 }
 
