@@ -77,6 +77,9 @@ const algorithms = [
         label: 'Bubblesort',
         value: SortAlgorithm.BUBBLE,
     }, {
+        label: 'Quicksort',
+        value: SortAlgorithm.QUICKSORT
+    }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
     }
