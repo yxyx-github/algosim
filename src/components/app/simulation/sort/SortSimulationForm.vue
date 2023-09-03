@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
+import type { SortSimulationStep } from '@/algorithms/sort/types'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
 import { computed, reactive, ref } from 'vue'
@@ -134,16 +135,26 @@ function submit() {
     }
 
     sortWorker.value = new SortWorker()
-    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: SortSimulation } | { name: 'progress', value: ProgressProvider } }) => {
+    /*sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: any } | { name: 'progress', value: ProgressProvider } }) => {
         if (e.data.name === 'sorted') {
-            emit('submit', e.data.value)
+            emit('submit', { steps: e.data.value } as SortSimulation)
             terminate()
             progress.value = new Progress(0, 0)
         } else {
             progress.value = e.data.value
         }
+    }*/
+    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: SortSimulation } /*any*/ | { name: 'progress', value: ProgressProvider } }) => {
+        if (e.data.name === 'progress') {
+            progress.value = e.data.value
+        } else {
+            // emit('submit', { steps: e.data } as SortSimulation)
+            emit('submit', e.data.value)
+            terminate()
+            progress.value = new Progress(0, 0)
+        }
     }
-    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort })
+    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, intervalCount: 100 })
 }
 </script>
 
