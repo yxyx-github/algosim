@@ -53,9 +53,10 @@ import { generateNumbers, SortFactory } from '@/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
 import SortWorker from '@/algorithms/sort/sortWorker?worker'
-import type { ProgressProvider } from '@/progressTracker/types'
+import type { ProgressProvider, TrackableProgress } from '@/progressTracker/types'
 import { Progress } from '@/progressTracker/progress'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
+import { ProgressTracker } from '@/progressTracker/progressTracker'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -100,11 +101,8 @@ const sortInputModes = [
     }
 ]
 
+const intervalCount = 100
 const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
-/*const progress = ref<{
-    value: ProgressProvider
-    label: ''
-}>()*/
 
 const sortWorker: Ref<Worker | null> = ref(null)
 
@@ -159,7 +157,7 @@ function submit() {
             stepReader.read().then(handleStep)
         }
     }
-    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, intervalCount: 100 })
+    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, intervalCount: intervalCount })
 }
 </script>
 

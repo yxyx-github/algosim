@@ -2,7 +2,7 @@ import type { ProgressHandler, TrackableProgress } from '@/progressTracker/types
 import { Progress } from '@/progressTracker/progress'
 
 export class ProgressTracker implements TrackableProgress {
-    private handler: ProgressHandler
+    private handler: ProgressHandler = () => {}
     private intervalCount: number | undefined
     private currentInterval: number = 0
     private overall: number
