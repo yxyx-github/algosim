@@ -22,17 +22,20 @@ export class ProgressTracker implements TrackableProgress {
         this.intervalCount = intervalCount
     }
 
-    track(current: number, overall: number = this.overall): void {
+    track(current: number, overall?: number): void {
+        if (overall) {
+            this.overall = overall
+        }
         this.lastCurrent = current
-        if (this.intervalCount !== undefined) {
-            const currentInterval = Math.floor(this.intervalCount / overall * current)
+        if (this.intervalCount === undefined) {
+            this.handler(new Progress(current, this.overall))
+        } else {
+            const currentInterval = Math.floor(this.intervalCount / this.overall * current)
             if (currentInterval > this.currentInterval) {
                 this.currentInterval = currentInterval
                 this.currentInterval = currentInterval
-                this.handler(new Progress(current, overall, currentInterval, this.intervalCount))
+                this.handler(new Progress(current, this.overall, currentInterval, this.intervalCount))
             }
-        } else {
-            this.handler(new Progress(current, overall))
         }
     }
 
