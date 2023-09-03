@@ -12,7 +12,4 @@ export interface ProgressProvider {
     overall: number
     currentInterval: number
     intervalCount: number
-
-    /*current: (interval?: boolean) => number
-    overall: (interval?: boolean) => number*/
 }

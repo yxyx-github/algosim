@@ -12,12 +12,4 @@ export class Progress implements ProgressProvider {
         this.currentInterval = currentInterval ?? current
         this.intervalCount = intervalCount ?? overall
     }
-
-    /*current(interval?: boolean = false): number {
-        return interval ? this.currentInterval : this.currentStep
-    }
-
-    overall(interval?: boolean = false): number {
-        return interval ? this.intervalCount : this.overallSteps
-    }*/
 }
