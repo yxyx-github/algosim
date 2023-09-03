@@ -28,7 +28,8 @@
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
                 <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
-            <FProgressBar v-if="sortWorker !== null" :value="progress.currentInterval">{{ progress.current }}/{{ progress.overall }}</FProgressBar>
+            <FProgressBar v-if="progress.sort !== null" :value="progress.sort.currentInterval">Sort: {{ progress.sort.current }}/{{ progress.sort.overall }}</FProgressBar>
+            <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval">Transfer: {{ progress.transfer.current }}/{{ progress.transfer.overall }}</FProgressBar>
         </template>
     </Form>
     <div>
@@ -102,7 +103,14 @@ const sortInputModes = [
 ]
 
 const intervalCount = 100
-const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
+// const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
+const progress = reactive<{
+    sort: ProgressProvider | null
+    transfer: ProgressProvider | null
+}>({
+    sort: null,
+    transfer: null,
+})
 
 const sortWorker: Ref<Worker | null> = ref(null)
 
@@ -136,21 +144,27 @@ function submit() {
         if (numbersToSort.length === 0) return
     }
 
+    const transferTracker: TrackableProgress = new ProgressTracker()
+    transferTracker.onTrack(p => progress.transfer = p, intervalCount)
     sortWorker.value = new SortWorker()
-    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } }) => {
+    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } | { name: 'resultCount', value: number } }) => {
         if (e.data.name === 'progress') {
-            progress.value = e.data.value
+            progress.sort = e.data.value
+        } else if (e.data.name === 'resultCount') {
+            transferTracker.init(e.data.value)
         } else {
             const steps: SortSimulationStep[] = []
             function handleStep({ done, value }: { done: boolean, value: SortSimulationStep }) {
                 if (done) {
                     emit('submit', { steps: steps } as SortSimulation)
                     terminate()
-                    progress.value = new Progress(0, 0)
+                    progress.sort = null
+                    progress.transfer = null
                     return
                 } else {
                     steps.push(value)
                     stepReader.read().then(handleStep)
+                    transferTracker.trackNext()
                 }
             }
             const stepReader = e.data.value.getReader()

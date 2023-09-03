@@ -8,6 +8,10 @@ export class ProgressTracker implements TrackableProgress {
     private overall: number
     private lastCurrent: number = 0
 
+    constructor(overall: number = 0) {
+        this.init(overall)
+    }
+
     init(overall: number): void {
         this.overall = overall
         this.currentInterval = 0
