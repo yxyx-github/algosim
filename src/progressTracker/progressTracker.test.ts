@@ -1,10 +1,10 @@
 import { describe, expect, test, vi } from 'vitest'
-import type { ProgressProvider, TrackableProgress } from '@/progressTracker/types'
+import type { ProgressHandler, ProgressProvider, TrackableProgress } from '@/progressTracker/types'
 import { ProgressTracker } from '@/progressTracker/progressTracker'
 import { Progress } from '@/progressTracker/progress'
 
 describe('ProgressTracker', () => {
-    const mocks = {
+    const mocks: { handle: ProgressHandler } = {
         handle: (p: ProgressProvider) => {}
     }
 
@@ -12,6 +12,7 @@ describe('ProgressTracker', () => {
         const overall = 6
         const spyHandler = vi.spyOn(mocks, 'handle')
         const tracker: TrackableProgress = new ProgressTracker()
+        // @ts-ignore
         tracker.onTrack(spyHandler)
         tracker.init(overall)
         for (let i = 1; i <= overall; i++) {
@@ -25,6 +26,7 @@ describe('ProgressTracker', () => {
         const overall = 6
         const spyHandler = vi.spyOn(mocks, 'handle')
         const tracker: TrackableProgress = new ProgressTracker()
+        // @ts-ignore
         tracker.onTrack(spyHandler)
         tracker.init(overall)
         for (let i = 1; i <= overall; i++) {
@@ -39,6 +41,7 @@ describe('ProgressTracker', () => {
         const newOverall = 8
         const spyHandler = vi.spyOn(mocks, 'handle')
         const tracker: TrackableProgress = new ProgressTracker()
+        // @ts-ignore
         tracker.onTrack(spyHandler)
         tracker.init(initialOverall)
         tracker.track(1)
@@ -57,6 +60,7 @@ describe('ProgressTracker', () => {
     test('can track progress custom intervalCount', () => {
         const spyHandler = vi.spyOn(mocks, 'handle')
         const tracker: TrackableProgress = new ProgressTracker()
+        // @ts-ignore
         tracker.onTrack(spyHandler, 3)
         tracker.init(6)
 
