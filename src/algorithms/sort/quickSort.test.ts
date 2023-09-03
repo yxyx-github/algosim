@@ -1,7 +1,6 @@
 import {describe, expect, test} from "vitest";
 import {SortSimulation} from "@/algorithms/sort/types";
 import {QuickSort} from "@/algorithms/sort/quickSort";
-import * as console from "console";
 
 describe('quickSort', () => {
     test('sort numbers with protocol', () => {
