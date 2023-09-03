@@ -163,11 +163,13 @@ function submit() {
                     return
                 } else {
                     steps.push(value)
+                    // @ts-ignore
                     stepReader.read().then(handleStep)
                     transferTracker.trackNext()
                 }
             }
             const stepReader = e.data.value.getReader()
+            // @ts-ignore
             stepReader.read().then(handleStep)
         }
     }

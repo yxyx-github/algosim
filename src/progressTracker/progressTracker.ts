@@ -5,11 +5,11 @@ export class ProgressTracker implements TrackableProgress {
     private handler: ProgressHandler = () => {}
     private intervalCount: number | undefined
     private currentInterval: number = 0
-    private overall: number
+    private overall: number = 0
     private lastCurrent: number = 0
 
-    constructor(overall: number = 0) {
-        this.init(overall)
+    constructor(overall?: number) {
+        if (overall) this.init(overall)
     }
 
     init(overall: number): void {
