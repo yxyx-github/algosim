@@ -54,7 +54,7 @@ import { generateNumbers, SortFactory } from '@/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
 import SortWorker from '@/algorithms/sort/sortWorker?worker'
-import type { ProgressProvider, TrackableProgress } from '@/progressTracker/types'
+import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/progressTracker/types'
 import { Progress } from '@/progressTracker/progress'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 import { ProgressTracker } from '@/progressTracker/progressTracker'
@@ -102,7 +102,10 @@ const sortInputModes = [
     }
 ]
 
-const intervalCount = 100
+const progressTrackerConfig: ProgressTrackerConfig = {
+    intervalCount: 100,
+    maxUpdateInterval: 2500,
+}
 // const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
 const progress = reactive<{
     sort: ProgressProvider | null
@@ -146,7 +149,7 @@ function submit() {
         if (numbersToSort.length === 0) return
     }
 
-    const transferTracker: TrackableProgress = new ProgressTracker(intervalCount)
+    const transferTracker: TrackableProgress = new ProgressTracker(progressTrackerConfig)
     transferTracker.onTrack(p => progress.transfer = p)
     sortWorker.value = new SortWorker()
     sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } | { name: 'resultCount', value: number } }) => {
@@ -175,7 +178,7 @@ function submit() {
             stepReader.read().then(handleStep)
         }
     }
-    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, intervalCount: intervalCount })
+    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, progressTrackerConfig: progressTrackerConfig })
 }
 </script>
 

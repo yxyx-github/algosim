@@ -1,10 +1,11 @@
 import type { SortAlgorithm, SortSimulationStep } from '@/algorithms/sort/types'
 import { SortFactory } from '@/algorithms/sort/index'
 import { ProgressTracker } from '@/progressTracker/progressTracker'
+import type { ProgressTrackerConfig } from '@/progressTracker/types'
 
-self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[], intervalCount?: number } }) => {
+self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[], progressTrackerConfig?: ProgressTrackerConfig } }) => {
 
-    const progressTracker = new ProgressTracker(e.data.intervalCount ?? 100)
+    const progressTracker = new ProgressTracker(e.data.progressTrackerConfig)
     progressTracker.onTrack((progress) => self.postMessage({ name: 'progress', value: progress }))
 
     const sorted = SortFactory.create(e.data.algorithm).sort(e.data.numbersToSort, progressTracker)

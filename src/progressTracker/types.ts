@@ -13,3 +13,8 @@ export interface ProgressProvider {
     currentInterval: number
     intervalCount: number
 }
+
+export type ProgressTrackerConfig = {
+    intervalCount?: number
+    maxUpdateInterval?: number
+}

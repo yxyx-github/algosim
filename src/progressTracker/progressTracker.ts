@@ -1,4 +1,4 @@
-import type { ProgressHandler, TrackableProgress } from '@/progressTracker/types'
+import type { ProgressHandler, ProgressTrackerConfig, TrackableProgress } from '@/progressTracker/types'
 import { Progress } from '@/progressTracker/progress'
 
 export class ProgressTracker implements TrackableProgress {
@@ -11,9 +11,9 @@ export class ProgressTracker implements TrackableProgress {
     private overall: number = 0
     private lastCurrent: number = 0
 
-    constructor(intervalCount?: number, maxUpdateInterval?: number) {
-        this.intervalCount = intervalCount
-        this.maxIntervalSize = maxUpdateInterval
+    constructor(config?: ProgressTrackerConfig) {
+        this.intervalCount = config?.intervalCount
+        this.maxIntervalSize = config?.maxUpdateInterval
     }
 
     init(overall: number): void {
