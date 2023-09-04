@@ -146,8 +146,8 @@ function submit() {
         if (numbersToSort.length === 0) return
     }
 
-    const transferTracker: TrackableProgress = new ProgressTracker()
-    transferTracker.onTrack(p => progress.transfer = p, intervalCount)
+    const transferTracker: TrackableProgress = new ProgressTracker(intervalCount)
+    transferTracker.onTrack(p => progress.transfer = p)
     sortWorker.value = new SortWorker()
     sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } | { name: 'resultCount', value: number } }) => {
         if (e.data.name === 'progress') {

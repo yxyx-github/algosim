@@ -2,6 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 import type { ProgressHandler, ProgressProvider, TrackableProgress } from '@/progressTracker/types'
 import { ProgressTracker } from '@/progressTracker/progressTracker'
 import { Progress } from '@/progressTracker/progress'
+import * as console from 'console'
 
 describe('ProgressTracker', () => {
     const mocks: { handle: ProgressHandler } = {
@@ -57,11 +58,11 @@ describe('ProgressTracker', () => {
         }
     })
 
-    test('can track progress custom intervalCount', () => {
+    test('can track progress with custom intervalCount', () => {
         const spyHandler = vi.spyOn(mocks, 'handle')
-        const tracker: TrackableProgress = new ProgressTracker()
+        const tracker: TrackableProgress = new ProgressTracker(3)
         // @ts-ignore
-        tracker.onTrack(spyHandler, 3)
+        tracker.onTrack(spyHandler)
         tracker.init(6)
 
         tracker.track(1)
@@ -76,5 +77,28 @@ describe('ProgressTracker', () => {
         tracker.track(6)
         expect(spyHandler).toHaveBeenCalledTimes(3)
         expect(spyHandler).toHaveBeenCalledWith(new Progress(6, 6, 3, 3))
+    })
+
+    test('can track progress with custom intervalCount and maxIntervalSize', () => {
+        const spyHandler = vi.spyOn(mocks, 'handle')
+        const tracker: TrackableProgress = new ProgressTracker(2, 3)
+        // @ts-ignore
+        tracker.onTrack(spyHandler)
+        tracker.init(8)
+
+        tracker.track(1)
+        tracker.track(2)
+        tracker.track(3)
+        expect(spyHandler).toHaveBeenCalledTimes(1)
+        expect(spyHandler).toHaveBeenCalledWith(new Progress(3, 8, 0, 2))
+        tracker.track(4)
+        tracker.track(5)
+        tracker.track(6)
+        expect(spyHandler).toHaveBeenCalledTimes(2)
+        expect(spyHandler).toHaveBeenCalledWith(new Progress(6, 8, 1, 2))
+        tracker.track(7)
+        tracker.track(8)
+        expect(spyHandler).toHaveBeenCalledTimes(3)
+        expect(spyHandler).toHaveBeenCalledWith(new Progress(8, 8, 2, 2))
     })
 })

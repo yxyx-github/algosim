@@ -4,22 +4,30 @@ import { Progress } from '@/progressTracker/progress'
 export class ProgressTracker implements TrackableProgress {
     private handler: ProgressHandler = () => {}
     private intervalCount: number | undefined
+    private intervalSize: number = 1
     private currentInterval: number = 0
+    private maxIntervalSize: number | undefined
+    private lastForcedCurrent: number = 0
     private overall: number = 0
     private lastCurrent: number = 0
 
-    constructor(overall?: number) {
-        if (overall) this.init(overall)
+    constructor(intervalCount?: number, maxUpdateInterval?: number) {
+        this.intervalCount = intervalCount
+        this.maxIntervalSize = maxUpdateInterval
     }
 
     init(overall: number): void {
         this.overall = overall
         this.currentInterval = 0
+        this.lastCurrent = 0
+        this.lastForcedCurrent = 0
+        if (this.intervalCount !== undefined) {
+            this.intervalSize = this.overall / this.intervalCount
+        }
     }
 
-    onTrack(handler: ProgressHandler, intervalCount?: number): void {
+    onTrack(handler: ProgressHandler): void {
         this.handler = handler
-        this.intervalCount = intervalCount
     }
 
     track(current: number, overall?: number): void {
@@ -31,11 +39,13 @@ export class ProgressTracker implements TrackableProgress {
             this.handler(new Progress(current, this.overall))
         } else {
             const currentInterval = Math.floor(this.intervalCount / this.overall * current)
-            if (currentInterval > this.currentInterval) {
-                this.currentInterval = currentInterval
-                this.currentInterval = currentInterval
+            if (currentInterval > this.currentInterval && this.lastForcedCurrent + this.intervalSize <= current) {
+                this.handler(new Progress(current, this.overall, currentInterval, this.intervalCount))
+            } else if (current - this.maxIntervalSize >= Math.max(this.currentInterval, this.lastForcedCurrent) || current === this.overall) {
+                this.lastForcedCurrent = current
                 this.handler(new Progress(current, this.overall, currentInterval, this.intervalCount))
             }
+            this.currentInterval = currentInterval
         }
     }
 
