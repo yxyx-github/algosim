@@ -55,7 +55,6 @@ import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
 import SortWorker from '@/algorithms/sort/sortWorker?worker'
 import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/progressTracker/types'
-import { Progress } from '@/progressTracker/progress'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 import { ProgressTracker } from '@/progressTracker/progressTracker'
 
