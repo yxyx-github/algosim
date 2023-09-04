@@ -10,6 +10,10 @@ export class QuickSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[]): SortSimulation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
+        pB.step({
+            sortedValues: numbers,
+            highlightedIndices: []
+        })
         this.quickSort(numbers, 0, numbers.length - 1, pB)
         pB.step({
             sortedValues: numbers,
