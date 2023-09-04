@@ -1,10 +1,16 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import type { SortSimulation } from '@/algorithms/sort/types'
 import { BubbleSort } from '@/algorithms/sort/bubbleSort'
-import { TrackableProgress } from '@/progressTracker/types'
-import { ProgressTracker } from '@/progressTracker/progressTracker'
+import type { ProgressHandler, TrackableProgress } from '@/progressTracker/types'
 
 describe('BubbleSort', () => {
+    const mockTracker: TrackableProgress = {
+        init: (overall: number) => {},
+        track: (current: number, overall?: number) => {},
+        trackNext: () => {},
+        onTrack: (handler: ProgressHandler, intervalCount?: number) => {},
+    }
+
     test('sort numbers with protocol', () => {
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
@@ -43,9 +49,16 @@ describe('BubbleSort', () => {
             ],
         }
 
-        const tracker: TrackableProgress = new ProgressTracker()
+        const spyInit = vi.spyOn(mockTracker, 'init')
+        const spyTrack = vi.spyOn(mockTracker, 'track')
+        const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new BubbleSort().sort(input, tracker)
+        const result = new BubbleSort().sort(input, mockTracker)
         expect(result).to.deep.equal(expected)
+
+        expect(spyInit).toHaveBeenCalledOnce()
+        expect(spyInit).toHaveBeenCalledWith(6)
+        expect(spyTrack).toHaveBeenCalledTimes(0)
+        expect(spyTrackNext).toHaveBeenCalledTimes(6)
     })
 })
