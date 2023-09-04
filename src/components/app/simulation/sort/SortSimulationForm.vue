@@ -28,8 +28,8 @@
                 <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
                 <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
-            <FProgressBar v-if="progress.sort !== null" :value="progress.sort.currentInterval">Sort: {{ progress.sort.current }}/{{ progress.sort.overall }}</FProgressBar>
-            <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval">Transfer: {{ progress.transfer.current }}/{{ progress.transfer.overall }}</FProgressBar>
+            <FProgressBar v-if="progress.sort !== null" :value="progress.sort.currentInterval" :label="`Sort: ${progress.sort.current}/${progress.sort.overall}`"/>
+            <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval" :label="`Transfer: ${progress.transfer.current}/${progress.transfer.overall}`"/>
         </template>
     </Form>
     <div>
