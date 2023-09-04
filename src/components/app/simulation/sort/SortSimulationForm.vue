@@ -118,6 +118,8 @@ function terminate() {
     if (sortWorker.value !== null) {
         sortWorker.value.terminate()
         sortWorker.value = null
+        progress.sort = null
+        progress.transfer = null
     }
 }
 
