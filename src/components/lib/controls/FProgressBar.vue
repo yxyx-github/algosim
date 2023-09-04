@@ -3,7 +3,7 @@
         <div v-if="$slots.default" class="text-center"><slot/></div>
         <div class="bg-gray-200 rounded-md overflow-hidden relative">
             <div class="h-6 bg-blue-500 relative" :style="`width: ${props.value}%;`"></div>
-            <div class="w-full absolute top-0 left-0 text-center" v-if="props.label">{{ props.label }}</div>
+            <div class="w-full absolute top-0 left-0 text-center whitespace-nowrap" v-if="props.label">{{ props.label }}</div>
         </div>
     </FColumn>
 </template>
