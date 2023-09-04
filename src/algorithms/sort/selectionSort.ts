@@ -7,6 +7,10 @@ export class SelectionSort implements SortAlgorithmImplementation {
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length * ((numbers.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
+        pB.step({
+            sortedValues: numbers,
+            highlightedIndices: [],
+        })
         for (let i = 0; i < numbers.length; i++) {
             let minIndex = i
             for (let j = i + 1; j < numbers.length; j++) {
@@ -37,6 +41,10 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 ] as HighlightedIndex[],
             })
         }
+        pB.step({
+            sortedValues: numbers,
+            highlightedIndices: [],
+        })
 
         return pB.build()
     }
