@@ -13,7 +13,7 @@ export class ProgressTracker implements TrackableProgress {
 
     constructor(config?: ProgressTrackerConfig) {
         this.intervalCount = config?.intervalCount
-        this.maxIntervalSize = config?.maxUpdateInterval
+        this.maxIntervalSize = config?.maxIntervalSize
     }
 
     init(overall: number): void {
@@ -41,7 +41,7 @@ export class ProgressTracker implements TrackableProgress {
             const currentInterval = Math.floor(this.intervalCount / this.overall * current)
             if (currentInterval > this.currentInterval && this.lastForcedCurrent + this.intervalSize <= current) {
                 this.handler(new Progress(current, this.overall, currentInterval, this.intervalCount))
-            } else if (current - this.maxIntervalSize >= Math.max(this.currentInterval, this.lastForcedCurrent) || current === this.overall) {
+            } else if ((this.maxIntervalSize !== undefined && current - this.maxIntervalSize >= Math.max(this.currentInterval, this.lastForcedCurrent)) || current === this.overall) {
                 this.lastForcedCurrent = current
                 this.handler(new Progress(current, this.overall, currentInterval, this.intervalCount))
             }

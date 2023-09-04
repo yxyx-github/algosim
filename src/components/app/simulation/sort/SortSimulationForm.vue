@@ -104,7 +104,7 @@ const sortInputModes = [
 
 const progressTrackerConfig: ProgressTrackerConfig = {
     intervalCount: 100,
-    maxUpdateInterval: 2500,
+    maxIntervalSize: 2500,
 }
 // const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
 const progress = reactive<{

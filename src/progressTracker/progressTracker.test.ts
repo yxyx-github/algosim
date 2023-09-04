@@ -81,7 +81,7 @@ describe('ProgressTracker', () => {
 
     test('can track progress with custom intervalCount and maxIntervalSize', () => {
         const spyHandler = vi.spyOn(mocks, 'handle')
-        const tracker: TrackableProgress = new ProgressTracker({ intervalCount: 2, maxUpdateInterval: 3 })
+        const tracker: TrackableProgress = new ProgressTracker({ intervalCount: 2, maxIntervalSize: 3 })
         // @ts-ignore
         tracker.onTrack(spyHandler)
         tracker.init(8)
