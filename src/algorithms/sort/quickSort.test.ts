@@ -1,5 +1,5 @@
 import {describe, expect, test} from "vitest";
-import {SortSimulation} from "@/algorithms/sort/types";
+import type {SortSimulation} from "@/algorithms/sort/types";
 import {QuickSort} from "@/algorithms/sort/quickSort";
 
 describe('quickSort', () => {
