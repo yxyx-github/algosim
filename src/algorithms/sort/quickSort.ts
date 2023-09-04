@@ -41,7 +41,8 @@ export class QuickSort implements SortAlgorithmImplementation {
             sortedValues: numbers,
             highlightedIndices: [
                 { type: 'current', index: end },
-                { type: 'current', index: j }
+                { type: 'current', index: j },
+                ...((i+1) === j ? []  : [{ type: 'threshold', index: i+1 }]),
             ] as HighlightedIndex[],
         })
 
