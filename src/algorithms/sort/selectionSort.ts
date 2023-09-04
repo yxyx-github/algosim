@@ -5,7 +5,7 @@ import type { TrackableProgress } from '@/progressTracker/types'
 export class SelectionSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
-        // TODO: implement progress tracker
+        progressTracker?.init(numbers.length * ((numbers.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
         for (let i = 0; i < numbers.length; i++) {
             let minIndex = i
@@ -22,6 +22,8 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 if (numbers[minIndex] > numbers[j]) {
                     minIndex = j
                 }
+
+                progressTracker?.trackNext()
             }
             let temp = numbers[minIndex]
             numbers[minIndex] = numbers[i]
