@@ -1,4 +1,4 @@
-import type { ProgressProvider } from '@/progressTracker/types'
+import type { ProgressProvider } from '@/main/progressTracker/types'
 
 export class Progress implements ProgressProvider {
     current: number

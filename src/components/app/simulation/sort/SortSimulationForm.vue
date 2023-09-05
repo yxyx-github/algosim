@@ -38,9 +38,9 @@
 </template>
 
 <script setup lang="ts">
-import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
-import type { SortSimulationStep } from '@/algorithms/sort/types'
-import type { SortSimulation } from '@/algorithms/sort/types'
+import { SortAlgorithm, SortInputMode } from '@/main/algorithms/sort/types'
+import type { SortSimulationStep } from '@/main/algorithms/sort/types'
+import type { SortSimulation } from '@/main/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
 import { computed, reactive, ref } from 'vue'
 import type { Ref } from 'vue'
@@ -50,13 +50,13 @@ import InputNumber from 'primevue/inputnumber'
 import Input from '@/components/lib/forms/Input.vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import Button from 'primevue/button'
-import { generateNumbers, SortFactory } from '@/algorithms/sort'
+import { generateNumbers, SortFactory } from '@/main/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
-import SortWorker from '@/algorithms/sort/sortWorker?worker'
-import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/progressTracker/types'
+import SortWorker from '@/main/algorithms/sort/sortWorker?worker'
+import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/main/progressTracker/types'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
-import { ProgressTracker } from '@/progressTracker/progressTracker'
+import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -136,17 +136,7 @@ reset()
 
 function submit() {
     if (values.algorithm === undefined) return
-    let numbersToSort = []
-    if (values.mode === SortInputMode.GENERATE) {
-        numbersToSort = generateNumbers(values.count, values.minVal, values.maxVal)
-    } else {
-        numbersToSort = values.customInput
-            .split(',')
-            .map(part => part.replace(/[^0-9]/g, ''))
-            .filter(part => part !== '')
-            .map(number => parseInt(number))
-        if (numbersToSort.length === 0) return
-    }
+    const numbersToSort = getNumbersToSort()
 
     const transferTracker: TrackableProgress = new ProgressTracker(progressTrackerConfig)
     transferTracker.onTrack(p => progress.transfer = p)
@@ -178,6 +168,18 @@ function submit() {
         }
     }
     sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, progressTrackerConfig: progressTrackerConfig })
+}
+
+function getNumbersToSort() {
+    if (values.mode === SortInputMode.GENERATE) {
+        return generateNumbers(values.count, values.minVal, values.maxVal)
+    } else {
+        return values.customInput
+            .split(',')
+            .map(part => part.replace(/[^0-9]/g, ''))
+            .filter(part => part !== '')
+            .map(number => parseInt(number))
+    }
 }
 </script>
 

@@ -1,4 +1,4 @@
-import type { Simulation, SimulationStep } from '@/simulation/types'
+import type { Simulation, SimulationStep } from '@/main/simulation/types'
 
 export class ProtocolBuilder<S extends SimulationStep> {
     private steps: S[] = []

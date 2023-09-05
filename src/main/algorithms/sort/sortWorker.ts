@@ -1,7 +1,7 @@
-import type { SortAlgorithm, SortSimulationStep } from '@/algorithms/sort/types'
-import { SortFactory } from '@/algorithms/sort/index'
-import { ProgressTracker } from '@/progressTracker/progressTracker'
-import type { ProgressTrackerConfig } from '@/progressTracker/types'
+import type { SortAlgorithm, SortSimulationStep } from '@/main/algorithms/sort/types'
+import { SortFactory } from '@/main/algorithms/sort/index'
+import { ProgressTracker } from '@/main/progressTracker/progressTracker'
+import type { ProgressTrackerConfig } from '@/main/progressTracker/types'
 
 self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[], progressTrackerConfig?: ProgressTrackerConfig } }) => {
 

@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
-import { SelectionSort } from '@/algorithms/sort/selectionSort'
-import type { SortSimulation } from '@/algorithms/sort/types'
-import type { ProgressHandler, TrackableProgress } from '@/progressTracker/types'
+import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
+import type { SortSimulation } from '@/main/algorithms/sort/types'
+import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
 
 describe('SelectionSort', () => {
     const mockTracker: TrackableProgress = {

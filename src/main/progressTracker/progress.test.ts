@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import type { ProgressProvider } from '@/progressTracker/types'
-import { Progress } from '@/progressTracker/progress'
+import type { ProgressProvider } from '@/main/progressTracker/types'
+import { Progress } from '@/main/progressTracker/progress'
 
 describe('Progress', () => {
     test('can create Progress with all values', () => {

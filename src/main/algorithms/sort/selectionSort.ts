@@ -1,6 +1,6 @@
-import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/algorithms/sort/types";
-import { ProtocolBuilder } from '@/simulation/protocolBuilder'
-import type { TrackableProgress } from '@/progressTracker/types'
+import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/main/algorithms/sort/types";
+import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
+import type { TrackableProgress } from '@/main/progressTracker/types'
 
 export class SelectionSort implements SortAlgorithmImplementation {
 

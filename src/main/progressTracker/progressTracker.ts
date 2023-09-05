@@ -1,5 +1,5 @@
-import type { ProgressHandler, ProgressTrackerConfig, TrackableProgress } from '@/progressTracker/types'
-import { Progress } from '@/progressTracker/progress'
+import type { ProgressHandler, ProgressTrackerConfig, TrackableProgress } from '@/main/progressTracker/types'
+import { Progress } from '@/main/progressTracker/progress'
 
 export class ProgressTracker implements TrackableProgress {
     private handler: ProgressHandler = () => {}

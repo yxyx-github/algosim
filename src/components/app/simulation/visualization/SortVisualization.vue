@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SortSimulationStep, HighlightColor, SortColors } from '@/algorithms/sort/types'
+import type { SortSimulationStep, HighlightColor, SortColors } from '@/main/algorithms/sort/types'
 import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{

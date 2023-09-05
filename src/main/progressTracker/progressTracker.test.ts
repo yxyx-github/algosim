@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
-import type { ProgressHandler, ProgressProvider, TrackableProgress } from '@/progressTracker/types'
-import { ProgressTracker } from '@/progressTracker/progressTracker'
-import { Progress } from '@/progressTracker/progress'
+import type { ProgressHandler, ProgressProvider, TrackableProgress } from '@/main/progressTracker/types'
+import { ProgressTracker } from '@/main/progressTracker/progressTracker'
+import { Progress } from '@/main/progressTracker/progress'
 import * as console from 'console'
 
 describe('ProgressTracker', () => {
