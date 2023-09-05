@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from 'vitest'
-import type { Simulation } from '@/simulation/types'
-import { ProtocolBuilder } from '@/simulation/protocolBuilder'
+import type { Simulation } from '@/main/simulation/types'
+import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 
 describe('protocolBuilder', () => {
     test('can be created with steps', () => {

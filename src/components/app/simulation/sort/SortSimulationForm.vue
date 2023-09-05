@@ -25,8 +25,11 @@
             </template>
             <ButtonBar>
                 <Button type="button" @click="reset" aria-label="Reset" label="Reset" severity="secondary"/>
-                <Button type="submit" aria-label="Sort" label="Sort"/>
+                <Button type="submit" aria-label="Sort" label="Sort" :loading="sortWorker !== null"/>
+                <Button v-if="sortWorker !== null" type="button" @click="terminate" aria-label="Cancel" label="Cancel" severity="danger"/>
             </ButtonBar>
+            <FProgressBar v-if="progress.sort !== null" :value="progress.sort.currentInterval" :label="`Sort: ${progress.sort.current}/${progress.sort.overall}`"/>
+            <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval" :label="`Transfer: ${progress.transfer.current}/${progress.transfer.overall}`"/>
         </template>
     </Form>
     <div>
@@ -35,19 +38,27 @@
 </template>
 
 <script setup lang="ts">
-import { SortAlgorithm, SortInputMode } from '@/algorithms/sort/types'
-import type { SortSimulation } from '@/algorithms/sort/types'
+import { SortAlgorithm, SortInputMode } from '@/main/algorithms/sort/types'
+import type { SortWorkerResponse } from '@/main/algorithms/sort/types'
+import type { SortSimulationStep } from '@/main/algorithms/sort/types'
+import type { SortSimulation } from '@/main/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import type { Ref } from 'vue'
 import type { ComputedRef } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
 import InputNumber from 'primevue/inputnumber'
 import Input from '@/components/lib/forms/Input.vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import Button from 'primevue/button'
-import { generateNumbers, SortFactory } from '@/algorithms/sort'
+import { generateNumbers, SortFactory } from '@/main/algorithms/sort'
 import SelectButton from 'primevue/selectbutton'
 import Textarea from 'primevue/textarea'
+import SortWorker from '@/main/algorithms/sort/sortWorker?worker'
+import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/main/progressTracker/types'
+import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
+import { ProgressTracker } from '@/main/progressTracker/progressTracker'
+import { simulationFromStream } from '@/main/simulation/stream'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -92,6 +103,30 @@ const sortInputModes = [
     }
 ]
 
+const progressTrackerConfig: ProgressTrackerConfig = {
+    intervalCount: 100,
+    maxIntervalSize: 2500,
+}
+
+const progress = reactive<{
+    sort: ProgressProvider | null
+    transfer: ProgressProvider | null
+}>({
+    sort: null,
+    transfer: null,
+})
+
+const sortWorker: Ref<Worker | null> = ref(null)
+
+function terminate() {
+    if (sortWorker.value !== null) {
+        sortWorker.value.terminate()
+        sortWorker.value = null
+        progress.sort = null
+        progress.transfer = null
+    }
+}
+
 function reset() {
     values.count = 100
     values.minVal = 0
@@ -103,19 +138,38 @@ reset()
 
 function submit() {
     if (values.algorithm === undefined) return
-    let numbersToSort = []
+    const numbersToSort = getNumbersToSort()
+
+    const transferTracker: TrackableProgress = new ProgressTracker(progressTrackerConfig)
+    transferTracker.onTrack(p => progress.transfer = p)
+    sortWorker.value = new SortWorker()
+    sortWorker.value.onmessage = (e: MessageEvent<SortWorkerResponse>) => {
+        if (e.data.name === 'progress') {
+            progress.sort = e.data.value
+        } else if (e.data.name === 'resultCount') {
+            transferTracker.init(e.data.value)
+        } else {
+            simulationFromStream<SortSimulation, SortSimulationStep>(e.data.value, transferTracker).then((simulation: SortSimulation) => {
+                emit('submit', simulation)
+                terminate()
+                progress.sort = null
+                progress.transfer = null
+            })
+        }
+    }
+    sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, progressTrackerConfig: progressTrackerConfig })
+}
+
+function getNumbersToSort() {
     if (values.mode === SortInputMode.GENERATE) {
-        numbersToSort = generateNumbers(values.count, values.minVal, values.maxVal)
+        return generateNumbers(values.count, values.minVal, values.maxVal)
     } else {
-        numbersToSort = values.customInput
+        return values.customInput
             .split(',')
             .map(part => part.replace(/[^0-9]/g, ''))
             .filter(part => part !== '')
             .map(number => parseInt(number))
-        if (numbersToSort.length === 0) return
     }
-    const sorted = SortFactory.create(values.algorithm as SortAlgorithm).sort(numbersToSort)
-    emit('submit', sorted)
 }
 </script>
 

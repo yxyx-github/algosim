@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { generateNumbers, SortFactory } from '@/algorithms/sort/index'
-import { SortAlgorithm } from '@/algorithms/sort/types'
-import { BubbleSort } from '@/algorithms/sort/bubbleSort'
+import { generateNumbers, SortFactory } from '@/main/algorithms/sort/index'
+import { SortAlgorithm } from '@/main/algorithms/sort/types'
+import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
 
 describe('SortFactory', () => {
     test('can create BubbleSort', () => {

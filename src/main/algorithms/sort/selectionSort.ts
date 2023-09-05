@@ -1,10 +1,16 @@
-import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/algorithms/sort/types";
-import { ProtocolBuilder } from '@/simulation/protocolBuilder'
+import type { SortAlgorithmImplementation, HighlightedIndex, SortSimulation, SortSimulationStep } from "@/main/algorithms/sort/types";
+import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
+import type { TrackableProgress } from '@/main/progressTracker/types'
 
 export class SelectionSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[]): SortSimulation {
+    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+        progressTracker?.init(numbers.length * ((numbers.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
+        pB.step({
+            sortedValues: numbers,
+            highlightedIndices: [],
+        })
         for (let i = 0; i < numbers.length; i++) {
             let minIndex = i
             for (let j = i + 1; j < numbers.length; j++) {
@@ -20,6 +26,8 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 if (numbers[minIndex] > numbers[j]) {
                     minIndex = j
                 }
+
+                progressTracker?.trackNext()
             }
             let temp = numbers[minIndex]
             numbers[minIndex] = numbers[i]
@@ -33,6 +41,10 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 ] as HighlightedIndex[],
             })
         }
+        pB.step({
+            sortedValues: numbers,
+            highlightedIndices: [],
+        })
 
         return pB.build()
     }
