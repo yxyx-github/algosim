@@ -1,7 +1,8 @@
-import type { SortAlgorithm, SortSimulationStep } from '@/main/algorithms/sort/types'
+import type { SortAlgorithm, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
 import { SortFactory } from '@/main/algorithms/sort/index'
 import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 import type { ProgressTrackerConfig } from '@/main/progressTracker/types'
+import { createSimulationStream } from '@/main/simulation/stream'
 
 self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[], progressTrackerConfig?: ProgressTrackerConfig } }) => {
 
@@ -12,13 +13,6 @@ self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[]
 
     self.postMessage({ name: 'resultCount', value: sorted.steps.length })
 
-    const stepReader = new ReadableStream<SortSimulationStep>({
-        start(controller) {
-            for (const step of sorted.steps) {
-                controller.enqueue(step)
-            }
-            controller.close()
-        }
-    })
+    const stepReader = createSimulationStream<SortSimulation, SortSimulationStep>(sorted)
     self.postMessage({ name: 'sorted', value: stepReader }, [stepReader] as any)
 }

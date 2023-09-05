@@ -57,6 +57,7 @@ import SortWorker from '@/main/algorithms/sort/sortWorker?worker'
 import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from '@/main/progressTracker/types'
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 import { ProgressTracker } from '@/main/progressTracker/progressTracker'
+import { simulationFromStream } from '@/main/simulation/stream'
 
 const emit = defineEmits<{
     (event: 'submit', simulation: SortSimulation): void
@@ -147,24 +148,12 @@ function submit() {
         } else if (e.data.name === 'resultCount') {
             transferTracker.init(e.data.value)
         } else {
-            const steps: SortSimulationStep[] = []
-            function handleStep({ done, value }: { done: boolean, value: SortSimulationStep }) {
-                if (done) {
-                    emit('submit', { steps: steps } as SortSimulation)
-                    terminate()
-                    progress.sort = null
-                    progress.transfer = null
-                    return
-                } else {
-                    steps.push(value)
-                    // @ts-ignore
-                    stepReader.read().then(handleStep)
-                    transferTracker.trackNext()
-                }
-            }
-            const stepReader = e.data.value.getReader()
-            // @ts-ignore
-            stepReader.read().then(handleStep)
+            simulationFromStream<SortSimulation, SortSimulationStep>(e.data.value, transferTracker).then((simulation: SortSimulation) => {
+                emit('submit', simulation)
+                terminate()
+                progress.sort = null
+                progress.transfer = null
+            })
         }
     }
     sortWorker.value.postMessage({ algorithm: values.algorithm, numbersToSort: numbersToSort, progressTrackerConfig: progressTrackerConfig })
