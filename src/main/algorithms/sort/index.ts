@@ -1,7 +1,6 @@
-import {SortAlgorithm} from '@/algorithms/sort/types'
-import {BubbleSort} from '@/algorithms/sort/bubbleSort'
-import {SelectionSort} from '@/algorithms/sort/selectionSort'
-import {QuickSort} from "@/algorithms/sort/quickSort";
+import { SortAlgorithm } from '@/main/algorithms/sort/types'
+import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
+import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
