@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
 import { SortAlgorithm, SortInputMode } from '@/main/algorithms/sort/types'
+import type { SortWorkerResponse } from '@/main/algorithms/sort/types'
 import type { SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
@@ -106,7 +107,7 @@ const progressTrackerConfig: ProgressTrackerConfig = {
     intervalCount: 100,
     maxIntervalSize: 2500,
 }
-// const progress: Ref<ProgressProvider> = ref(new Progress(0, 0))
+
 const progress = reactive<{
     sort: ProgressProvider | null
     transfer: ProgressProvider | null
@@ -142,7 +143,7 @@ function submit() {
     const transferTracker: TrackableProgress = new ProgressTracker(progressTrackerConfig)
     transferTracker.onTrack(p => progress.transfer = p)
     sortWorker.value = new SortWorker()
-    sortWorker.value.onmessage = (e: { data: { name: 'sorted', value: ReadableStream<SortSimulationStep> } | { name: 'progress', value: ProgressProvider } | { name: 'resultCount', value: number } }) => {
+    sortWorker.value.onmessage = (e: MessageEvent<SortWorkerResponse>) => {
         if (e.data.name === 'progress') {
             progress.sort = e.data.value
         } else if (e.data.name === 'resultCount') {

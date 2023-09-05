@@ -1,10 +1,9 @@
-import type { SortAlgorithm, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
+import type { SortSimulation, SortSimulationStep, SortWorkerRequest } from '@/main/algorithms/sort/types'
 import { SortFactory } from '@/main/algorithms/sort/index'
 import { ProgressTracker } from '@/main/progressTracker/progressTracker'
-import type { ProgressTrackerConfig } from '@/main/progressTracker/types'
 import { createSimulationStream } from '@/main/simulation/stream'
 
-self.onmessage = (e: { data: { algorithm: SortAlgorithm, numbersToSort: number[], progressTrackerConfig?: ProgressTrackerConfig } }) => {
+self.onmessage = (e: MessageEvent<SortWorkerRequest>) => {
 
     const progressTracker = new ProgressTracker(e.data.progressTrackerConfig)
     progressTracker.onTrack((progress) => self.postMessage({ name: 'progress', value: progress }))
