@@ -91,6 +91,9 @@ const algorithms = [
         label: 'Mergesort',
         value: SortAlgorithm.MERGESORT,
     }, {
+        label: 'Quicksort',
+        value: SortAlgorithm.QUICKSORT,
+    }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
     }
@@ -137,7 +140,6 @@ function reset() {
     values.customInput = ''
     emit('reset')
 }
-
 reset()
 
 function submit() {
