@@ -50,6 +50,7 @@ export class ProgressTracker implements TrackableProgress {
     }
 
     trackNext() {
+        console.log('pt.trackNext()')
         this.track(this.lastCurrent + 1)
     }
 

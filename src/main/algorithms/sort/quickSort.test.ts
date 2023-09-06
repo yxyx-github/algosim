@@ -186,8 +186,6 @@ describe('quickSort', () => {
         expect(spyInit).toHaveBeenCalledOnce()
         expect(spyInit).toHaveBeenCalledWith(10)
         expect(spyTrack).toHaveBeenCalledTimes(0)
-        setTimeout(() => {
-            spyTrackNext.toHaveBeenCalledTimes(10)
-        }, 100)
+        expect(spyTrackNext).toHaveBeenCalledTimes(10)
     })
 })

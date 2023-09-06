@@ -32,8 +32,8 @@ export class QuickSort implements SortAlgorithmImplementation {
         }
         let partitionIndex = this.partition(numbers, begin, end, pB);
 
-        this.quickSort(numbers, begin, partitionIndex - 1, pB);
-        this.quickSort(numbers, partitionIndex + 1, end, pB);
+        this.quickSort(numbers, begin, partitionIndex - 1, pB, progressTracker);
+        this.quickSort(numbers, partitionIndex + 1, end, pB, progressTracker);
     }
 
     private partition(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>) {
