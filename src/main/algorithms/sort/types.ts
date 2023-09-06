@@ -1,5 +1,5 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
-import type {TrackableProgress, ProgressProvider, ProgressTrackerConfig} from '@/main/progressTracker/types'
+import type { TrackableProgress, ProgressProvider, ProgressTrackerConfig } from '@/main/progressTracker/types'
 
 export type HighlightType = 'current' | 'threshold'
 export type HighlightColor = HighlightType | 'neutral'
