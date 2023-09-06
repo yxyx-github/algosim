@@ -31,7 +31,7 @@
 import FRow from '@/components/lib/layout/FRow.vue'
 import Button from 'primevue/button'
 import Slider from 'primevue/slider'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive } from 'vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
 import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
