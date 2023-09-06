@@ -3,7 +3,7 @@ import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import { MergeSort } from '@/main/algorithms/sort/mergeSort'
 
-describe('SelectionSort', () => {
+describe('MergeSort', () => {
     const mockTracker: TrackableProgress = {
         init: (overall: number) => {},
         track: (current: number, overall?: number) => {},
