@@ -5,17 +5,21 @@
         </Input>
         <template v-if="values.algorithm !== undefined">
             <Input label="Items to sort:">
-                <SelectButton v-model="values.mode" optionLabel="label" optionValue="value" :options="sortInputModes" :pt="{ root: () => ({ class: 'flex flex-row' }), button: () => ({ class: 'flex-grow' }) }"/>
+                <SelectButton v-model="values.mode" optionLabel="label" optionValue="value" :options="sortInputModes"
+                              :pt="{ root: () => ({ class: 'flex flex-row' }), button: () => ({ class: 'flex-grow' }) }"/>
             </Input>
             <template v-if="values.mode === SortInputMode.GENERATE">
                 <Input label="Number of items:">
-                    <InputNumber inputClass="w-20" v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="1000" :step="10"/>
+                    <InputNumber inputClass="w-20" v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="1000"
+                                 :step="10"/>
                 </Input>
                 <Input label="Minimum value:">
-                    <InputNumber inputClass="w-20" v-model="values.minVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="1"/>
+                    <InputNumber inputClass="w-20" v-model="values.minVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0"
+                                 :max="10000" :step="1"/>
                 </Input>
                 <Input label="Maximum value:">
-                    <InputNumber inputClass="w-20" v-model="values.maxVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="10000" :step="1"/>
+                    <InputNumber inputClass="w-20" v-model="values.maxVal" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0"
+                                 :max="10000" :step="1"/>
                 </Input>
             </template>
             <template v-else>
@@ -89,7 +93,7 @@ const algorithms = [
         value: SortAlgorithm.BUBBLE,
     }, {
         label: 'Quicksort',
-        value: SortAlgorithm.QUICKSORT
+        value: SortAlgorithm.QUICKSORT,
     }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
@@ -137,6 +141,7 @@ function reset() {
     values.customInput = ''
     emit('reset')
 }
+
 reset()
 
 function submit() {

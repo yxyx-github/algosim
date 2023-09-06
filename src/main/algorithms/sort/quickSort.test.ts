@@ -3,7 +3,7 @@ import type { SortSimulation } from '@/main/algorithms/sort/types'
 import { QuickSort } from '@/main/algorithms/sort/quickSort'
 import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
 
-describe('quickSort', () => {
+describe('QuickSort', () => {
     const mockTracker: TrackableProgress = {
         init: (overall: number) => {},
         track: (current: number, overall?: number) => {},
