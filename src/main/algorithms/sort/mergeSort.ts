@@ -3,9 +3,9 @@ import type {
     SortAlgorithmImplementation,
     SortSimulation,
     SortSimulationStep
-} from "@/main/algorithms/sort/types";
-import type {TrackableProgress} from "@/main/progressTracker/types";
-import {ProtocolBuilder} from "@/main/simulation/protocolBuilder";
+} from '@/main/algorithms/sort/types'
+import type { TrackableProgress } from '@/main/progressTracker/types'
+import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 
 export class MergeSort implements SortAlgorithmImplementation {
 
@@ -16,7 +16,7 @@ export class MergeSort implements SortAlgorithmImplementation {
             sortedValues: numbers,
             highlightedIndices: [],
         })
-        this.mergeSort(numbers, 0, numbers.length-1, pB, progressTracker)
+        this.mergeSort(numbers, 0, numbers.length - 1, pB, progressTracker)
         pB.step({
             sortedValues: numbers,
             highlightedIndices: [],
@@ -33,18 +33,18 @@ export class MergeSort implements SortAlgorithmImplementation {
             progressTracker?.trackNext()
             return
         }
-        const mid: number = Math.floor((right-left)/ 2) + left
+        const mid: number = Math.floor((right - left) / 2) + left
 
         this.mergeSort(numbers, left, mid, pB, progressTracker)
-        this.mergeSort(numbers, mid+1, right, pB, progressTracker)
+        this.mergeSort(numbers, mid + 1, right, pB, progressTracker)
         this.merge(numbers, left, right, mid, pB)
     }
 
     private merge(numbers: number[], left: number, right: number, mid: number, pB: ProtocolBuilder<SortSimulationStep>) {
         let i: number = left;
-        let j: number = mid+1;
+        let j: number = mid + 1;
         let k: number = 0;
-        let res: number[] = new Array(right-left+1)
+        let res: number[] = new Array(right - left + 1)
 
         while (i <= mid && j <= right) {
             pB.step({
@@ -84,12 +84,12 @@ export class MergeSort implements SortAlgorithmImplementation {
             res[k++] = numbers[j++];
         }
 
-        for (let l=0; l<res.length; l++) {
-            numbers[left+l] = res[l]
+        for (let l = 0; l < res.length; l++) {
+            numbers[left + l] = res[l]
             pB.step({
                 sortedValues: numbers,
                 highlightedIndices: [
-                    { type: 'current', index: l+left },
+                    { type: 'current', index: l + left },
                 ] as HighlightedIndex[],
             })
         }
