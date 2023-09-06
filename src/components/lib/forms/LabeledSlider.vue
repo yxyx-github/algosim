@@ -1,10 +1,16 @@
 <template>
-    <FColumn class="pb-2 h-[3.125rem]" justifyItems="around" :gap="0" :grow="true">
-        <label class="text-center">
+    <FColumn class="pb-2" justifyItems="center" :gap="0" :grow="true">
+        <label class="text-center pb-2">
             <slot name="label">{{ props.label ?? '' }}</slot>
         </label>
         <slot/>
     </FColumn>
+<!--    <FColumn class="pb-2 h-[3.125rem]" justifyItems="around" :gap="0" :grow="true">
+        <label class="text-center">
+            <slot name="label">{{ props.label ?? '' }}</slot>
+        </label>
+        <slot/>
+    </FColumn>-->
 </template>
 
 <script setup lang="ts">
