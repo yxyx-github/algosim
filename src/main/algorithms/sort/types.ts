@@ -17,7 +17,7 @@ export interface HighlightedIndex {
 export enum SortAlgorithm {
     BUBBLE,
     SELECTION,
-    QUICKSORT
+    QUICKSORT,
 }
 
 export enum SortInputMode {

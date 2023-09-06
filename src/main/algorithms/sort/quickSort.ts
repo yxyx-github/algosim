@@ -3,9 +3,9 @@ import type {
     SortAlgorithmImplementation,
     SortSimulation,
     SortSimulationStep
-} from "@/main/algorithms/sort/types";
-import {ProtocolBuilder} from "@/main/simulation/protocolBuilder";
-import type {TrackableProgress} from "@/main/progressTracker/types";
+} from '@/main/algorithms/sort/types'
+import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
+import type { TrackableProgress } from '@/main/progressTracker/types'
 
 
 export class QuickSort implements SortAlgorithmImplementation {
@@ -44,9 +44,9 @@ export class QuickSort implements SortAlgorithmImplementation {
             pB.step({
                 sortedValues: numbers,
                 highlightedIndices: [
-                    {type: 'current', index: end},
-                    {type: 'current', index: j},
-                    ...((i + 1) === j ? [] : [{type: 'threshold', index: i + 1}]),
+                    { type: 'current', index: end },
+                    { type: 'current', index: j },
+                    ...((i + 1) === j ? [] : [{ type: 'threshold', index: i + 1 }]),
                 ] as HighlightedIndex[],
             })
 
@@ -58,8 +58,8 @@ export class QuickSort implements SortAlgorithmImplementation {
                 pB.step({
                     sortedValues: numbers,
                     highlightedIndices: [
-                        {type: 'current', index: j},
-                        ...((i) === j ? [] : [{type: 'current', index: i}]),
+                        { type: 'current', index: j },
+                        ...((i) === j ? [] : [{ type: 'current', index: i }]),
                     ] as HighlightedIndex[],
                 })
             }
@@ -68,8 +68,8 @@ export class QuickSort implements SortAlgorithmImplementation {
         pB.step({
             sortedValues: numbers,
             highlightedIndices: [
-                {type: 'current', index: end},
-                ...((i + 1) === end ? [] : [{type: 'current', index: i + 1}]),
+                { type: 'current', index: end },
+                ...((i + 1) === end ? [] : [{ type: 'current', index: i + 1 }]),
             ] as HighlightedIndex[],
         })
 
@@ -80,14 +80,14 @@ export class QuickSort implements SortAlgorithmImplementation {
         pB.step({
             sortedValues: numbers,
             highlightedIndices: [
-                {type: 'current', index: end},
-                ...((i + 1) === end ? [] : [{type: 'current', index: i + 1}]),
+                { type: 'current', index: end },
+                ...((i + 1) === end ? [] : [{ type: 'current', index: i + 1 }]),
             ] as HighlightedIndex[],
         })
         return i + 1;
     }
 
     description(): string {
-    return 'Quicksort description'
+        return 'Quicksort description'
     }
 }

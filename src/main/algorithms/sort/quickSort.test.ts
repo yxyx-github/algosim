@@ -1,7 +1,7 @@
-import {describe, expect, test, vi} from "vitest";
-import type {SortSimulation} from "@/main/algorithms/sort/types";
-import {QuickSort} from "@/main/algorithms/sort/quickSort";
-import {ProgressHandler, TrackableProgress} from "@/main/progressTracker/types";
+import { describe, expect, test, vi } from "vitest";
+import type { SortSimulation } from '@/main/algorithms/sort/types'
+import { QuickSort } from '@/main/algorithms/sort/quickSort'
+import { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
 
 
 describe('quickSort', () => {
@@ -87,7 +87,7 @@ describe('quickSort', () => {
                 { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: [{ type: 'current', index: 8 }] },
 
 
-                { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: []},
+                { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: [] },
             ]
         }
 
@@ -170,10 +170,9 @@ describe('quickSort', () => {
                 { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: [{ type: 'current', index: 8 }] },
 
 
-                { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: []},
+                { sortedValues: [1, 2, 2, 2, 3, 4, 4, 7, 10, 12], highlightedIndices: [] },
             ]
         }
-
 
 
         const spyInit = vi.spyOn(mockTracker, 'init')
@@ -187,6 +186,8 @@ describe('quickSort', () => {
         expect(spyInit).toHaveBeenCalledOnce()
         expect(spyInit).toHaveBeenCalledWith(10)
         expect(spyTrack).toHaveBeenCalledTimes(0)
-        setTimeout(() => {spyTrackNext.toHaveBeenCalledTimes(10)}, 100)
+        setTimeout(() => {
+            spyTrackNext.toHaveBeenCalledTimes(10)
+        }, 100)
     })
 })
