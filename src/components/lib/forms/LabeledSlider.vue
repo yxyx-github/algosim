@@ -1,7 +1,9 @@
 <template>
-    <FColumn :gap="1">
-        <label><slot name="label">{{ props.label ?? '' }}</slot></label>
-        <slot name="default"/>
+    <FColumn class="pb-2" justifyItems="around" :gap="0" :grow="true">
+        <label class="text-center">
+            <slot name="label">{{ props.label ?? '' }}</slot>
+        </label>
+        <slot/>
     </FColumn>
 </template>
 

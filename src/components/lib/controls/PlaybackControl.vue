@@ -10,10 +10,9 @@
                 <Button @click="toBegin" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
                 <Button @click="backward" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
             </ButtonGroup>
-            <FColumn class="mb-2" justifyItems="around" :gap="0" :grow="true">
-                <div class="text-center">{{ labelText }}</div>
+            <LabeledSlider :label="labelText">
                 <Slider :min="props.min" :max="props.max" v-model="value"/>
-            </FColumn>
+            </LabeledSlider>
             <ButtonGroup>
                 <Button @click="forward" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
                 <Button @click="toEnd" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
@@ -30,6 +29,7 @@ import Slider from 'primevue/slider'
 import { computed, reactive } from 'vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
+import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 
