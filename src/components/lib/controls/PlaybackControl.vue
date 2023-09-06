@@ -3,7 +3,7 @@
         <ButtonGroup>
             <Button @click="play" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
             <Button @click="stop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
-            <Button @click="$refs.timeoutLengthSlider.toggle($event)" icon="pi pi-clock" aria-label="Delay" v-tooltip.top="'Delay'"/>
+            <Button @click="($refs.timeoutLengthSlider as any).toggle($event)" icon="pi pi-clock" aria-label="Delay" v-tooltip.top="'Delay'"/>
         </ButtonGroup>
 
         <FRow :grow="true" :gap="3">
