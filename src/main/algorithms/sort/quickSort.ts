@@ -7,7 +7,6 @@ import type {
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 
-
 export class QuickSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
