@@ -1,6 +1,6 @@
 import {describe, expect, test, vi} from "vitest";
-import {ProgressHandler, TrackableProgress} from "@/main/progressTracker/types";
-import {SortSimulation} from "@/main/algorithms/sort/types";
+import type {ProgressHandler, TrackableProgress} from "@/main/progressTracker/types";
+import type {SortSimulation} from "@/main/algorithms/sort/types";
 import {MergeSort} from "@/main/algorithms/sort/mergeSort";
 
 describe('SelectionSort', () => {
