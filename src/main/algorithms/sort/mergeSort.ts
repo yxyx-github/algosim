@@ -1,4 +1,9 @@
-import type {SortAlgorithmImplementation, SortSimulation, SortSimulationStep} from "@/main/algorithms/sort/types";
+import type {
+    HighlightedIndex,
+    SortAlgorithmImplementation,
+    SortSimulation,
+    SortSimulationStep
+} from "@/main/algorithms/sort/types";
 import type {TrackableProgress} from "@/main/progressTracker/types";
 import {ProtocolBuilder} from "@/main/simulation/protocolBuilder";
 
@@ -11,7 +16,7 @@ export class MergeSort implements SortAlgorithmImplementation {
             sortedValues: numbers,
             highlightedIndices: [],
         })
-        this.mergeSort(numbers, numbers.length, pB, progressTracker)
+        this.mergeSort(numbers, 0, numbers.length-1, pB, progressTracker)
         pB.step({
             sortedValues: numbers,
             highlightedIndices: [],
@@ -23,46 +28,70 @@ export class MergeSort implements SortAlgorithmImplementation {
         return 'Mergesort description'
     }
 
-    private mergeSort(numbers: number[], len: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
-        if (len < 2) {
+    private mergeSort(numbers: number[], left: number, right: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
+        if (left >= right) {
             progressTracker?.trackNext()
             return
         }
-        const mid: number = Math.floor(len / 2)
-        let l: number[] = new Array(mid)
-        let r: number[] = new Array(len - mid)
+        const mid: number = Math.floor((right-left)/ 2) + left
 
-        for (let i = 0; i < mid; i++) {
-            l[i] = numbers[i]
-        }
-
-        for (let i = mid; i < len; i++) {
-            r[i - mid] = numbers[i]
-        }
-
-        this.mergeSort(l, mid, pB, progressTracker)
-        this.mergeSort(r, len - mid, pB, progressTracker)
-        this.merge(numbers, l, r, mid, len - mid)
+        this.mergeSort(numbers, left, mid, pB, progressTracker)
+        this.mergeSort(numbers, mid+1, right, pB, progressTracker)
+        this.merge(numbers, left, right, mid, pB)
     }
 
-    private merge(numbers: number[], l: number[], r: number[], left: number, right: number) {
-        let i: number = 0;
-        let j: number = 0;
+    private merge(numbers: number[], left: number, right: number, mid: number, pB: ProtocolBuilder<SortSimulationStep>) {
+        let i: number = left;
+        let j: number = mid+1;
         let k: number = 0;
+        let res: number[] = new Array(right-left+1)
 
-        while (i < left && j < right) {
-            if (l[i] <= r[j]) {
-                numbers[k++] = l[i++];
-            }
-            else {
-                numbers[k++] = r[j++];
-            }
+        while (i <= mid && j <= right) {
+            pB.step({
+                sortedValues: numbers,
+                highlightedIndices: [
+                    { type: 'current', index: i },
+                    { type: 'current', index: j },
+                    ...(i === left ? [] : [{ type: 'threshold', index: left }]),
+                    ...(i === mid || left === mid ? [] : [{ type: 'threshold', index: mid }]),
+                    ...(j === right ? [] : [{ type: 'threshold', index: right }]),
+                ] as HighlightedIndex[],
+            })
+            res[k++] = numbers[numbers[i] <= numbers[j] ? i++ : j++];
         }
-        while (i < left) {
-            numbers[k++] = l[i++];
+        while (i <= mid) {
+            pB.step({
+                sortedValues: numbers,
+                highlightedIndices: [
+                    { type: 'current', index: i },
+                    ...(i === left ? [] : [{ type: 'threshold', index: left }]),
+                    ...(i === mid || left === mid ? [] : [{ type: 'threshold', index: mid }]),
+                    { type: 'threshold', index: right },
+                ] as HighlightedIndex[],
+            })
+            res[k++] = numbers[i++];
         }
-        while (j < right) {
-            numbers[k++] = r[j++];
+        while (j <= right) {
+            pB.step({
+                sortedValues: numbers,
+                highlightedIndices: [
+                    { type: 'current', index: j },
+                    { type: 'threshold', index: left },
+                    ...(mid === left ? [] : [{ type: 'threshold', index: mid }]),
+                    ...(j === right ? [] : [{ type: 'threshold', index: right }]),
+                ] as HighlightedIndex[],
+            })
+            res[k++] = numbers[j++];
+        }
+
+        for (let l=0; l<res.length; l++) {
+            numbers[left+l] = res[l]
+            pB.step({
+                sortedValues: numbers,
+                highlightedIndices: [
+                    { type: 'current', index: l+left },
+                ] as HighlightedIndex[],
+            })
         }
     }
 }
