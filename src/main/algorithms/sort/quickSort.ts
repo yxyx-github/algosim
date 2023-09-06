@@ -6,7 +6,6 @@ import type {
 } from '@/main/algorithms/sort/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type { TrackableProgress } from '@/main/progressTracker/types'
-import * as console from "console";
 
 
 export class QuickSort implements SortAlgorithmImplementation {
