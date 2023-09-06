@@ -1,6 +1,5 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
-import type { TrackableProgress } from '@/main/progressTracker/types'
-import type { ProgressProvider, ProgressTrackerConfig } from '@/main/progressTracker/types'
+import type {TrackableProgress, ProgressProvider, ProgressTrackerConfig} from '@/main/progressTracker/types'
 
 export type HighlightType = 'current' | 'threshold'
 export type HighlightColor = HighlightType | 'neutral'
@@ -17,6 +16,7 @@ export interface HighlightedIndex {
 export enum SortAlgorithm {
     BUBBLE,
     SELECTION,
+    MERGESORT,
 }
 
 export enum SortInputMode {

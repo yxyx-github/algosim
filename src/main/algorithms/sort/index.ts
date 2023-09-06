@@ -1,12 +1,15 @@
-import { SortAlgorithm } from '@/main/algorithms/sort/types'
-import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
-import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
+import {SortAlgorithm} from '@/main/algorithms/sort/types'
+import {BubbleSort} from '@/main/algorithms/sort/bubbleSort'
+import {SelectionSort} from '@/main/algorithms/sort/selectionSort'
+import {MergeSort} from "@/main/algorithms/sort/mergeSort";
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
         switch (algorithm) {
             case SortAlgorithm.SELECTION:
                 return new SelectionSort()
+            case SortAlgorithm.MERGESORT:
+                return new MergeSort()
             default:
             case SortAlgorithm.BUBBLE:
                 return new BubbleSort()
