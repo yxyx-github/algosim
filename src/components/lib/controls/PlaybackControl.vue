@@ -57,12 +57,10 @@ const value = computed({
 
 const playback = reactive<{
     status: PlaybackStatus
-    animationFrame: ReturnType<typeof requestAnimationFrame> | null
-    previousTimeStamp: DOMHighResTimeStamp | null,
+    timeout: ReturnType<typeof setTimeout> | null
 }>({
     status: 'stopped',
-    animationFrame: null,
-    previousTimeStamp: null,
+    timeout: null,
 })
 
 const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' : 'Play')
@@ -70,53 +68,34 @@ const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' :
 function play() {
     if (playback.status === 'running') {
         playback.status = 'paused'
+        playback.timeout = null
     } else {
         if (playback.status === 'stopped' && value.value === props.max) {
             value.value = props.min
         }
         playback.status = 'running'
-        startAnimation()
+        initTimeout()
     }
 }
 
 function stop() {
     playback.status = 'stopped'
     value.value = props.min
-    stopAnimation()
 }
 
-function startAnimation() {
-    if (playback.animationFrame === null) {
-        playback.animationFrame = requestAnimationFrame(continuePlayback)
-    }
-}
-
-function stopAnimation() {
-    cancelAnimationFrame(playback.animationFrame)
-    playback.animationFrame = null
-    playback.previousTimeStamp = null
-}
-
-function nextAnimationStep() {
-    if (playback.status === 'running') {
-        playback.animationFrame = requestAnimationFrame(continuePlayback)
-    } else {
-        stopAnimation()
-    }
-}
-
-function continuePlayback(timeStamp: DOMHighResTimeStamp) {
-    if (value.value < props.max) {
-        if (playback.previousTimeStamp === null) {
-            playback.previousTimeStamp = timeStamp
-        } else if (timeStamp - playback.previousTimeStamp >= 500) {
-            value.value++
-            playback.previousTimeStamp = timeStamp
-        }
-        nextAnimationStep()
+function continuePlayback() {
+    playback.timeout = null
+    if (playback.status === 'running' && value.value < props.max) {
+        value.value++
+        initTimeout()
     } else {
         playback.status = 'stopped'
-        stopAnimation()
+    }
+}
+
+function initTimeout() {
+    if (playback.timeout === null) {
+        playback.timeout = setTimeout(continuePlayback, 500)
     }
 }
 
