@@ -6,6 +6,7 @@ import type {
 } from '@/main/algorithms/sort/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type { TrackableProgress } from '@/main/progressTracker/types'
+import * as console from "console";
 
 
 export class QuickSort implements SortAlgorithmImplementation {
@@ -27,16 +28,19 @@ export class QuickSort implements SortAlgorithmImplementation {
 
     private quickSort(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
         if (begin >= end) {
-            progressTracker?.trackNext()
+            if (begin === end) {
+                progressTracker?.trackNext()
+            }
             return
         }
-        let partitionIndex = this.partition(numbers, begin, end, pB);
+        let partitionIndex = this.partition(numbers, begin, end, pB, progressTracker);
 
         this.quickSort(numbers, begin, partitionIndex - 1, pB, progressTracker);
         this.quickSort(numbers, partitionIndex + 1, end, pB, progressTracker);
     }
 
-    private partition(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>) {
+    private partition(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
+        progressTracker?.trackNext()
         let pivot: number = numbers[end];
         let i = (begin - 1);
 
