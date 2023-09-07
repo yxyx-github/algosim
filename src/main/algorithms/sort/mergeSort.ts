@@ -90,6 +90,8 @@ export class MergeSort implements SortAlgorithmImplementation {
                 sortedValues: numbers,
                 highlightedIndices: [
                     { type: 'current', index: l + left },
+                    ...(l + left === right ? [] : [{ type: 'threshold', index: right }]),
+                    ...(l + left === left ? [] : [{ type: 'threshold', index: left }]),
                 ] as HighlightedIndex[],
             })
         }
