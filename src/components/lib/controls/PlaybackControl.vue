@@ -3,6 +3,7 @@
         <ButtonGroup>
             <Button @click="play" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
             <Button @click="stop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
+            <Button @click="($refs.timeoutLengthSlider as any).toggle($event)" icon="pi pi-clock" aria-label="Delay" v-tooltip.top="'Delay'"/>
         </ButtonGroup>
 
         <FRow :grow="true" :gap="3">
@@ -10,26 +11,32 @@
                 <Button @click="toBegin" icon="pi pi-fast-backward" aria-label="Begin" v-tooltip.top="'Begin'"/>
                 <Button @click="backward" icon="pi pi-step-backward" aria-label="Backward" v-tooltip.top="'Backward'"/>
             </ButtonGroup>
-            <FColumn class="mb-2" justifyItems="around" :gap="0" :grow="true">
-                <div class="text-center">{{ labelText }}</div>
+            <LabeledSlider :label="labelText" class="self-center">
                 <Slider :min="props.min" :max="props.max" v-model="value"/>
-            </FColumn>
+            </LabeledSlider>
             <ButtonGroup>
                 <Button @click="forward" icon="pi pi-step-forward" aria-label="Forward" v-tooltip.top="'Forward'"/>
                 <Button @click="toEnd" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
             </ButtonGroup>
         </FRow>
+        <OverlayPanel ref="timeoutLengthSlider" class="w-96 max-w-full">
+            <LabeledSlider class="" :label="`Playback delay: ${playback.timeoutLength} ms`">
+                <Slider :min="0" :max="1000" v-model="playback.timeoutLength"/>
+            </LabeledSlider>
+        </OverlayPanel>
     </ButtonBar>
 </template>
 
 <script setup lang="ts">
-import FColumn from '@/components/lib/layout/FColumn.vue'
 import FRow from '@/components/lib/layout/FRow.vue'
 import Button from 'primevue/button'
 import Slider from 'primevue/slider'
 import { computed, reactive } from 'vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
+import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
+import type { MenuItem } from 'primevue/menuitem'
+import OverlayPanel from 'primevue/overlaypanel'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 
@@ -48,6 +55,14 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue'])
 
+const settingsMenuItems: MenuItem[] = [
+    {
+        label: 'Playback Speed',
+        icon: 'pi pi-clock',
+        command: () => {},
+    }
+]
+
 const labelText = computed(() => props.label(value.value))
 
 const value = computed({
@@ -58,9 +73,11 @@ const value = computed({
 const playback = reactive<{
     status: PlaybackStatus
     timeout: ReturnType<typeof setTimeout> | null
+    timeoutLength: number
 }>({
     status: 'stopped',
     timeout: null,
+    timeoutLength: 100,
 })
 
 const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' : 'Play')
@@ -95,7 +112,7 @@ function continuePlayback() {
 
 function initTimeout() {
     if (playback.timeout === null) {
-        playback.timeout = setTimeout(continuePlayback, 500)
+        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
     }
 }
 
