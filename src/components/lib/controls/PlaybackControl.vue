@@ -36,7 +36,7 @@ import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
 import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
 import OverlayPanel from 'primevue/overlaypanel'
-import { useAnimationInterval } from '@/composables/animationInterval'
+import { useAnimationInterval } from '@/composables/animations/animationInterval'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 
@@ -74,7 +74,13 @@ const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' :
 
 const animationInterval = useAnimationInterval(
     () => value.value++,
-    () => value.value < props.max,
+    () => {
+        const next = value.value < props.max
+        if (!next) {
+            playback.status = 'stopped'
+        }
+        return next
+    },
     () => playback.timeoutLength,
 )
 
