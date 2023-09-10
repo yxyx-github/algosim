@@ -64,20 +64,22 @@ const value = computed({
 const playback = reactive<{
     status: PlaybackStatus
     timeout: ReturnType<typeof setTimeout> | null
-    // animationFrame: ReturnType<typeof requestAnimationFrame> | null
-    // previousTimeStamp: DOMHighResTimeStamp | null,
+    animationFrame: ReturnType<typeof requestAnimationFrame> | null
+    previousTimeStamp: DOMHighResTimeStamp | null,
     timeoutLength: number
 }>({
     status: 'stopped',
     timeout: null,
-    // animationFrame: null,
-    // previousTimeStamp: null,
+    animationFrame: null,
+    previousTimeStamp: null,
     timeoutLength: 100,
 })
 
 const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' : 'Play')
 
 function play() {
+    console.log(import.meta.env.VITE_PLAYBACK_IMPLEMENTATION)
+
     if (playback.status === 'running') {
         playback.status = 'paused'
         stopAnimation()
@@ -97,44 +99,52 @@ function stop() {
 }
 
 function startAnimation() {
-    /*if (playback.animationFrame === null) {
-        playback.animationFrame = requestAnimationFrame(continuePlayback)
-    }*/
-
-    if (playback.timeout === null) {
-        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
+    if (import.meta.env.VITE_PLAYBACK_IMPLEMENTATION === 'animation-frame') {
+        if (playback.animationFrame === null) {
+            playback.animationFrame = requestAnimationFrame(continuePlayback)
+        }
+    } else {
+        if (playback.timeout === null) {
+            playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
+        }
     }
 }
 
 function stopAnimation() {
-    /*if (playback.animationFrame !== null) {
-        cancelAnimationFrame(playback.animationFrame)
-    }
-    playback.animationFrame = null
-    playback.previousTimeStamp = null*/
-
-    if (playback.timeout !== null) {
-        clearTimeout(playback.timeout)
-        playback.timeout = null
+    if (import.meta.env.VITE_PLAYBACK_IMPLEMENTATION === 'animation-frame') {
+        if (playback.animationFrame !== null) {
+            cancelAnimationFrame(playback.animationFrame)
+        }
+        playback.animationFrame = null
+        playback.previousTimeStamp = null
+    } else {
+        if (playback.timeout !== null) {
+            clearTimeout(playback.timeout)
+            playback.timeout = null
+        }
     }
 }
 
 function nextAnimationStep() {
-    // playback.animationFrame = requestAnimationFrame(continuePlayback)
-
-    playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
+    if (import.meta.env.VITE_PLAYBACK_IMPLEMENTATION === 'animation-frame') {
+        playback.animationFrame = requestAnimationFrame(continuePlayback)
+    } else {
+        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
+    }
 }
 
-function continuePlayback(timeStamp?: DOMHighResTimeStamp) {
+function continuePlayback(timeStamp: DOMHighResTimeStamp = 0) {
     if (value.value < props.max) {
-        /*if (playback.previousTimeStamp === null) {
-            playback.previousTimeStamp = timeStamp
-        } else if (timeStamp - playback.previousTimeStamp >= playback.timeoutLength) {
+        if (import.meta.env.VITE_PLAYBACK_IMPLEMENTATION === 'animation-frame') {
+            if (playback.previousTimeStamp === null) {
+                playback.previousTimeStamp = timeStamp
+            } else if (timeStamp - playback.previousTimeStamp >= playback.timeoutLength) {
+                value.value++
+                playback.previousTimeStamp = timeStamp
+            }
+        } else {
             value.value++
-            playback.previousTimeStamp = timeStamp
-        }*/
-
-        value.value++
+        }
 
         nextAnimationStep()
     } else {
