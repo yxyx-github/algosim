@@ -63,13 +63,15 @@ const value = computed({
 
 const playback = reactive<{
     status: PlaybackStatus
-    animationFrame: ReturnType<typeof requestAnimationFrame> | null
-    previousTimeStamp: DOMHighResTimeStamp | null,
+    timeout: ReturnType<typeof setTimeout> | null
+    // animationFrame: ReturnType<typeof requestAnimationFrame> | null
+    // previousTimeStamp: DOMHighResTimeStamp | null,
     timeoutLength: number
 }>({
     status: 'stopped',
-    animationFrame: null,
-    previousTimeStamp: null,
+    timeout: null,
+    // animationFrame: null,
+    // previousTimeStamp: null,
     timeoutLength: 100,
 })
 
@@ -95,31 +97,45 @@ function stop() {
 }
 
 function startAnimation() {
-    if (playback.animationFrame === null) {
+    /*if (playback.animationFrame === null) {
         playback.animationFrame = requestAnimationFrame(continuePlayback)
+    }*/
+
+    if (playback.timeout === null) {
+        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
     }
 }
 
 function stopAnimation() {
-    if (playback.animationFrame !== null) {
+    /*if (playback.animationFrame !== null) {
         cancelAnimationFrame(playback.animationFrame)
     }
     playback.animationFrame = null
-    playback.previousTimeStamp = null
+    playback.previousTimeStamp = null*/
+
+    if (playback.timeout !== null) {
+        clearTimeout(playback.timeout)
+        playback.timeout = null
+    }
 }
 
 function nextAnimationStep() {
-    playback.animationFrame = requestAnimationFrame(continuePlayback)
+    // playback.animationFrame = requestAnimationFrame(continuePlayback)
+
+    playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
 }
 
-function continuePlayback(timeStamp: DOMHighResTimeStamp) {
+function continuePlayback(timeStamp?: DOMHighResTimeStamp) {
     if (value.value < props.max) {
-        if (playback.previousTimeStamp === null) {
+        /*if (playback.previousTimeStamp === null) {
             playback.previousTimeStamp = timeStamp
         } else if (timeStamp - playback.previousTimeStamp >= playback.timeoutLength) {
             value.value++
             playback.previousTimeStamp = timeStamp
-        }
+        }*/
+
+        value.value++
+
         nextAnimationStep()
     } else {
         playback.status = 'stopped'
