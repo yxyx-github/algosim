@@ -21,7 +21,7 @@
         </FRow>
         <OverlayPanel ref="timeoutLengthSlider" class="w-96 max-w-full">
             <LabeledSlider class="" :label="`Playback delay: ${playback.timeoutLength} ms`">
-                <Slider :min="0" :max="1000" v-model="playback.timeoutLength"/>
+                <Slider :min="0" :max="500" v-model="playback.timeoutLength"/>
             </LabeledSlider>
         </OverlayPanel>
     </ButtonBar>
@@ -35,7 +35,6 @@ import { computed, reactive } from 'vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
 import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
-import type { MenuItem } from 'primevue/menuitem'
 import OverlayPanel from 'primevue/overlaypanel'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
@@ -55,14 +54,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue'])
 
-const settingsMenuItems: MenuItem[] = [
-    {
-        label: 'Playback Speed',
-        icon: 'pi pi-clock',
-        command: () => {},
-    }
-]
-
 const labelText = computed(() => props.label(value.value))
 
 const value = computed({
@@ -72,11 +63,13 @@ const value = computed({
 
 const playback = reactive<{
     status: PlaybackStatus
-    timeout: ReturnType<typeof setTimeout> | null
+    animationFrame: ReturnType<typeof requestAnimationFrame> | null
+    previousTimeStamp: DOMHighResTimeStamp | null,
     timeoutLength: number
 }>({
     status: 'stopped',
-    timeout: null,
+    animationFrame: null,
+    previousTimeStamp: null,
     timeoutLength: 100,
 })
 
@@ -85,34 +78,52 @@ const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' :
 function play() {
     if (playback.status === 'running') {
         playback.status = 'paused'
-        playback.timeout = null
+        stopAnimation()
     } else {
         if (playback.status === 'stopped' && value.value === props.max) {
             value.value = props.min
         }
         playback.status = 'running'
-        initTimeout()
+        startAnimation()
     }
 }
 
 function stop() {
     playback.status = 'stopped'
     value.value = props.min
+    stopAnimation()
 }
 
-function continuePlayback() {
-    playback.timeout = null
-    if (playback.status === 'running' && value.value < props.max) {
-        value.value++
-        initTimeout()
-    } else {
-        playback.status = 'stopped'
+function startAnimation() {
+    if (playback.animationFrame === null) {
+        playback.animationFrame = requestAnimationFrame(continuePlayback)
     }
 }
 
-function initTimeout() {
-    if (playback.timeout === null) {
-        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
+function stopAnimation() {
+    if (playback.animationFrame !== null) {
+        cancelAnimationFrame(playback.animationFrame)
+    }
+    playback.animationFrame = null
+    playback.previousTimeStamp = null
+}
+
+function nextAnimationStep() {
+    playback.animationFrame = requestAnimationFrame(continuePlayback)
+}
+
+function continuePlayback(timeStamp: DOMHighResTimeStamp) {
+    if (value.value < props.max) {
+        if (playback.previousTimeStamp === null) {
+            playback.previousTimeStamp = timeStamp
+        } else if (timeStamp - playback.previousTimeStamp >= playback.timeoutLength) {
+            value.value++
+            playback.previousTimeStamp = timeStamp
+        }
+        nextAnimationStep()
+    } else {
+        playback.status = 'stopped'
+        stopAnimation()
     }
 }
 
