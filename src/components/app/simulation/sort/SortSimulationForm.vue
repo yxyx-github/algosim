@@ -61,8 +61,8 @@ import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 import { simulationFromStream } from '@/main/simulation/stream'
 
 const emit = defineEmits<{
-    (event: 'submit', simulation: SortSimulation): void
-    (event: 'reset'): void
+    submit: [simulation: SortSimulation],
+    reset: [],
 }>()
 
 const values = reactive<{
