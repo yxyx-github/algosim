@@ -31,7 +31,7 @@ const currentSimulationStep: ComputedRef<S | null> = computed(() => props.simula
 
 const fullScreen = ref<boolean>(false)
 
-const fullScreenButtonLabel = computed(() => fullScreen ? 'Minimize' : 'Maximize')
+const fullScreenButtonLabel = computed(() => fullScreen.value ? 'Minimize' : 'Maximize')
 
 function toggleFullScreen() {
     fullScreen.value = !fullScreen.value
