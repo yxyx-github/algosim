@@ -19,6 +19,7 @@
                 <Button @click="toEnd" icon="pi pi-fast-forward" aria-label="End" v-tooltip.top="'End'"/>
             </ButtonGroup>
         </FRow>
+        <slot/>
         <OverlayPanel ref="timeoutLengthSlider" class="w-96 max-w-full">
             <LabeledSlider class="" :label="`Playback delay: ${playback.timeoutLength} ms`">
                 <Slider :min="0" :max="500" v-model="playback.timeoutLength"/>
