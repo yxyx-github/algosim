@@ -5,18 +5,16 @@
     </FColumn>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="S extends SimulationStep">
 import FColumn from '@/components/lib/layout/FColumn.vue'
 import PlaybackControl from '@/components/lib/controls/PlaybackControl.vue'
 import type { ComputedRef } from 'vue'
 import { computed, ref } from 'vue'
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
 
-interface Props {
-    simulation: Simulation<SimulationStep>
-}
-
-const props = defineProps<Props>()
+const props = defineProps<{
+    simulation: Simulation<S>
+}>()
 
 const playbackValue = ref(1)
 
@@ -26,7 +24,7 @@ function createPlaybackLabel(value: number) {
     return `Step: ${value}/${numberOfSteps.value}`
 }
 
-const currentSimulationStep: ComputedRef<SimulationStep | null> = computed(() => props.simulation.steps[playbackValue.value - 1] ?? null)
+const currentSimulationStep: ComputedRef<S | null> = computed(() => props.simulation.steps[playbackValue.value - 1] ?? null)
 </script>
 
 <style scoped>
