@@ -85,8 +85,6 @@ const animationInterval = useAnimationInterval(
 )
 
 function onPlay() {
-    console.log(import.meta.env.VITE_PLAYBACK_IMPLEMENTATION)
-
     if (playback.status === 'running') {
         playback.status = 'paused'
         animationInterval.stop()
