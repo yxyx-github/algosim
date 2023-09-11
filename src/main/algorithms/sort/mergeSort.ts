@@ -24,8 +24,8 @@ export class MergeSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string {
-        return 'Mergesort description'
+    description(): string[] {
+        return ['Mergesort', 'description']
     }
 
     private mergeSort(numbers: number[], left: number, right: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
