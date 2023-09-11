@@ -35,7 +35,6 @@ function updateSimulation(sim: SortSimulation) {
 }
 
 function updateDescription(desc: string[]) {
-    console.log('update desc')
     description.value = desc
 }
 </script>

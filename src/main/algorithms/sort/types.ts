@@ -38,7 +38,7 @@ export type SortWorkerResponse =
 
 export interface SortAlgorithmImplementation {
     sort: (values: number[], progressTracker?: TrackableProgress) => SortSimulation,
-    description: () => string,
+    description: () => string[],
 }
 
 export interface SortSimulationStep extends SimulationStep {

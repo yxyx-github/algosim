@@ -79,8 +79,8 @@ const values = reactive<{
     customInput: '',
 })
 
-const algorithmDescription: ComputedRef<string> = computed(() => (values.algorithm === undefined ? '' : SortFactory.create(values.algorithm).description()))
-watchEffect(() => emit('updateDescription', [algorithmDescription.value]))
+const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SortFactory.create(values.algorithm).description()))
+watchEffect(() => emit('updateDescription', algorithmDescription.value))
 
 const algorithms = [
     {

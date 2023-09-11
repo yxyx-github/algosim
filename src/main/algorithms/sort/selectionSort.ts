@@ -49,7 +49,7 @@ export class SelectionSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string {
-        return 'Selectionsort description'
+    description(): string[] {
+        return ['Selectionsort', 'description']
     }
 }
