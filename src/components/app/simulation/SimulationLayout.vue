@@ -8,9 +8,7 @@
                 <slot name="simulation"/>
             </FColumn>
         </FContainer>
-        <FColumn :gap="0">
-            <slot name="description"/>
-        </FColumn>
+        <slot name="description"/>
     </FColumn>
 </template>
 

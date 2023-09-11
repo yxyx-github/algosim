@@ -32,9 +32,6 @@
             <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval" :label="`Transfer: ${progress.transfer.current}/${progress.transfer.overall}`"/>
         </template>
     </Form>
-    <div>
-        {{ algorithmDescription }}
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -43,7 +40,7 @@ import type { SortWorkerResponse } from '@/main/algorithms/sort/types'
 import type { SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import Dropdown from 'primevue/dropdown'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 import type { ComputedRef } from 'vue'
 import Form from '@/components/lib/forms/Form.vue'
@@ -63,6 +60,7 @@ import { simulationFromStream } from '@/main/simulation/stream'
 const emit = defineEmits<{
     submit: [simulation: SortSimulation],
     reset: [],
+    updateDescription: [description: string[]],
 }>()
 
 const values = reactive<{
@@ -82,6 +80,7 @@ const values = reactive<{
 })
 
 const algorithmDescription: ComputedRef<string> = computed(() => (values.algorithm === undefined ? '' : SortFactory.create(values.algorithm).description()))
+watchEffect(() => emit('updateDescription', [algorithmDescription.value]))
 
 const algorithms = [
     {
