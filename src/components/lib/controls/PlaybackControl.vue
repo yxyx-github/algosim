@@ -1,8 +1,8 @@
 <template>
     <ButtonBar>
         <ButtonGroup>
-            <Button @click="play" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
-            <Button @click="stop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
+            <Button @click="onPlay" :icon="`pi pi-${playback.status === 'running' ? 'pause' : 'play'}`" :aria-label="playButtonLabel" v-tooltip.top="playButtonLabel"/>
+            <Button @click="onStop" icon="pi pi-stop" aria-label="Stop" v-tooltip.top="'Stop'"/>
             <Button @click="($refs.timeoutLengthSlider as any).toggle($event)" icon="pi pi-clock" aria-label="Delay" v-tooltip.top="'Delay'"/>
         </ButtonGroup>
 
@@ -21,7 +21,7 @@
         </FRow>
         <OverlayPanel ref="timeoutLengthSlider" class="w-96 max-w-full">
             <LabeledSlider class="" :label="`Playback delay: ${playback.timeoutLength} ms`">
-                <Slider :min="0" :max="1000" v-model="playback.timeoutLength"/>
+                <Slider :min="0" :max="500" v-model="playback.timeoutLength"/>
             </LabeledSlider>
         </OverlayPanel>
     </ButtonBar>
@@ -35,8 +35,8 @@ import { computed, reactive } from 'vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import ButtonGroup from '@/components/lib/controls/ButtonGroup.vue'
 import LabeledSlider from '@/components/lib/forms/LabeledSlider.vue'
-import type { MenuItem } from 'primevue/menuitem'
 import OverlayPanel from 'primevue/overlaypanel'
+import { useAnimationInterval } from '@/composables/animations/animationInterval'
 
 type PlaybackStatus = 'stopped' | 'paused' | 'running'
 
@@ -55,14 +55,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue'])
 
-const settingsMenuItems: MenuItem[] = [
-    {
-        label: 'Playback Speed',
-        icon: 'pi pi-clock',
-        command: () => {},
-    }
-]
-
 const labelText = computed(() => props.label(value.value))
 
 const value = computed({
@@ -72,48 +64,43 @@ const value = computed({
 
 const playback = reactive<{
     status: PlaybackStatus
-    timeout: ReturnType<typeof setTimeout> | null
     timeoutLength: number
 }>({
     status: 'stopped',
-    timeout: null,
     timeoutLength: 100,
 })
 
 const playButtonLabel = computed(() => playback.status === 'running' ? 'Pause' : 'Play')
 
-function play() {
+const animationInterval = useAnimationInterval(
+    () => value.value++,
+    () => {
+        const next = value.value < props.max
+        if (!next) {
+            playback.status = 'stopped'
+        }
+        return next
+    },
+    () => playback.timeoutLength,
+)
+
+function onPlay() {
     if (playback.status === 'running') {
         playback.status = 'paused'
-        playback.timeout = null
+        animationInterval.stop()
     } else {
         if (playback.status === 'stopped' && value.value === props.max) {
             value.value = props.min
         }
         playback.status = 'running'
-        initTimeout()
+        animationInterval.start()
     }
 }
 
-function stop() {
+function onStop() {
     playback.status = 'stopped'
     value.value = props.min
-}
-
-function continuePlayback() {
-    playback.timeout = null
-    if (playback.status === 'running' && value.value < props.max) {
-        value.value++
-        initTimeout()
-    } else {
-        playback.status = 'stopped'
-    }
-}
-
-function initTimeout() {
-    if (playback.timeout === null) {
-        playback.timeout = setTimeout(continuePlayback, playback.timeoutLength)
-    }
+    animationInterval.stop()
 }
 
 function toBegin() {
