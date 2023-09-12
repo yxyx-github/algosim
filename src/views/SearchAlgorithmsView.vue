@@ -1,7 +1,7 @@
 <template>
     <SimulationLayout>
         <template #form>
-            Form
+            <SearchSimulationForm/>
         </template>
         <template v-if="simulation !== null" #simulation>
             <SimulationView :simulation="simulation">
@@ -23,6 +23,7 @@ import TextViewer from '@/components/lib/TextViewer.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { SearchSimulation } from '@/main/algorithms/search/types'
+import SearchSimulationForm from '@/components/app/simulation/sort/SearchSimulationForm.vue'
 
 const simulation: Ref<SearchSimulation | null> = ref(null)
 const description: Ref<string[]> = ref([])
