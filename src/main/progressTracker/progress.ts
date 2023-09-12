@@ -1,10 +1,10 @@
 import type { ProgressProvider } from '@/main/progressTracker/types'
 
 export class Progress implements ProgressProvider {
-    current: number
-    overall: number
-    currentInterval: number
-    intervalCount: number
+    readonly current: number
+    readonly overall: number
+    readonly currentInterval: number
+    readonly intervalCount: number
 
     constructor(current: number, overall: number, currentInterval?: number, intervalCount?: number) {
         this.current = current
