@@ -49,8 +49,8 @@ export class SelectionSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string {
-        return 'Selectionsort ist ein weiterer naiver Sortieralgorithmus, dessen Funktionsweise simpel ist. ' +
+    description(): string[] {
+        return ['Selectionsort ist ein weiterer naiver Sortieralgorithmus, dessen Funktionsweise simpel ist. ' +
             'Die Liste wird mehrfach durchlaufen. ' +
             'Bei jeder Iteration wird das kleinste Element ermittelt, indem jedes Element mit dem bisherigen kleinsten Element verglichen wird. ' +
             'Das kleinste Element wird anschließend an den Beginn der unsortierten Liste bewegt und als sortiert gekennzeichnet. ' +
@@ -58,6 +58,6 @@ export class SelectionSort implements SortAlgorithmImplementation {
             'Wie zu erkennen ist, wird bei jedem Iterieren über die unsortierte Liste ein Element sortiert. ' +
             'Somit muss die Liste für jedes jedes Element einmal durchlaufen werden. ' +
             'Deshalb spricht man bei Selectionsort von einer Laufzeitkomplexität von O(n^2).' +
-            'Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch in der Größenordnung O(1).'
+            'Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch in der Größenordnung O(1).']
     }
 }

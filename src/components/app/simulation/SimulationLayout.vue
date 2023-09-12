@@ -1,12 +1,15 @@
 <template>
-    <FContainer :direction="{ mb: 'col', md: 'row' }">
-        <FColumn>
-            <slot name="form"/>
-        </FColumn>
-        <FColumn :grow="true">
-            <slot name="simulation"/>
-        </FColumn>
-    </FContainer>
+    <FColumn>
+        <FContainer :direction="{ mb: 'col', md: 'row' }">
+            <FColumn>
+                <slot name="form"/>
+            </FColumn>
+            <FColumn :grow="true">
+                <slot name="simulation"/>
+            </FColumn>
+        </FContainer>
+        <slot name="description"/>
+    </FColumn>
 </template>
 
 <script setup lang="ts">

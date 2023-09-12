@@ -89,7 +89,7 @@ export class QuickSort implements SortAlgorithmImplementation {
         return i + 1;
     }
 
-    description(): string {
-        return 'Quicksort description'
+    description(): string[] {
+        return ['Quicksort', 'description']
     }
 }

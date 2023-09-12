@@ -30,8 +30,8 @@ export class BubbleSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string {
-        return 'BubbleSort description'
+    description(): string[] {
+        return ['BubbleSort', 'description']
     }
 
     private createStep(values: number[], pointer: number, lastElement: number): SortSimulationStep {
