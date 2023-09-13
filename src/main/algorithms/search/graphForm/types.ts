@@ -5,6 +5,7 @@ export type GraphFormItem = {
     label: string,
     coords: Coords,
     connections: TRBL<boolean>,
+    connect: TRBL<boolean>,
     highlight: TRBL<boolean>,
 }
 
