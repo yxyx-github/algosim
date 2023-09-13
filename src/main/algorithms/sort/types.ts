@@ -18,6 +18,7 @@ export enum SortAlgorithm {
     MERGESORT,
     QUICKSORT,
     SELECTION,
+    INSERTION,
 }
 
 export enum SortInputMode {

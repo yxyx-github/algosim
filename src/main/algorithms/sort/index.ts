@@ -3,6 +3,7 @@ import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
 import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
 import { QuickSort } from '@/main/algorithms/sort/quickSort'
 import { MergeSort } from '@/main/algorithms/sort/mergeSort'
+import { InsertionSort } from '@/main/algorithms/sort/insertionSort'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
@@ -13,6 +14,8 @@ export class SortFactory {
                 return new QuickSort()
             case SortAlgorithm.MERGESORT:
                 return new MergeSort()
+            case SortAlgorithm.INSERTION:
+                return new InsertionSort()
             default:
             case SortAlgorithm.BUBBLE:
                 return new BubbleSort()

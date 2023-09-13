@@ -95,6 +95,9 @@ const algorithms = [
     }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
+    }, {
+        label: 'Insertionsort',
+        value: SortAlgorithm.INSERTION,
     }
 ]
 
