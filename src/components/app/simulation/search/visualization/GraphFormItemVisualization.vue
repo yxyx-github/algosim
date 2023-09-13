@@ -1,5 +1,5 @@
 <template>
-    <svg viewBox="0 0 90 90">
+    <svg :width="size" :height="size" viewBox="0 0 90 90">
         <rect x="0" y="0" width="90" height="90" class="wrapper"/>
 
         <rect x="0" y="0" width="20" height="20" class="corner"/>
@@ -28,10 +28,16 @@
 
 <script setup lang="ts">
 import type { GraphFormItem } from '@/main/algorithms/search/graphForm/types'
+import { computed } from 'vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     item: GraphFormItem,
-}>()
+    scale?: number,
+}>(), {
+    scale: 1,
+})
+
+const size = computed(() => `${props.scale * 9}rem`)
 </script>
 
 <style scoped>
