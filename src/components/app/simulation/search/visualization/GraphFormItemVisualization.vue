@@ -1,24 +1,26 @@
 <template>
-    <svg viewBox="0 0 9 9">
-        <rect x="0" y="0" width="2" height="2" class="corner"/>
-        <rect x="2" y="0" width="5" height="2" class="border"/>
-        <rect x="4" y="0" width="1" height="2" class="connection"/>
-        <rect x="4" y="0" width="1" height="5" class="connected"/>
+    <svg viewBox="0 0 90 90">
+        <rect x="0" y="0" width="20" height="20" class="corner"/>
+        <rect x="20" y="0" width="50" height="20" class="border"/>
+        <rect x="40" y="0" width="10" height="20" class="connection"/>
+        <rect x="40" y="0" width="10" height="50" class="connected"/>
 
-        <rect x="7" y="0" width="2" height="2" class="corner"/>
-        <rect x="7" y="2" width="2" height="5" class="border"/>
-        <rect x="7" y="4" width="2" height="1" class="connection"/>
-        <rect x="4" y="4" width="5" height="1" class="connected"/>
+        <rect x="70" y="0" width="20" height="20" class="corner"/>
+        <rect x="70" y="20" width="20" height="50" class="border"/>
+        <rect x="70" y="40" width="20" height="10" class="connection"/>
+        <rect x="40" y="40" width="50" height="10" class="connected"/>
 
-        <rect x="7" y="7" width="2" height="2" class="corner"/>
-        <rect x="2" y="7" width="5" height="2" class="border"/>
-        <rect x="4" y="7" width="1" height="2" class="connection"/>
-        <rect x="4" y="4" width="1" height="5" class="connected"/>
+        <rect x="70" y="70" width="20" height="20" class="corner"/>
+        <rect x="20" y="70" width="50" height="20" class="border"/>
+        <rect x="40" y="70" width="10" height="20" class="connection"/>
+        <rect x="40" y="40" width="10" height="50" class="connected"/>
 
-        <rect x="0" y="7" width="2" height="2" class="corner"/>
-        <rect x="0" y="2" width="2" height="5" class="border"/>
-        <rect x="0" y="4" width="2" height="1" class="connection"/>
-        <rect x="0" y="4" width="5" height="1" class="connected"/>
+        <rect x="0" y="70" width="20" height="20" class="corner"/>
+        <rect x="0" y="20" width="20" height="50" class="border"/>
+        <rect x="0" y="40" width="20" height="10" class="connection"/>
+        <rect x="0" y="40" width="50" height="10" class="connected"/>
+
+        <text x="45" y="45" class="label">label</text>
     </svg>
 </template>
 
@@ -36,5 +38,9 @@ const props = defineProps<{
 }
 .connection, .connected {
     fill: #ff0000;
+}
+.label {
+    dominant-baseline: middle;
+    text-anchor: middle;
 }
 </style>
