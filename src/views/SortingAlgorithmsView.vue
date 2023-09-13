@@ -23,7 +23,7 @@ import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
-import SortVisualization from '@/components/app/simulation/visualization/SortVisualization.vue'
+import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
 import SortSimulationForm from '@/components/app/simulation/sort/SortSimulationForm.vue'
 import TextViewer from '@/components/lib/TextViewer.vue'
 

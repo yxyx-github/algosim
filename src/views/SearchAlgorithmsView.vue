@@ -23,7 +23,7 @@ import TextViewer from '@/components/lib/TextViewer.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import type { SearchSimulation } from '@/main/algorithms/search/types'
-import SearchSimulationForm from '@/components/app/simulation/sort/SearchSimulationForm.vue'
+import SearchSimulationForm from '@/components/app/simulation/search/SearchSimulationForm.vue'
 
 const simulation: Ref<SearchSimulation | null> = ref(null)
 const description: Ref<string[]> = ref([])
