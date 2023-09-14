@@ -24,55 +24,7 @@ import type { ComputedRef, Ref } from 'vue'
 import { computed, ref } from 'vue'
 import Button from 'primevue/button'
 
-const graphForm: Ref<GraphForm> = ref([
-    [
-        {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 0, y: 0 },
-            connections: { top: false, right: true, bottom: true, left: true },
-            connect: { top: false, right: true, bottom: true, left: false },
-            highlight: { top: false, right: true, bottom: true, left: true },
-        }, {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 1, y: 0 },
-            connections: { top: false, right: false, bottom: false, left: false },
-            connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
-        }, {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 2, y: 0 },
-            connections: { top: false, right: true, bottom: true, left: true },
-            connect: { top: false, right: true, bottom: true, left: false },
-            highlight: { top: false, right: true, bottom: true, left: true },
-        },
-    ], [
-        {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 0, y: 1 },
-            connections: { top: true, right: true, bottom: false, left: true },
-            connect: { top: true, right: true, bottom: false, left: false },
-            highlight: { top: true, right: true, bottom: false, left: true },
-        }, {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 1, y: 1 },
-            connections: { top: false, right: false, bottom: false, left: false },
-            connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
-        }, {
-            type: GraphFormItemType.NODE,
-            label: 'node',
-            coords: { x: 2, y: 1 },
-            connections: { top: true, right: true, bottom: false, left: true },
-            connect: { top: true, right: true, bottom: false, left: false },
-            highlight: { top: true, right: true, bottom: false, left: true },
-        },
-    ],
-])
+const graphForm: Ref<GraphForm> = ref([])
 
 const graphFormItems: ComputedRef<GraphFormItem[]> = computed(() => {
     let items: GraphFormItem[] = []
@@ -88,36 +40,51 @@ const isEmpty = computed(() => rows.value === 0 && cols.value === 0)
 
 function addRow() {
     const oldCols = cols.value
-    console.log('oC:', oldCols)
-    const newRow: GraphFormItem[] = []
-    for (let i = 0; i < oldCols; i++) {
-        newRow.push({
-            type: GraphFormItemType.NODE,
-            label: '',
-            coords: { x: i, y: rows.value },
-            connections: { top: false, right: false, bottom: false, left: false },
-            connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
-        })
+    if (oldCols === 0) {
+        clear()
+    } else {
+        const newRow: GraphFormItem[] = []
+        for (let i = 0; i < oldCols; i++) {
+            newRow.push({
+                type: GraphFormItemType.NODE,
+                label: '',
+                coords: { x: i, y: rows.value },
+                connections: { top: false, right: false, bottom: false, left: false },
+                connect: { top: false, right: false, bottom: false, left: false },
+                highlight: { top: false, right: false, bottom: false, left: false },
+            })
+        }
+        graphForm.value.push(newRow)
     }
-    graphForm.value.push(newRow)
 }
 
 function addColumn() {
     const oldCols = cols.value
-    graphForm.value.forEach((row, index) => row.push({
-        type: GraphFormItemType.NODE,
-        label: '',
-        coords: { x: oldCols, y: index },
-        connections: { top: false, right: false, bottom: false, left: false },
-        connect: { top: false, right: false, bottom: false, left: false },
-        highlight: { top: false, right: false, bottom: false, left: false },
-    }))
+    if (oldCols === 0) {
+        clear()
+    } else {
+        graphForm.value.forEach((row, index) => row.push({
+            type: GraphFormItemType.NODE,
+            label: '',
+            coords: { x: oldCols, y: index },
+            connections: { top: false, right: false, bottom: false, left: false },
+            connect: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false },
+        }))
+    }
 }
 
 function clear() {
-    graphForm.value = []
+    graphForm.value = [[{
+        type: GraphFormItemType.NODE,
+        label: '',
+        coords: { x: 0, y: 0 },
+        connections: { top: false, right: false, bottom: false, left: false },
+        connect: { top: false, right: false, bottom: false, left: false },
+        highlight: { top: false, right: false, bottom: false, left: false },
+    }]]
 }
+clear()
 
 function submit() {
 
