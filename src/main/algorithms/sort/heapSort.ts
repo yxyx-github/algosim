@@ -91,20 +91,20 @@ export class HeapSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`Heapsort ist ein Sortierverfahren, welches auf dem binären Heap als zentrale Datenstruktur aufbaut. \
-        Im ersten Schritt wird die Liste in einen binären Max-Heap umgewandelt. Danach kann die Wurzel des Heaps \
-        an das Ende bewegt werden, da es sich um das größte Element der Liste handelt. Der Heap wird dabei um dieses \
-        Element gekürzt. Da der Heap nun kein Max-Heap mehr ist muss er heapified werden. Das Finden des größten Elements wird \
-        wiederholt bis alle Elemente der Liste sortiert sind. In dieser Hinsicht lässt sich eine Parallele zu Selectionsort \
+        return [`Heapsort ist ein Sortierverfahren, welches auf dem binären Heap als zentrale Datenstruktur aufbaut.
+        Im ersten Schritt wird die Liste in einen binären Max-Heap umgewandelt. Danach kann die Wurzel des Heaps
+        an das Ende bewegt werden, da es sich um das größte Element der Liste handelt. Der Heap wird dabei um dieses
+        Element gekürzt. Da der Heap nun kein Max-Heap mehr ist muss er heapified werden. Das Finden des größten Elements wird
+        wiederholt bis alle Elemente der Liste sortiert sind. In dieser Hinsicht lässt sich eine Parallele zu Selectionsort
         erkennen. Heapsort hat eine Laufzeitkomplexität von O(n*log(n)) und benötigt keinen zusätzlichen Speicherlatz.`,
-        `Ein binärer Heap ist ein Binärbaum, bei dem alle Ebenen bis auf die unterste Ebene vollständig ausgefüllt sind. \
-        Man unterscheidet zusätzlich zwischen Max-Heap und Min-Heap. Der Max-Heap hat zusätzlich die Bedingung, dass \
-        alle Kinder eines Knoten kleiner gleich dem Knoten selbst sind. Der Min-Heap hat eine analoge Bedingung. \
-        Ein Heap kann als Liste dargestellt werden, dabei werden die Ebenen des Heaps hintereinander von links nach \
-        rechts gelesen dargestellt. Das bedeutet, dass die Wurzel eines Heaps immer den Index 0 hat. Bei einem Max-Heap \
+        `Ein binärer Heap ist ein Binärbaum, bei dem alle Ebenen bis auf die unterste Ebene vollständig ausgefüllt sind.
+        Man unterscheidet zusätzlich zwischen Max-Heap und Min-Heap. Der Max-Heap hat zusätzlich die Bedingung, dass
+        alle Kinder eines Knoten kleiner gleich dem Knoten selbst sind. Der Min-Heap hat eine analoge Bedingung.
+        Ein Heap kann als Liste dargestellt werden, dabei werden die Ebenen des Heaps hintereinander von links nach
+        rechts gelesen dargestellt. Das bedeutet, dass die Wurzel eines Heaps immer den Index 0 hat. Bei einem Max-Heap
         handelt es sich dabei auch um das größte Element des Heaps.`,
-        `Heapify stellt sicher, dass es sich beim Heap um einen Max- bzw. Min-Heap handelt. Dazu wird ein Knoten mit \
-         seinen Kindern verglichen und getauscht, sofern es sich nicht um das größte bzw. kleinste Element handelt. Dieser \
+        `Heapify stellt sicher, dass es sich beim Heap um einen Max- bzw. Min-Heap handelt. Dazu wird ein Knoten mit
+         seinen Kindern verglichen und getauscht, sofern es sich nicht um das größte bzw. kleinste Element handelt. Dieser
          Vorgang wird rekursiv verkettet, so dass auch die Unterbäume Max- bzw. Min-Heaps sind.`]
     }
 }
