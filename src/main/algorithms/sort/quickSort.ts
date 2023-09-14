@@ -28,7 +28,7 @@ export class QuickSort implements SortAlgorithmImplementation {
         return [`Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem Divide-and-Conquer-Prinzip basiert. Die \
         Funktionsweise von Quicksort basiert auf dem Unterteilen der Liste in Teillisten. Diese Unterteilung wird mit\
         einem Pivotelement vorgenommen. Als Pivotelement wird klassischerweise das letzte Element der Liste gewählt. \
-        Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Ein anderes vorgehen bei der Pivotwahl wäre \
+        Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Ein anderes Vorgehen bei der Pivotwahl wäre \
         zum Beispiel den Median aus einer Teilmenge der Liste zu wählen. Anschließend müssen alle Elemente, welche \
         kleiner sind als der Pivot, links vom Pivot stehen. Alle Elemente, die größer sind, müssen rechts stehen. Die \
         Elemente, die den gleichen Wert wie der Pivot haben keine vorgeschriebene Position. Nachdem diese \
@@ -36,7 +36,7 @@ export class QuickSort implements SortAlgorithmImplementation {
         einen rekursiven Aufruf von Quicksort erreicht. Leere Listen und Listen mit der Länge 1 werden als bereits sortiert \
         gewertet und fungieren somit als Abbruchbedingung. Die Laufzeitkomplexität von Quicksort hängt maßgeblich mit \
         der Wahl des Pivotelements zusammen. Im Worst-Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der \
-        durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass kein zusätzlichen \
+        durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass kein zusätzlicher \
         Speicherplatz benötigt wird, da es sich um ein In-Place-Verfahren handelt. Außerdem lässt es sich sehr \
         einfach parallelisieren.`]
     }
