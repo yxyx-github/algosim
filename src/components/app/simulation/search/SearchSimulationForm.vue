@@ -6,7 +6,7 @@
                     :style="`grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
             >
                 <div v-if="isEmpty"></div>
-                <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item"/>
+                <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item" @update:item="updateItem"/>
             </div>
             <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
             <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
@@ -85,6 +85,10 @@ function clear() {
     }]]
 }
 clear()
+
+function updateItem(item: GraphFormItem) {
+    graphForm.value[item.coords.y][item.coords.x] = item
+}
 
 function submit() {
 
