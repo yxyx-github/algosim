@@ -3,6 +3,7 @@
 const mediaQueryVariants = ['mb', '2sm', 'sm', 'md', 'lg', 'xl', '2xl']
 
 module.exports = {
+    important: true,
     content: [
         './src/**/*.{html,js,ts,vue}',
         './node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}',
