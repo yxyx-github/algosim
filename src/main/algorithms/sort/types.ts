@@ -16,6 +16,7 @@ export interface HighlightedIndex {
 export enum SortAlgorithm {
     BUBBLE,
     HEAPSORT,
+    INSERTION,
     MERGESORT,
     QUICKSORT,
     SELECTION,

@@ -90,6 +90,9 @@ const algorithms = [
         label: 'Heapsort',
         value: SortAlgorithm.HEAPSORT,
     }, {
+        label: 'Insertionsort',
+        value: SortAlgorithm.INSERTION,
+    }, {
         label: 'Mergesort',
         value: SortAlgorithm.MERGESORT,
     }, {
