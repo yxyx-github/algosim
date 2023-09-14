@@ -53,7 +53,7 @@ describe('InsertionSort', () => {
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()
-        expect(spyInit).toHaveBeenCalledWith(6)
+        expect(spyInit).toHaveBeenCalledWith(4)
         expect(spyTrack).toHaveBeenCalledTimes(0)
         expect(spyTrackNext).toHaveBeenCalledTimes(4)
     })

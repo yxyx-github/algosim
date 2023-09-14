@@ -87,6 +87,9 @@ const algorithms = [
         label: 'Bubblesort',
         value: SortAlgorithm.BUBBLE,
     }, {
+        label: 'Insertionsort',
+        value: SortAlgorithm.INSERTION,
+    }, {
         label: 'Mergesort',
         value: SortAlgorithm.MERGESORT,
     }, {
@@ -95,9 +98,6 @@ const algorithms = [
     }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
-    }, {
-        label: 'Insertionsort',
-        value: SortAlgorithm.INSERTION,
     }
 ]
 

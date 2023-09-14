@@ -15,10 +15,10 @@ export interface HighlightedIndex {
 
 export enum SortAlgorithm {
     BUBBLE,
+    INSERTION,
     MERGESORT,
     QUICKSORT,
     SELECTION,
-    INSERTION,
 }
 
 export enum SortInputMode {

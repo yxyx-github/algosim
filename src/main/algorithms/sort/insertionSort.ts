@@ -4,7 +4,7 @@ import type { TrackableProgress } from '@/main/progressTracker/types'
 
 export class InsertionSort implements SortAlgorithmImplementation {
     sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
-        progressTracker?.init(values.length * ((values.length - 1) / 2))
+        progressTracker?.init(values.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step({
             sortedValues: values,
@@ -12,21 +12,20 @@ export class InsertionSort implements SortAlgorithmImplementation {
         })
         let item = -1
         for (let currentElement = 1; currentElement < values.length; currentElement++) {
+            progressTracker?.trackNext()
             for (let pointer = currentElement - 1; pointer >= 0; pointer--) {
-                if (values[pointer] > values[pointer + 1]) {
+                if (values[pointer] < values[pointer + 1]) {
                     pB.step(this.createStep(values, pointer, currentElement))
-                    item = values[pointer]
-                    values[pointer] = values[pointer + 1]
-                    values[pointer + 1] = item
-                } else {
-                    pB.step(this.createStep(values, pointer, currentElement))
-                    progressTracker?.trackNext()
                     break;
                 }
                 pB.step(this.createStep(values, pointer, currentElement))
-                progressTracker?.trackNext()
+                item = values[pointer]
+                values[pointer] = values[pointer + 1]
+                values[pointer + 1] = item
+                pB.step(this.createStep(values, pointer, currentElement))
             }
         }
+        progressTracker?.trackNext()
         pB.step({
             sortedValues: values,
             highlightedIndices: [],
