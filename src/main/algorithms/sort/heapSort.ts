@@ -102,6 +102,9 @@ export class HeapSort implements SortAlgorithmImplementation {
         alle Kinder eines Knoten kleiner gleich dem Knoten selbst sind. Der Min-Heap hat eine analoge Bedingung. \
         Ein Heap kann als Liste dargestellt werden, dabei werden die Ebenen des Heaps hintereinander von links nach \
         rechts gelesen dargestellt. Das bedeutet, dass die Wurzel eines Heaps immer den Index 0 hat. Bei einem Max-Heap \
-        handelt es sich dabei auch um das größte Element des Heaps.`]
+        handelt es sich dabei auch um das größte Element des Heaps.`,
+        `Heapify stellt sicher, dass es sich beim Heap um einen Max- bzw. Min-Heap handelt. Dazu wird ein Knoten mit \
+         seinen Kindern verglichen und getauscht, sofern es sich nicht um das größte bzw. kleinste Element handelt. Dieser \
+         Vorgang wird rekursiv verkettet, so dass auch die Unterbäume Max- bzw. Min-Heaps sind.`]
     }
 }
