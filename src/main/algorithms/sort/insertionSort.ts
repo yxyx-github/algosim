@@ -14,11 +14,10 @@ export class InsertionSort implements SortAlgorithmImplementation {
         for (let currentElement = 1; currentElement < values.length; currentElement++) {
             progressTracker?.trackNext()
             for (let pointer = currentElement - 1; pointer >= 0; pointer--) {
+                pB.step(this.createStep(values, pointer, currentElement))
                 if (values[pointer] < values[pointer + 1]) {
-                    pB.step(this.createStep(values, pointer, currentElement))
                     break;
                 }
-                pB.step(this.createStep(values, pointer, currentElement))
                 item = values[pointer]
                 values[pointer] = values[pointer + 1]
                 values[pointer + 1] = item
