@@ -1,9 +1,9 @@
-import {SortAlgorithm} from '@/main/algorithms/sort/types'
-import {BubbleSort} from '@/main/algorithms/sort/bubbleSort'
-import {SelectionSort} from '@/main/algorithms/sort/selectionSort'
-import {QuickSort} from '@/main/algorithms/sort/quickSort'
-import {MergeSort} from '@/main/algorithms/sort/mergeSort'
-import {HeapSort} from "@/main/algorithms/sort/heapSort";
+import { SortAlgorithm } from '@/main/algorithms/sort/types'
+import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
+import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
+import { QuickSort } from '@/main/algorithms/sort/quickSort'
+import { MergeSort } from '@/main/algorithms/sort/mergeSort'
+import { HeapSort } from '@/main/algorithms/sort/heapSort'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
