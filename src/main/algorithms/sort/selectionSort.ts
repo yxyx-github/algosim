@@ -50,14 +50,16 @@ export class SelectionSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return ['Selectionsort ist ein weiterer naiver Sortieralgorithmus, dessen Funktionsweise simpel ist. ' +
-            'Die zu sortierende Liste wird dabei mehrfach durchlaufen. ' +
-            'Bei jeder Iteration wird das kleinste Element ermittelt, indem jedes Element mit dem bisherigen kleinsten Element verglichen wird. ' +
-            'Das kleinste Element wird anschließend an den Beginn der unsortierten Liste bewegt und als sortiert gekennzeichnet. ' +
-            'Es entsteht eine Unterteilung in eine sortierte und einen unsortierte Liste. ' +
-            'Wie zu erkennen ist, wird bei jeder Iteration über die unsortierte Liste ein Element sortiert. ' +
-            'Somit muss die Liste für jedes Element einmal durchlaufen werden. ' +
-            'Deshalb spricht man bei Selectionsort von einer Laufzeitkomplexität von O(n²).' +
-            'Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch in der Größenordnung O(1).']
+        return [
+            `Selectionsort ist ein weiterer naiver Sortieralgorithmus, dessen Funktionsweise simpel ist.
+            Die zu sortierende Liste wird dabei mehrfach durchlaufen.
+            Bei jeder Iteration wird das kleinste Element ermittelt, indem jedes Element mit dem bisherigen kleinsten Element verglichen wird.
+            Das kleinste Element wird anschließend an den Beginn der unsortierten Liste verschoben und als sortiert gekennzeichnet.
+            Es entsteht eine Unterteilung in eine sortierte und eine unsortierte Liste.
+            Wie zu erkennen ist, wird bei jeder Iteration über die unsortierte Liste ein Element sortiert.
+            Somit muss die Liste für jedes Element einmal durchlaufen werden.
+            Deshalb spricht man bei Selectionsort von einer Laufzeitkomplexität von O(n²).
+            Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch in der Größenordnung O(1).`
+        ]
     }
 }
