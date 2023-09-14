@@ -25,18 +25,19 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem divide-and-conquer-Prinzip basiert. Die \
-        Funktionsweise von Quicksort basiert auf dem unterteilen der Liste in Teillisten. Diese Unterteilung wird mit\
-        einem Pivotelement vorgenommen. Das Pivotelement wird klassischerweise als das letzte Element der Liste gewählt. \
-        Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Anschließend müssen aller Elemte, welche\
+        return [`Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem Divide-and-Conquer-Prinzip basiert. Die \
+        Funktionsweise von Quicksort basiert auf dem Unterteilen der Liste in Teillisten. Diese Unterteilung wird mit\
+        einem Pivotelement vorgenommen. Als Pivotelement wird klassischerweise das letzte Element der Liste gewählt. \
+        Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Ein anderes vorgehen bei der Pivotwahl wäre \
+        zum Beispiel den Median aus einer Teilmenge der Liste zu wählen. Anschließend müssen alle Elemente, welche \
         kleiner sind als der Pivot, links vom Pivot stehen. Alle Elemente, die größer sind, müssen rechts stehen. Die \
         Elemente, die den gleichen Wert wie der Pivot haben keine vorgeschriebene Position zu haben. Nachdem diese \
-        Vorsortierung vorgenommen wurde, müssen nur noch die Teillisten sortiert werden. Diese Sortierung wird durch \
+        Vorsortierung durchgeführt wurde, müssen nur noch die Teillisten sortiert werden. Diese Sortierung wird durch \
         einen rekursiven Aufruf von Quicksort erreicht. Leere Listen und Listen mit der Länge 1 werden als bereits sortiert \
         gewertet und fungieren somit als Abbruchbedingung. Die Laufzeitkomplexität von Quicksort hängt maßgeblich mit \
-        der Wahl des Pivotelements zusammen. Im Wost-Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der \
-        durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass Quicksort kein \
-        zusätzlichen Speicherplatz benötigt, da es sich um ein in-place-Verfahren handelt. Außerdem lässt sich Quicksort sehr \
+        der Wahl des Pivotelements zusammen. Im Worst-Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der \
+        durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass kein zusätzlichen \
+        Speicherplatz benötigt wird, da es sich um ein In-Place-Verfahren handelt. Außerdem lässt es sich sehr \
         einfach parallelisieren.`]
     }
 
