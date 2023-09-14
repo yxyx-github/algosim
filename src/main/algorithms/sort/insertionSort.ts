@@ -38,7 +38,7 @@ export class InsertionSort implements SortAlgorithmImplementation {
             Teil betrachtet werden. InsertionSort wählt nun immer das nächste Element des unsortierten Teils aus und vergleicht es so lange mit dem bereits sortieren Teil der Liste, 
             bis die passende Stelle zum Einfügen gefunden wurde. Ist das passiert, erhöht sich der Anteil des sortierten Teils und es wird das nächste Element des unsortierten Teils gewählt. 
             Die Laufzeitkomplexität des Verfahrens ist von der Anordnung der Eingabewerte abhängig. Sie liegt im Worst Case bei O(n²) und im Best Case bei O(n). 
-            Da der Algorithmus in-place arbeitet, liegt die Speicherkomplexität bei O(1). Für eine Weiterentwicklung dieses Sortieralgorithmus siehe ShellSort.`
+            Da der Algorithmus In-Place arbeitet, liegt die Speicherkomplexität bei O(1). Für eine Weiterentwicklung dieses Sortieralgorithmus siehe ShellSort.`
         ]
     }
 
