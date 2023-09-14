@@ -25,14 +25,16 @@ export class MergeSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return ['Mergesort ist ein rekursiver Sortieralgorithmus, welcher auf dem divide-and-conquer-Prinzip basiert. \
-        Mergesort teilt die Liste rekuriv in mehrere Teillisten. Wenn eine Teilliste die Länge 1 oder 0 hat, dann\
-        ist sie automaisch sortiert. Die sortierten können Listen müssen nun effizient zusammengesetzt werden, dazu müssen\
-        jeweils die zwei ersten (kleinsten) Elemente verglichen werden, um das kleinere Element in der sortieren Liste\
-        zu plazieren und den Prozess mit den neuen ersten (kleinsten) Elementen zu wiederholen. Das Zusammensetzten der\
-        Teillisten hat also einen Aufwand von O(n). Diese zusammengesetzte Liste benötigt allerdings weiteren Speicherplatz\
-        in der Größenordung O(n). Mergesort im gesamten hat eine Laufzeitkompexität von O(n*log(n)) und ist somit besser\
-        geeignet als Quicksort, welches im Worst-Case O(n^2) benötigt. Dafür benötigt Mergesort allerdings mehr Speicher.']
+        return [`
+            Mergesort ist ein rekursiver Sortieralgorithmus, welcher auf dem Divide-and-Conquer-Prinzip basiert.
+            Mergesort teilt die Liste rekursiv in mehrere Teillisten. Wenn eine Teilliste die Länge 1 oder 0 hat, dann
+            ist sie automatisch sortiert. Die sortierten Listen müssen nun effizient zusammengesetzt werden. Um 2 Teillisten zu einer zusammenzusetzen müssen
+            jeweils die zwei ersten (kleinsten) Elemente dieser verglichen werden. Das kleinere Element wird an den Anfang der neuen sortierten Liste platziert.
+            Dieser Vorgang wird solange wiederholt, wie Elemente in den beiden Teillisten vorhanden sind.
+            Das Zusammensetzten der Teillisten hat also einen Aufwand von O(n). Die zusammengesetzte Liste benötigt allerdings weiteren Speicherplatz
+            in der Größenordung O(n). Insgesamt hat Mergesort daher eine Laufzeitkompexität von O(n*log(n)) und ist somit schneller als Quicksort,
+            welches im Worst-Case O(n^2) benötigt. Dafür benötigt Mergesort allerdings mehr Speicher, nämlich O(n).`
+        ]
     }
 
     private mergeSort(numbers: number[], left: number, right: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
