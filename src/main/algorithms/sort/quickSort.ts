@@ -25,7 +25,7 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return ['Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem divide-and-conquer-Prinzip basiert. Die \
+        return [`Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem divide-and-conquer-Prinzip basiert. Die \
         Funktionsweise von Quicksort basiert auf dem unterteilen der Liste in Teillisten. Diese Unterteilung wird mit\
         einem Pivotelement vorgenommen. Das Pivotelement wird klassischerweise als das letzte Element der Liste gewählt. \
         Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Anschließend müssen aller Elemte, welche\
@@ -37,7 +37,7 @@ export class QuickSort implements SortAlgorithmImplementation {
         der Wahl des Pivotelements zusammen. Im Wost-Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der \
         durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass Quicksort kein \
         zusätzlichen Speicherplatz benötigt, da es sich um ein in-place-Verfahren handelt. Außerdem lässt sich Quicksort sehr \
-        einfach parallelisieren.']
+        einfach parallelisieren.`]
     }
 
     private quickSort(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
