@@ -31,7 +31,7 @@ export class QuickSort implements SortAlgorithmImplementation {
         Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Ein anderes vorgehen bei der Pivotwahl wäre \
         zum Beispiel den Median aus einer Teilmenge der Liste zu wählen. Anschließend müssen alle Elemente, welche \
         kleiner sind als der Pivot, links vom Pivot stehen. Alle Elemente, die größer sind, müssen rechts stehen. Die \
-        Elemente, die den gleichen Wert wie der Pivot haben keine vorgeschriebene Position zu haben. Nachdem diese \
+        Elemente, die den gleichen Wert wie der Pivot haben keine vorgeschriebene Position. Nachdem diese \
         Vorsortierung durchgeführt wurde, müssen nur noch die Teillisten sortiert werden. Diese Sortierung wird durch \
         einen rekursiven Aufruf von Quicksort erreicht. Leere Listen und Listen mit der Länge 1 werden als bereits sortiert \
         gewertet und fungieren somit als Abbruchbedingung. Die Laufzeitkomplexität von Quicksort hängt maßgeblich mit \
