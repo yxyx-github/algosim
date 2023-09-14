@@ -90,7 +90,7 @@ export class HeapSort implements SortAlgorithmImplementation {
         }
     }
 
-    description(): string {
-        return 'Heapsort description'
+    description(): string[] {
+        return ['Heapsort description']
     }
 }
