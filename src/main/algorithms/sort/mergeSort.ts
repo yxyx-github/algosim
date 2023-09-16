@@ -1,26 +1,23 @@
 import type {
-    HighlightedIndex,
     SortAlgorithmImplementation,
     SortSimulation,
     SortSimulationStep
 } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class MergeSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [],
-        })
+
+        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
         this.mergeSort(numbers, 0, numbers.length - 1, pB, progressTracker)
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [],
-        })
+        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+
         return pB.build()
     }
 
@@ -56,53 +53,61 @@ export class MergeSort implements SortAlgorithmImplementation {
         let res: number[] = new Array(right - left + 1)
 
         while (i <= mid && j <= right) {
-            pB.step({
-                sortedValues: numbers,
-                highlightedIndices: [
-                    { type: 'current', index: i },
-                    { type: 'current', index: j },
-                    ...(i === left ? [] : [{ type: 'threshold', index: left }]),
-                    ...(i === mid || left === mid ? [] : [{ type: 'threshold', index: mid }]),
-                    ...(j === right ? [] : [{ type: 'threshold', index: right }]),
-                ] as HighlightedIndex[],
-            })
+            pB.step(this.createCompareStep(numbers, left, mid, right, i, j))
             res[k++] = numbers[numbers[i] <= numbers[j] ? i++ : j++];
         }
         while (i <= mid) {
-            pB.step({
-                sortedValues: numbers,
-                highlightedIndices: [
-                    { type: 'current', index: i },
-                    ...(i === left ? [] : [{ type: 'threshold', index: left }]),
-                    ...(i === mid || left === mid ? [] : [{ type: 'threshold', index: mid }]),
-                    { type: 'threshold', index: right },
-                ] as HighlightedIndex[],
-            })
+            pB.step(this.createLeftLeftoverStep(numbers, left, mid, right, i))
             res[k++] = numbers[i++];
         }
         while (j <= right) {
-            pB.step({
-                sortedValues: numbers,
-                highlightedIndices: [
-                    { type: 'current', index: j },
-                    { type: 'threshold', index: left },
-                    ...(mid === left ? [] : [{ type: 'threshold', index: mid }]),
-                    ...(j === right ? [] : [{ type: 'threshold', index: right }]),
-                ] as HighlightedIndex[],
-            })
+            pB.step(this.createRightLeftoverStep(numbers, left, mid, right, j))
             res[k++] = numbers[j++];
         }
 
         for (let l = 0; l < res.length; l++) {
             numbers[left + l] = res[l]
-            pB.step({
-                sortedValues: numbers,
-                highlightedIndices: [
-                    { type: 'current', index: l + left },
-                    ...(l + left === right ? [] : [{ type: 'threshold', index: right }]),
-                    ...(l + left === left ? [] : [{ type: 'threshold', index: left }]),
-                ] as HighlightedIndex[],
-            })
+            pB.step(this.createInsertStep(numbers, left, right, l))
         }
+    }
+
+    private createCompareStep(numbers: number[], left: number, mid: number, right: number, i: number, j: number): SortSimulationStep {
+        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+            [
+                {color: SortColor.CURRENT, index: i},
+                {color: SortColor.CURRENT, index: j},
+                ...(i === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
+                ...(i === mid ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
+                ...(j === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+            ])
+    }
+
+    private createLeftLeftoverStep(numbers: number[], left: number, mid: number, right: number, i: number): SortSimulationStep {
+        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+            [
+                {color: SortColor.CURRENT, index: i},
+                ...(i === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
+                ...(i === mid ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
+                {color: SortColor.THRESHOLD, index: right},
+            ])
+    }
+
+    private createRightLeftoverStep(numbers: number[], left: number, mid: number, right: number, j: number): SortSimulationStep {
+        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+            [
+                {color: SortColor.CURRENT, index: j},
+                {color: SortColor.THRESHOLD, index: left},
+                ...(mid === left ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
+                ...(j === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+            ])
+    }
+
+    private createInsertStep(numbers: number[], left: number, right: number, l: number): SortSimulationStep {
+        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+            [
+                {color: SortColor.CURRENT, index: l + left},
+                ...(l + left === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
+                ...(l + left === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+            ])
     }
 }
