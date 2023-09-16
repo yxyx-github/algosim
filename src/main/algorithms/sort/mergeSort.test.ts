@@ -45,7 +45,6 @@ describe('MergeSort', () => {
         }
 
         const result = new MergeSort().sort(input)
-        console.log(JSON.stringify(result))
         expect(result).to.deep.equal(expected)
     })
 
