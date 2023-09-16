@@ -1,15 +1,14 @@
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
-import type { HighlightedIndex, SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
+import type {SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class InsertionSort implements SortAlgorithmImplementation {
     sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(values.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step({
-            sortedValues: values,
-            highlightedIndices: [],
-        })
+        pB.step(SortSimulationStepFactory.createSimulationStep(values))
         let item = -1
         for (let currentElement = 1; currentElement < values.length; currentElement++) {
             progressTracker?.trackNext()
@@ -25,10 +24,7 @@ export class InsertionSort implements SortAlgorithmImplementation {
             }
         }
         progressTracker?.trackNext()
-        pB.step({
-            sortedValues: values,
-            highlightedIndices: [],
-        })
+        pB.step(SortSimulationStepFactory.createSimulationStep(values))
         return pB.build()
     }
 
@@ -37,13 +33,11 @@ export class InsertionSort implements SortAlgorithmImplementation {
     }
 
     private createStep(values: number[], pointer: number, currentElement: number): SortSimulationStep {
-        return {
-            sortedValues: values,
-            highlightedIndices: [
-                { type: 'current', index: pointer },
-                { type: 'current', index: pointer + 1 },
-                ...((pointer + 1) === currentElement ? [] : [{ type: 'threshold', index: currentElement }]),
-            ] as HighlightedIndex[],
-        }
+        return SortSimulationStepFactory.createHighlightedSimulationStep(values,
+            [
+                {color: SortColor.CURRENT, index: pointer},
+                {color: SortColor.CURRENT, index: pointer + 1},
+                ...(pointer + 1 === currentElement ? [] : [{color: SortColor.THRESHOLD, index: currentElement}]),
+            ])
     }
 }
