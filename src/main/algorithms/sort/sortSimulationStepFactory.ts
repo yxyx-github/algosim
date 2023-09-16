@@ -1,5 +1,5 @@
-import type {SortSimulationStep} from '@/main/algorithms/sort/types'
-import {SortColor} from '@/main/algorithms/sort/types'
+import type { SortSimulationStep } from '@/main/algorithms/sort/types'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class SortSimulationStepFactory {
 
