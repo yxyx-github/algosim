@@ -1,6 +1,11 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
 import type { TrackableProgress, ProgressProvider, ProgressTrackerConfig } from '@/main/progressTracker/types'
 
+export type HighlightedIndex = {
+    color: string
+    index: number
+}
+
 export enum SortAlgorithm {
     BUBBLE,
     HEAPSORT,
