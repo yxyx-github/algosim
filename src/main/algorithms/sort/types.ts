@@ -1,15 +1,8 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
 import type { TrackableProgress, ProgressProvider, ProgressTrackerConfig } from '@/main/progressTracker/types'
 
-export type HighlightType = 'current' | 'threshold'
-export type HighlightColor = HighlightType | 'neutral'
-
-export type SortColors = {
-    [key in HighlightColor]?: string
-}
-
-export interface HighlightedIndex {
-    type: HighlightType
+export type HighlightedIndex = {
+    color: string
     index: number
 }
 
@@ -20,6 +13,12 @@ export enum SortAlgorithm {
     MERGESORT,
     QUICKSORT,
     SELECTION,
+}
+
+export enum SortColor {
+    NEUTRAL = '#8b8b8b',
+    CURRENT= '#ff0000',
+    THRESHOLD ='#000000',
 }
 
 export enum SortInputMode {
@@ -43,9 +42,13 @@ export interface SortAlgorithmImplementation {
     description: () => string[],
 }
 
+export interface SortedValue {
+    value: number
+    displayColor: string
+}
+
 export interface SortSimulationStep extends SimulationStep {
-    sortedValues: number[]
-    highlightedIndices: HighlightedIndex[]
+    sortedValues: SortedValue[]
 }
 
 export interface SortSimulation extends Simulation<SortSimulationStep> {

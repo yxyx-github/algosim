@@ -1,26 +1,23 @@
 import type {
-    HighlightedIndex,
     SortAlgorithmImplementation,
     SortSimulation,
     SortSimulationStep
 } from '@/main/algorithms/sort/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type { TrackableProgress } from '@/main/progressTracker/types'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class QuickSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         progressTracker?.init(numbers.length)
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: []
-        })
+
+        pB.step(SortSimulationStepFactory.create(numbers))
         this.quickSort(numbers, 0, numbers.length - 1, pB, progressTracker)
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: []
-        })
+        pB.step(SortSimulationStepFactory.create(numbers))
+
         return pB.build()
     }
 
@@ -60,49 +57,48 @@ export class QuickSort implements SortAlgorithmImplementation {
         let i = (begin - 1);
 
         for (let j = begin; j < end; j++) {
-            pB.step({
-                sortedValues: numbers,
-                highlightedIndices: [
-                    { type: 'current', index: end },
-                    { type: 'current', index: j },
-                    ...((i + 1) === j ? [] : [{ type: 'threshold', index: i + 1 }]),
-                ] as HighlightedIndex[],
-            })
+            pB.step(this.createCompareStep(numbers, end, j, i))
 
             if (numbers[j] <= pivot) {
                 i++;
                 let temp = numbers[i];
                 numbers[i] = numbers[j];
                 numbers[j] = temp;
-                pB.step({
-                    sortedValues: numbers,
-                    highlightedIndices: [
-                        { type: 'current', index: j },
-                        ...((i) === j ? [] : [{ type: 'current', index: i }]),
-                    ] as HighlightedIndex[],
-                })
+                pB.step(this.createSwapStep(numbers, j, i))
             }
         }
 
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [
-                { type: 'current', index: end },
-                ...((i + 1) === end ? [] : [{ type: 'current', index: i + 1 }]),
-            ] as HighlightedIndex[],
-        })
-
+        pB.step(this.createPivotPositionStep(numbers, end, i))
         let temp = numbers[i + 1];
         numbers[i + 1] = numbers[end];
         numbers[end] = temp;
+        pB.step(this.createPivotPositionStep(numbers, end, i))
 
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [
-                { type: 'current', index: end },
-                ...((i + 1) === end ? [] : [{ type: 'current', index: i + 1 }]),
-            ] as HighlightedIndex[],
-        })
         return i + 1;
+    }
+
+    private createSwapStep(numbers: number[], j: number, i: number): SortSimulationStep {
+        return SortSimulationStepFactory.create(numbers,
+            [
+                { color: SortColor.CURRENT, index: j },
+                ...(i === j ? [] : [{ color: SortColor.CURRENT, index: i }]),
+            ])
+    }
+
+    private createCompareStep(numbers: number[], end: number, j: number, i: number): SortSimulationStep {
+        return SortSimulationStepFactory.create(numbers,
+            [
+                { color: SortColor.CURRENT, index: end },
+                { color: SortColor.CURRENT, index: j },
+                ...(i + 1 === j ? [] : [{ color: SortColor.THRESHOLD, index: i + 1 }]),
+            ])
+    }
+
+    private createPivotPositionStep(numbers: number[], end: number, i: number): SortSimulationStep {
+        return SortSimulationStepFactory.create(numbers,
+            [
+                { color: SortColor.CURRENT, index: end },
+                ...(i + 1 === end ? [] : [{ color: SortColor.CURRENT, index: i + 1 }]),
+            ])
     }
 }
