@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<{
     scale?: number
     maxHeight?: string
 }>(), {
+
     scale: 1,
 })
 
