@@ -8,7 +8,7 @@ export class BubbleSort implements SortAlgorithmImplementation {
     sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(values.length * ((values.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step(SortSimulationStepFactory.createSimulationStep(values))
+        pB.step(SortSimulationStepFactory.create(values))
         let item = -1
         for (let lastElement = values.length - 1; lastElement > 0; lastElement--) {
             for (let pointer = 0; pointer < lastElement; pointer++) {
@@ -22,7 +22,7 @@ export class BubbleSort implements SortAlgorithmImplementation {
                 progressTracker?.trackNext()
             }
         }
-        pB.step(SortSimulationStepFactory.createSimulationStep(values))
+        pB.step(SortSimulationStepFactory.create(values))
         return pB.build()
     }
 
@@ -36,7 +36,7 @@ export class BubbleSort implements SortAlgorithmImplementation {
     }
 
     private createStep(values: number[], pointer: number, lastElement: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(values,
+        return SortSimulationStepFactory.create(values,
             [
                 { color: SortColor.CURRENT, index: pointer },
                 { color: SortColor.CURRENT, index: pointer + 1 },

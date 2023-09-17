@@ -14,9 +14,9 @@ export class QuickSort implements SortAlgorithmImplementation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         progressTracker?.init(numbers.length)
 
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
         this.quickSort(numbers, 0, numbers.length - 1, pB, progressTracker)
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
 
         return pB.build()
     }
@@ -78,7 +78,7 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     private createSwapStep(numbers: number[], j: number, i: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: j},
                 ...(i === j ? [] : [{color: SortColor.CURRENT, index: i}]),
@@ -86,7 +86,7 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     private createCompareStep(numbers: number[], end: number, j: number, i: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: end},
                 {color: SortColor.CURRENT, index: j},
@@ -95,7 +95,7 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     private createPivotPositionStep(numbers: number[], end: number, i: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: end},
                 ...(i + 1 === end ? [] : [{color: SortColor.CURRENT, index: i+1}]),

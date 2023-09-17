@@ -17,14 +17,14 @@ describe('InsertionSort', () => {
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
             steps: [
-                SortSimulationStepFactory.createSimulationStep([3, 4, 2, 7]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
-                SortSimulationStepFactory.createSimulationStep([2, 3, 4, 7])
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
+                SortSimulationStepFactory.create([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
+                SortSimulationStepFactory.create([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7])
             ]
         }
 
@@ -36,14 +36,14 @@ describe('InsertionSort', () => {
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
             steps: [
-                SortSimulationStepFactory.createSimulationStep([3, 4, 2, 7]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
-                SortSimulationStepFactory.createHighlightedSimulationStep([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
-                SortSimulationStepFactory.createSimulationStep([2, 3, 4, 7])
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
+                SortSimulationStepFactory.create([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
+                SortSimulationStepFactory.create([3, 4, 2, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([3, 2, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
+                SortSimulationStepFactory.create([2, 3, 4, 7])
             ]
         }
 

@@ -19,7 +19,7 @@ describe('HeapSort', () => {
         const expected: SortSimulation = {
             steps: [
 
-                SortSimulationStepFactory.createSimulationStep([3, 4, 2, 7]),
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
                 { sortedValues: [{value: 3, displayColor: colors[0]}, {value: 4, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 7, displayColor: SortColor.CURRENT}] },
                 { sortedValues: [{value: 3, displayColor: colors[0]}, {value: 7, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 4, displayColor: SortColor.CURRENT}] },
                 { sortedValues: [{value: 3, displayColor: SortColor.CURRENT}, {value: 7, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 4, displayColor: colors[2]}] },
@@ -38,7 +38,7 @@ describe('HeapSort', () => {
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.CURRENT }, {value: 4, displayColor: SortColor.THRESHOLD }, {value: 7, displayColor: SortColor.NEUTRAL}] },
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.THRESHOLD }, {value: 4, displayColor: SortColor.NEUTRAL }, {value: 7, displayColor: SortColor.NEUTRAL}] },
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.THRESHOLD }, {value: 4, displayColor: SortColor.NEUTRAL }, {value: 7, displayColor: SortColor.NEUTRAL}] },
-                SortSimulationStepFactory.createSimulationStep([2, 3, 4, 7])
+                SortSimulationStepFactory.create([2, 3, 4, 7])
             ]
         }
 
@@ -52,7 +52,7 @@ describe('HeapSort', () => {
         const expected: SortSimulation = {
             steps: [
 
-                SortSimulationStepFactory.createSimulationStep([3, 4, 2, 7]),
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
                 { sortedValues: [{value: 3, displayColor: colors[0]}, {value: 4, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 7, displayColor: SortColor.CURRENT}] },
                 { sortedValues: [{value: 3, displayColor: colors[0]}, {value: 7, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 4, displayColor: SortColor.CURRENT}] },
                 { sortedValues: [{value: 3, displayColor: SortColor.CURRENT}, {value: 7, displayColor: SortColor.CURRENT }, {value: 2, displayColor: colors[1] }, {value: 4, displayColor: colors[2]}] },
@@ -71,7 +71,7 @@ describe('HeapSort', () => {
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.CURRENT }, {value: 4, displayColor: SortColor.THRESHOLD }, {value: 7, displayColor: SortColor.NEUTRAL}] },
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.THRESHOLD }, {value: 4, displayColor: SortColor.NEUTRAL }, {value: 7, displayColor: SortColor.NEUTRAL}] },
                 { sortedValues: [{value: 2, displayColor: SortColor.CURRENT}, {value: 3, displayColor: SortColor.THRESHOLD }, {value: 4, displayColor: SortColor.NEUTRAL }, {value: 7, displayColor: SortColor.NEUTRAL}] },
-                SortSimulationStepFactory.createSimulationStep([2, 3, 4, 7])
+                SortSimulationStepFactory.create([2, 3, 4, 7])
             ]
         }
 

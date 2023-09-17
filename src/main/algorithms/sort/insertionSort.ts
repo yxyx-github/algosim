@@ -8,7 +8,7 @@ export class InsertionSort implements SortAlgorithmImplementation {
     sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(values.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step(SortSimulationStepFactory.createSimulationStep(values))
+        pB.step(SortSimulationStepFactory.create(values))
         let item = -1
         for (let currentElement = 1; currentElement < values.length; currentElement++) {
             progressTracker?.trackNext()
@@ -24,7 +24,7 @@ export class InsertionSort implements SortAlgorithmImplementation {
             }
         }
         progressTracker?.trackNext()
-        pB.step(SortSimulationStepFactory.createSimulationStep(values))
+        pB.step(SortSimulationStepFactory.create(values))
         return pB.build()
     }
 
@@ -33,7 +33,7 @@ export class InsertionSort implements SortAlgorithmImplementation {
     }
 
     private createStep(values: number[], pointer: number, currentElement: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(values,
+        return SortSimulationStepFactory.create(values,
             [
                 {color: SortColor.CURRENT, index: pointer},
                 {color: SortColor.CURRENT, index: pointer + 1},

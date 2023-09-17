@@ -16,7 +16,7 @@ export class HeapSort implements SortAlgorithmImplementation {
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
 
         for (let i = Math.floor(numbers.length / 2) - 1; i >= 0; i--) {
             this.heapify(numbers, numbers.length, i, pB, progressTracker);
@@ -35,7 +35,7 @@ export class HeapSort implements SortAlgorithmImplementation {
             this.heapify(numbers, i, 0, pB, progressTracker);
         }
 
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
         return pB.build()
     }
 

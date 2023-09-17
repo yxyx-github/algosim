@@ -14,9 +14,9 @@ export class MergeSort implements SortAlgorithmImplementation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
 
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
         this.mergeSort(numbers, 0, numbers.length - 1, pB, progressTracker)
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
 
         return pB.build()
     }
@@ -72,7 +72,7 @@ export class MergeSort implements SortAlgorithmImplementation {
     }
 
     private createCompareStep(numbers: number[], left: number, mid: number, right: number, i: number, j: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: i},
                 {color: SortColor.CURRENT, index: j},
@@ -83,7 +83,7 @@ export class MergeSort implements SortAlgorithmImplementation {
     }
 
     private createLeftLeftoverStep(numbers: number[], left: number, mid: number, right: number, i: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: i},
                 ...(i === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
@@ -93,7 +93,7 @@ export class MergeSort implements SortAlgorithmImplementation {
     }
 
     private createRightLeftoverStep(numbers: number[], left: number, mid: number, right: number, j: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: j},
                 {color: SortColor.THRESHOLD, index: left},
@@ -103,7 +103,7 @@ export class MergeSort implements SortAlgorithmImplementation {
     }
 
     private createInsertStep(numbers: number[], left: number, right: number, l: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: l + left},
                 ...(l + left === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),

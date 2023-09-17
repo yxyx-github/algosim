@@ -9,7 +9,7 @@ export class SelectionSort implements SortAlgorithmImplementation {
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length * ((numbers.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
         for (let i = 0; i < numbers.length; i++) {
             let minIndex = i
             for (let j = i + 1; j < numbers.length; j++) {
@@ -27,7 +27,7 @@ export class SelectionSort implements SortAlgorithmImplementation {
 
             pB.step(this.createSwapStep(numbers, i, minIndex))
         }
-        pB.step(SortSimulationStepFactory.createSimulationStep(numbers))
+        pB.step(SortSimulationStepFactory.create(numbers))
 
         return pB.build()
     }
@@ -47,7 +47,7 @@ export class SelectionSort implements SortAlgorithmImplementation {
     }
 
     private createCompareStep(numbers: number[], i: number, j: number, minIndex: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: minIndex},
                 {color: SortColor.CURRENT, index: j},
@@ -56,7 +56,7 @@ export class SelectionSort implements SortAlgorithmImplementation {
     }
 
     private createSwapStep(numbers: number[], i: number, minIndex: number): SortSimulationStep {
-        return SortSimulationStepFactory.createHighlightedSimulationStep(numbers,
+        return SortSimulationStepFactory.create(numbers,
             [
                 {color: SortColor.CURRENT, index: i},
                 ...(i === minIndex ? [] : [{color: SortColor.CURRENT, index: minIndex}]),
