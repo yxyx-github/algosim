@@ -1,7 +1,7 @@
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type {
     SortAlgorithmImplementation,
-    SortIndex,
+    SortedValue,
     SortSimulation,
     SortSimulationStep
 } from '@/main/algorithms/sort/types'
@@ -106,7 +106,7 @@ export class HeapSort implements SortAlgorithmImplementation {
     }
 
     private createBaseLayer(numbers: number[], n: number): SortSimulationStep {
-        let sortedValues: SortIndex[] = new Array(numbers.length)
+        let sortedValues: SortedValue[] = new Array(numbers.length)
         let k: number = 0;
         for (let i= 0; i < n; i++) {
             if (Math.log2(i+1) % 1 === 0) {

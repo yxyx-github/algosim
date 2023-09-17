@@ -31,13 +31,13 @@ export interface SortAlgorithmImplementation {
     description: () => string[],
 }
 
-export interface SortIndex {
+export interface SortedValue {
     value: number
     displayColor: string
 }
 
 export interface SortSimulationStep extends SimulationStep {
-    sortedValues: SortIndex[]
+    sortedValues: SortedValue[]
 }
 
 export interface SortSimulation extends Simulation<SortSimulationStep> {
