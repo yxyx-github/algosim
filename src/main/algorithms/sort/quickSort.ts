@@ -5,8 +5,8 @@ import type {
 } from '@/main/algorithms/sort/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type { TrackableProgress } from '@/main/progressTracker/types'
-import {SortSimulationStepFactory} from '@/main/algorithms/sort/sortSimulationStepFactory'
-import {SortColor} from '@/main/algorithms/sort/types'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/sortColor'
 
 export class QuickSort implements SortAlgorithmImplementation {
 

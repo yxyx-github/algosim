@@ -6,7 +6,7 @@ import type {
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
-import { SortColor } from '@/main/algorithms/sort/types'
+import { SortColor } from '@/main/algorithms/sort/sortColor'
 
 export class MergeSort implements SortAlgorithmImplementation {
 

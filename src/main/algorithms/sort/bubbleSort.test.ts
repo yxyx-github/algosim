@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
 import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
-import { SortColor } from '@/main/algorithms/sort/types'
+import { SortColor } from '@/main/algorithms/sort/sortColor'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
 
 describe('BubbleSort', () => {
