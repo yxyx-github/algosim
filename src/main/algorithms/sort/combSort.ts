@@ -1,17 +1,16 @@
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
-import type { HighlightedIndex, SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
+import type { SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class CombSort implements SortAlgorithmImplementation {
 
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(this.calculateGapSteps(numbers.length))
         const pB = new ProtocolBuilder<SortSimulationStep>()
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [],
-        })
 
+        pB.step(SortSimulationStepFactory.create(numbers))
         let gap = numbers.length
         let swapped = false
 
@@ -35,10 +34,7 @@ export class CombSort implements SortAlgorithmImplementation {
             }
         }
         progressTracker?.trackNext()
-        pB.step({
-            sortedValues: numbers,
-            highlightedIndices: [],
-        })
+        pB.step(SortSimulationStepFactory.create(numbers))
         return pB.build()
     }
 
@@ -47,13 +43,11 @@ export class CombSort implements SortAlgorithmImplementation {
     }
 
     private createStep(numbers: number[], pointer: number, gap: number): SortSimulationStep {
-        return {
-            sortedValues: numbers,
-            highlightedIndices: [
-                { type: 'current', index: pointer },
-                { type: 'current', index: pointer + gap },
-            ] as HighlightedIndex[],
-        }
+        return SortSimulationStepFactory.create(numbers,
+            [
+                { color: SortColor.CURRENT, index: pointer },
+                { color: SortColor.CURRENT, index: pointer + gap },
+            ])
     }
 
     private calculateGapSteps(n: number) : number {
