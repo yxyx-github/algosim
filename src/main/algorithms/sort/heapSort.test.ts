@@ -2,6 +2,8 @@ import { describe, expect, test, vi } from 'vitest'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
 import { HeapSort } from '@/main/algorithms/sort/heapSort'
+import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 describe('HeapSort', () => {
     const mockTracker: TrackableProgress = {
@@ -12,30 +14,32 @@ describe('HeapSort', () => {
     }
 
     test('sort numbers with protocol', () => {
+        const colors: string[] = ['#e89ffa', '#a03cef', '#f323a6', '#fa7a37', '#f4e476', '#c0ed4c', '#6ef6a6', '#3794df', '#283af3', '#0f1e7f']
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
             steps: [
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 7, 2, 4], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 7, 2, 4], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }] },
-                { sortedValues: [7, 3, 2, 4], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }] },
-                { sortedValues: [7, 3, 2, 4], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [7, 4, 2, 3], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [7, 4, 2, 3], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
-                { sortedValues: [4, 3, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [4, 3, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 2 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 2 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'threshold', index: 1 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'threshold', index: 1 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [] },
-            ],
+
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
+                { sortedValues: [{ value: 3, displayColor: colors[0] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: colors[0] }, { value: 7, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: colors[2] }] },
+                { sortedValues: [{ value: 7, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: colors[2] }] },
+                { sortedValues: [{ value: 7, displayColor: colors[0] }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 7, displayColor: colors[0] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 3, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 7, displayColor: SortColor.CURRENT }, { value: 4, displayColor: colors[1] }, { value: 2, displayColor: colors[1] }, { value: 3, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: colors[1] }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 4, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 4, displayColor: SortColor.CURRENT }, { value: 3, displayColor: colors[1] }, { value: 2, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.THRESHOLD }, { value: 4, displayColor: SortColor.NEUTRAL }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.THRESHOLD }, { value: 4, displayColor: SortColor.NEUTRAL }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                SortSimulationStepFactory.create([2, 3, 4, 7])
+            ]
         }
 
         const result = new HeapSort().sort(input)
@@ -43,30 +47,32 @@ describe('HeapSort', () => {
     })
 
     test('sort numbers with protocol and track progress', () => {
+        const colors: string[] = ['#e89ffa', '#a03cef', '#f323a6', '#fa7a37', '#f4e476', '#c0ed4c', '#6ef6a6', '#3794df', '#283af3', '#0f1e7f']
         const input = [3, 4, 2, 7]
         const expected: SortSimulation = {
             steps: [
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 7, 2, 4], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 7, 2, 4], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }] },
-                { sortedValues: [7, 3, 2, 4], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }] },
-                { sortedValues: [7, 3, 2, 4], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [7, 4, 2, 3], highlightedIndices: [{ type: 'current', index: 1 }, { type: 'current', index: 3 }] },
-                { sortedValues: [7, 4, 2, 3], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 3 }] },
-                { sortedValues: [3, 4, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 }, { type: 'threshold', index: 3 }] },
-                { sortedValues: [4, 3, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [4, 3, 2, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 2 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 2 },  { type: 'threshold', index: 3 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [3, 2, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'current', index: 1 },  { type: 'threshold', index: 2 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'threshold', index: 1 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [{ type: 'current', index: 0 }, { type: 'threshold', index: 1 }] },
-                { sortedValues: [2, 3, 4, 7], highlightedIndices: [] },
-            ],
+
+                SortSimulationStepFactory.create([3, 4, 2, 7]),
+                { sortedValues: [{ value: 3, displayColor: colors[0] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: colors[0] }, { value: 7, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: colors[2] }] },
+                { sortedValues: [{ value: 7, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: colors[2] }] },
+                { sortedValues: [{ value: 7, displayColor: colors[0] }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 7, displayColor: colors[0] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 3, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 7, displayColor: SortColor.CURRENT }, { value: 4, displayColor: colors[1] }, { value: 2, displayColor: colors[1] }, { value: 3, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: colors[1] }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.CURRENT }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 4, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: colors[1] }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 4, displayColor: SortColor.CURRENT }, { value: 3, displayColor: colors[1] }, { value: 2, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: colors[1] }, { value: 4, displayColor: SortColor.CURRENT }, { value: 7, displayColor: SortColor.THRESHOLD }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 3, displayColor: SortColor.CURRENT }, { value: 2, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.CURRENT }, { value: 4, displayColor: SortColor.THRESHOLD }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.THRESHOLD }, { value: 4, displayColor: SortColor.NEUTRAL }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                { sortedValues: [{ value: 2, displayColor: SortColor.CURRENT }, { value: 3, displayColor: SortColor.THRESHOLD }, { value: 4, displayColor: SortColor.NEUTRAL }, { value: 7, displayColor: SortColor.NEUTRAL }] },
+                SortSimulationStepFactory.create([2, 3, 4, 7])
+            ]
         }
 
         const spyInit = vi.spyOn(mockTracker, 'init')
