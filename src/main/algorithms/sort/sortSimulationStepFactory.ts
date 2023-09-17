@@ -6,7 +6,7 @@ export class SortSimulationStepFactory {
     static createHighlightedSimulationStep(sortedValues: number[], highlightedIndices: {color: string, index: number}[]): SortSimulationStep  {
         return {
             sortedValues: sortedValues.map((value, index) => {
-                return {value: value, displayColor: highlightedIndices.find(highlightedIndex => highlightedIndex.index == index)?.color ?? SortColor.NEUTRAL}
+                return {value: value, displayColor: highlightedIndices.find(highlightedIndex => highlightedIndex.index === index)?.color ?? SortColor.NEUTRAL}
             })
         }
     }
