@@ -7,12 +7,15 @@ export class SortSimulationStepFactory {
         if (highlightedIndices === undefined) {
             return {
                 sortedValues: sortedValues.map(value => {
+
                     return {value: value, displayColor: SortColor.NEUTRAL}
                 })
             }
         }
+
         return {
             sortedValues: sortedValues.map((value, index) => {
+
                 return {value: value, displayColor: highlightedIndices.find(highlightedIndex => highlightedIndex.index === index)?.color ?? SortColor.NEUTRAL}
             })
         }
