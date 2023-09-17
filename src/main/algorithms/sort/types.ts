@@ -10,6 +10,12 @@ export enum SortAlgorithm {
     SELECTION,
 }
 
+export enum SortColor {
+    NEUTRAL = '#8b8b8b',
+    CURRENT= '#ff0000',
+    THRESHOLD ='#000000',
+}
+
 export enum SortInputMode {
     GENERATE,
     CUSTOM,

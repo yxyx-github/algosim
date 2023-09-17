@@ -3,7 +3,7 @@ import { SelectionSort } from '@/main/algorithms/sort/selectionSort'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
-import { SortColor } from '@/main/algorithms/sort/sortColor'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 describe('SelectionSort', () => {
     const mockTracker: TrackableProgress = {

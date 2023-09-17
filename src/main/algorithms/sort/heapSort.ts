@@ -7,7 +7,7 @@ import type {
 } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
-import { SortColor } from '@/main/algorithms/sort/sortColor'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class HeapSort implements SortAlgorithmImplementation {
 

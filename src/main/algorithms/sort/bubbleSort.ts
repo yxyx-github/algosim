@@ -2,7 +2,7 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import type {SortAlgorithmImplementation, SortSimulation, SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
-import { SortColor } from '@/main/algorithms/sort/sortColor'
+import { SortColor } from '@/main/algorithms/sort/types'
 
 export class BubbleSort implements SortAlgorithmImplementation {
     sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
