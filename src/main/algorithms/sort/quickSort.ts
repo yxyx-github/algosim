@@ -80,25 +80,25 @@ export class QuickSort implements SortAlgorithmImplementation {
     private createSwapStep(numbers: number[], j: number, i: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: j},
-                ...(i === j ? [] : [{color: SortColor.CURRENT, index: i}]),
+                { color: SortColor.CURRENT, index: j },
+                ...(i === j ? [] : [{ color: SortColor.CURRENT, index: i }]),
             ])
     }
 
     private createCompareStep(numbers: number[], end: number, j: number, i: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: end},
-                {color: SortColor.CURRENT, index: j},
-                ...(i + 1 === j ? [] : [{color: SortColor.THRESHOLD, index: i+1}]),
+                { color: SortColor.CURRENT, index: end },
+                { color: SortColor.CURRENT, index: j },
+                ...(i + 1 === j ? [] : [{ color: SortColor.THRESHOLD, index: i + 1 }]),
             ])
     }
 
     private createPivotPositionStep(numbers: number[], end: number, i: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: end},
-                ...(i + 1 === end ? [] : [{color: SortColor.CURRENT, index: i+1}]),
+                { color: SortColor.CURRENT, index: end },
+                ...(i + 1 === end ? [] : [{ color: SortColor.CURRENT, index: i + 1 }]),
             ])
     }
 }

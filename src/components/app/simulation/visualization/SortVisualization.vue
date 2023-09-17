@@ -30,10 +30,8 @@ const viewBoxWidth = computed(() => props.step.sortedValues.length)
 const viewBoxHeight = computed(() => maxValue.value)
 const maxSelfHeight = computed(() => viewBoxHeight.value * props.scale)
 const maxHeight = computed(() => props.maxHeight === undefined ? `${maxSelfHeight.value}rem` : `min(${props.maxHeight},${maxSelfHeight.value}rem)`)
-
-
-
 </script>
+
 <style scoped>
 
 </style>

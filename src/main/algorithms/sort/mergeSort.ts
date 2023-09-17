@@ -74,40 +74,40 @@ export class MergeSort implements SortAlgorithmImplementation {
     private createCompareStep(numbers: number[], left: number, mid: number, right: number, i: number, j: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: i},
-                {color: SortColor.CURRENT, index: j},
-                ...(i === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
-                ...(i === mid ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
-                ...(j === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+                { color: SortColor.CURRENT, index: i },
+                { color: SortColor.CURRENT, index: j },
+                ...(i === left ? [] : [{ color: SortColor.THRESHOLD, index: left }]),
+                ...(i === mid ? [] : [{ color: SortColor.THRESHOLD, index: mid }]),
+                ...(j === right ? [] : [{ color: SortColor.THRESHOLD, index: right }]),
             ])
     }
 
     private createLeftLeftoverStep(numbers: number[], left: number, mid: number, right: number, i: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: i},
-                ...(i === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
-                ...(i === mid ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
-                {color: SortColor.THRESHOLD, index: right},
+                { color: SortColor.CURRENT, index: i },
+                ...(i === left ? [] : [{ color: SortColor.THRESHOLD, index: left }]),
+                ...(i === mid ? [] : [{ color: SortColor.THRESHOLD, index: mid }]),
+                { color: SortColor.THRESHOLD, index: right },
             ])
     }
 
     private createRightLeftoverStep(numbers: number[], left: number, mid: number, right: number, j: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: j},
-                {color: SortColor.THRESHOLD, index: left},
-                ...(mid === left ? [] : [{color: SortColor.THRESHOLD, index: mid}]),
-                ...(j === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+                { color: SortColor.CURRENT, index: j },
+                { color: SortColor.THRESHOLD, index: left },
+                ...(mid === left ? [] : [{ color: SortColor.THRESHOLD, index: mid }]),
+                ...(j === right ? [] : [{ color: SortColor.THRESHOLD, index: right }]),
             ])
     }
 
     private createInsertStep(numbers: number[], left: number, right: number, l: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: l + left},
-                ...(l + left === left ? [] : [{color: SortColor.THRESHOLD, index: left}]),
-                ...(l + left === right ? [] : [{color: SortColor.THRESHOLD, index: right}]),
+                { color: SortColor.CURRENT, index: l + left },
+                ...(l + left === left ? [] : [{ color: SortColor.THRESHOLD, index: left }]),
+                ...(l + left === right ? [] : [{ color: SortColor.THRESHOLD, index: right }]),
             ])
     }
 }

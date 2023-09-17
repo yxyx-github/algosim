@@ -35,9 +35,9 @@ export class InsertionSort implements SortAlgorithmImplementation {
     private createStep(values: number[], pointer: number, currentElement: number): SortSimulationStep {
         return SortSimulationStepFactory.create(values,
             [
-                {color: SortColor.CURRENT, index: pointer},
-                {color: SortColor.CURRENT, index: pointer + 1},
-                ...(pointer + 1 === currentElement ? [] : [{color: SortColor.THRESHOLD, index: currentElement}]),
+                { color: SortColor.CURRENT, index: pointer },
+                { color: SortColor.CURRENT, index: pointer + 1 },
+                ...(pointer + 1 === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
             ])
     }
 }

@@ -81,8 +81,8 @@ export class HeapSort implements SortAlgorithmImplementation {
         if (i !== 0) {
             step.sortedValues[i].displayColor = SortColor.CURRENT;
         }
-        if (i+1 !== numbers.length) {
-            step.sortedValues[i+1].displayColor = SortColor.THRESHOLD;
+        if (i + 1 !== numbers.length) {
+            step.sortedValues[i + 1].displayColor = SortColor.THRESHOLD;
         }
         return step
     }
@@ -90,16 +90,16 @@ export class HeapSort implements SortAlgorithmImplementation {
     private createBaseLayer(numbers: number[], n: number): SortSimulationStep {
         let sortedValues: SortedValue[] = new Array(numbers.length)
         let k: number = 0;
-        for (let i= 0; i < n; i++) {
-            if (Math.log2(i+1) % 1 === 0) {
-                k = (k+1) % (this.colors.length+1)
+        for (let i = 0; i < n; i++) {
+            if (Math.log2(i + 1) % 1 === 0) {
+                k = (k + 1) % (this.colors.length + 1)
             }
-            sortedValues[i] = {value: numbers[i], displayColor: this.colors[k-1]}
+            sortedValues[i] = { value: numbers[i], displayColor: this.colors[k - 1] }
         }
-        for (let i= n; i < numbers.length; i++) {
-            sortedValues[i] = {value: numbers[i], displayColor: SortColor.NEUTRAL}
+        for (let i = n; i < numbers.length; i++) {
+            sortedValues[i] = { value: numbers[i], displayColor: SortColor.NEUTRAL }
         }
-        return {sortedValues}
+        return { sortedValues }
     }
 
     description(): string[] {

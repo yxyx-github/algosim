@@ -49,17 +49,17 @@ export class SelectionSort implements SortAlgorithmImplementation {
     private createCompareStep(numbers: number[], i: number, j: number, minIndex: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: minIndex},
-                {color: SortColor.CURRENT, index: j},
-                ...(i === minIndex ? [] : [{color: SortColor.THRESHOLD, index: i}]),
+                { color: SortColor.CURRENT, index: minIndex },
+                { color: SortColor.CURRENT, index: j },
+                ...(i === minIndex ? [] : [{ color: SortColor.THRESHOLD, index: i }]),
             ])
     }
 
     private createSwapStep(numbers: number[], i: number, minIndex: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
-                {color: SortColor.CURRENT, index: i},
-                ...(i === minIndex ? [] : [{color: SortColor.CURRENT, index: minIndex}]),
+                { color: SortColor.CURRENT, index: i },
+                ...(i === minIndex ? [] : [{ color: SortColor.CURRENT, index: minIndex }]),
             ])
     }
 }
