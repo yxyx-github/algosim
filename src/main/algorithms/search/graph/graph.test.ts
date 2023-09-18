@@ -45,7 +45,7 @@ describe('Graph', () => {
         const e2 = new Edge<string, string>(v1, v3, 3, 'e2')
         const e3 = new Edge<string, string>(v3, v1, 2, 'e3')
         const e4 = new Edge<string, string>(v1, v3, 8, 'e4')
-        const e5 = new Edge<string, string>(v2, v3, 9, 'e5')
+        const e5 = new Edge<string, string>(v2, v3, 8, 'e5')
         const e6 = new Edge<string, string>(v1, v3, 9, 'e6')
 
         g.addEdge(e1)
@@ -63,6 +63,7 @@ describe('Graph', () => {
         expect(g.hasEdge(e3)).to.true
         expect(g.hasEdge(e4)).to.true
         expect(g.hasEdge(e5)).to.false
+        expect(g.hasEdge(e5, true)).to.false
         expect(g.hasEdge(e6)).to.true
         expect(g.hasEdge(e6, true)).to.false
     })
