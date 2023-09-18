@@ -38,10 +38,6 @@ export class CombSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string[] {
-        return ['Combsort description']
-    }
-
     private createStep(numbers: number[], pointer: number, gap: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
@@ -57,5 +53,16 @@ export class CombSort implements SortAlgorithmImplementation {
             n = Math.floor((n*10)/13)
         }
         return count
+    }
+
+    description(): string[] {
+        return [`
+        Combsort ist ein In-Place Sortieralgorithmus. Die Funktionsweise von Combsort basiert auf Bubblesort. Anders als
+        bei Bubblesort werden allerdings nicht nur benachbarte Elemente verglichen. Stattdessen beginnt Combsort damit
+        Elemente mit einer bestimmten Entfernung zueinander zu vergleichen und optional zu tauschen. Diese Entfernung wird
+        gap genannt. Nach jeder Iteration wird das gap durch 1,3 dividiert. Wenn mit einem gap von 1 ein Durchlauf ohne
+        Vertauschung erfolgt, dann ist die Liste sortiert. Die Laufzeitkomplexität von Combsort beträgt O(n²). Da es sich
+        bei Combsort um ein In-Place-Verfahren handelt, wird kein weiterer Speicherplatz benötigt.`
+        ]
     }
 }
