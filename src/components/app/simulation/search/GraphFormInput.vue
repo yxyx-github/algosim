@@ -16,8 +16,10 @@
 <script setup lang="ts">
 import GraphFormItemVisualization from '@/components/app/simulation/search/visualization/GraphFormItemVisualization.vue'
 import Button from 'primevue/button'
-import { computed, ComputedRef } from 'vue'
-import { GraphForm, GraphFormItem, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { computed } from 'vue'
+import type { ComputedRef, WritableComputedRef } from 'vue'
+import type { GraphForm, GraphFormItem } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 const props = defineProps<{
     modelValue: GraphForm
@@ -27,7 +29,7 @@ const emit = defineEmits<{
     'update:modelValue': [modelValue: GraphForm]
 }>()
 
-const graphForm: ComputedRef<GraphForm> = computed({
+const graphForm: WritableComputedRef<GraphForm> = computed({
     get: () => props.modelValue,
     set: (value) => emit('update:modelValue', value),
 })
