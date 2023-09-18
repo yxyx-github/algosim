@@ -28,16 +28,16 @@
 </template>
 
 <script setup lang="ts">
-import type { GraphFormItem } from '@/main/algorithms/search/graphForm/types'
+import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { computed } from 'vue'
 
 const emit = defineEmits<{
-    'update:item': [item: GraphFormItem],
+    'update:item': [item: GraphFormItemData],
 }>()
 
 const props = withDefaults(defineProps<{
-    item: GraphFormItem,
+    item: GraphFormItemData,
     scale?: number,
 }>(), {
     scale: 1,

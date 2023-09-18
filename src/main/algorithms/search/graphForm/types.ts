@@ -1,6 +1,8 @@
-export type GraphForm = GraphFormItem[][]
+import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
-export type GraphFormItem = {
+export type GraphFormGrid = GraphFormItem[][]
+
+export type GraphFormItemData = {
     type: GraphFormItemType,
     label: string,
     coords: Coords,

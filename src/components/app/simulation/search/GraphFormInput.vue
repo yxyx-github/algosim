@@ -5,7 +5,7 @@
                 :style="`grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
         >
             <div v-if="isEmpty"></div>
-            <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item" @update:item="updateItem"/>
+            <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item.data()" @update:item="updateItem"/>
         </div>
         <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
         <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
@@ -16,11 +16,11 @@
 <script setup lang="ts">
 import GraphFormItemVisualization from '@/components/app/simulation/search/visualization/GraphFormItemVisualization.vue'
 import Button from 'primevue/button'
-import type { ComputedRef, WritableComputedRef } from 'vue'
+import type { WritableComputedRef } from 'vue'
 import { computed } from 'vue'
-import type { GraphForm, GraphFormItem } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
-import { getBlankGraphFormItem, graphFormToItems } from '@/main/algorithms/search/graphForm'
+import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
+import type { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
+import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const props = defineProps<{
     modelValue: GraphForm
@@ -35,48 +35,26 @@ const graphForm: WritableComputedRef<GraphForm> = computed({
     set: (value) => emit('update:modelValue', value),
 })
 
-const graphFormItems: ComputedRef<GraphFormItem[]> = computed(() => graphFormToItems(graphForm.value))
+const graphFormItems = computed(() => graphForm.value.toItems())
 
-const rows = computed(() => graphForm.value.length)
-const cols = computed(() => graphForm.value[0]?.length ?? 0)
-const isEmpty = computed(() => rows.value === 0 && cols.value === 0)
+const cols = computed(() => graphForm.value.cols())
+const isEmpty = computed(() => graphForm.value.isEmpty())
 
 function addRow() {
-    const oldCols = cols.value
-    if (oldCols === 0) {
-        clear()
-    } else {
-        const newRow: GraphFormItem[] = []
-        for (let i = 0; i < oldCols; i++) {
-            newRow.push(getBlankGraphFormItem(i, rows.value))
-        }
-        graphForm.value.push(newRow)
-    }
+    graphForm.value.addRow()
 }
 
 function addColumn() {
-    const oldCols = cols.value
-    if (oldCols === 0) {
-        clear()
-    } else {
-        graphForm.value.forEach((row, index) => row.push(getBlankGraphFormItem(oldCols, index)))
-    }
+    graphForm.value.addColumn()
 }
 
 function clear() {
-    graphForm.value = [[getBlankGraphFormItem(0, 0)]]
+    graphForm.value.clear()
 }
 
-clear()
-
-function updateItem(item: GraphFormItem) {
-    graphForm.value[item.coords.y][item.coords.x] = {
-        ...item,
-        type: Object.values(item.connections)
-            .filter(v => v)
-            .length === 2
-            ? GraphFormItemType.EDGE
-            : GraphFormItemType.VERTEX }
+function updateItem(item: GraphFormItemData) {
+    // TODO: change arg type to GraphFormItem
+    graphForm.value.updateItem(new GraphFormItem(item))
 }
 </script>
 

@@ -20,16 +20,16 @@ import FContainer from '@/components/lib/layout/FContainer.vue'
 import GraphFormInput from '@/components/app/simulation/search/GraphFormInput.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import type { GraphForm } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
-import type { Graph } from '@/main/algorithms/search/graph/graph'
+import { Graph } from '@/main/algorithms/search/graph/graph'
 import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 
-const graphForm: Ref<GraphForm> = ref([])
+const graphForm = ref(new GraphForm())
 
 function submit() {
     const converter = new GraphFormConverter()
-    const graph: Graph<VertexValue, EdgeValue> = converter.graphFromForm(graphForm.value)
+    const graph: Graph<VertexValue, EdgeValue> = converter.toGraph(graphForm.value)
 }
 </script>
 
