@@ -1,10 +1,9 @@
-import type { GraphConfig } from '@/main/algorithms/search/graph/types'
-import type { Vertex } from '@/main/algorithms/search/graph/vertex'
-import type { Edge } from '@/main/algorithms/search/graph/edge'
+import { Vertex } from '@/main/algorithms/search/graph/vertex'
+import { Edge } from '@/main/algorithms/search/graph/edge'
 
-export class Graph<T>{
+export class Graph<T, S>{
     private vertices: Vertex<T>[] = []
-    private edges: Edge<T>[] = []
+    private edges: Edge<T, S>[] = []
 
     getVertices() {
         return this.vertices
@@ -28,7 +27,7 @@ export class Graph<T>{
         return this.edges
     }
 
-    hasEdge(edge: Edge<T>, checkWeight: boolean = false) {
+    hasEdge(edge: Edge<T, S>, checkWeight: boolean = false) {
         return this.edges.some(e =>
             e.getFrom().getId() === edge.getFrom().getId() &&
             e.getTo().getId() === edge.getTo().getId() &&
@@ -36,19 +35,19 @@ export class Graph<T>{
         )
     }
 
-    addEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
-        this.addEdge(new Edge<T>(v1, v2, weight))
-        this.addEdge(new Edge<T>(v2, v1, weight))
+    addEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number, value: S) {
+        this.addEdge(new Edge<T, S>(v1, v2, weight, value))
+        this.addEdge(new Edge<T, S>(v2, v1, weight, value))
     }
 
-    addEdge(edge: Edge<T>) {
+    addEdge(edge: Edge<T, S>) {
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
             this.removeEdge(edge)
             this.edges.push(edge)
         }
     }
 
-    removeEdge(edge: Edge<T>) {
+    removeEdge(edge: Edge<T, S>) {
         this.edges = this.edges.filter(e =>
             e.getFrom().getId() !== edge.getFrom().getId() ||
             e.getTo().getId() !== edge.getTo().getId()

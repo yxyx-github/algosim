@@ -52,6 +52,8 @@ function addRow() {
                 connections: { top: false, right: false, bottom: false, left: false },
                 connect: { top: false, right: false, bottom: false, left: false },
                 highlight: { top: false, right: false, bottom: false, left: false },
+                isStart: false,
+                isEnd: false,
             })
         }
         graphForm.value.push(newRow)
@@ -70,6 +72,8 @@ function addColumn() {
             connections: { top: false, right: false, bottom: false, left: false },
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
+            isStart: false,
+            isEnd: false,
         }))
     }
 }
@@ -82,6 +86,8 @@ function clear() {
         connections: { top: false, right: false, bottom: false, left: false },
         connect: { top: false, right: false, bottom: false, left: false },
         highlight: { top: false, right: false, bottom: false, left: false },
+        isStart: false,
+        isEnd: false,
     }]]
 }
 clear()

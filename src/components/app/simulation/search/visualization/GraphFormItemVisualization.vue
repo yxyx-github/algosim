@@ -30,7 +30,6 @@
 <script setup lang="ts">
 import type { GraphFormItem } from '@/main/algorithms/search/graphForm/types'
 import { computed } from 'vue'
-import { SortSimulation } from '@/main/algorithms/sort/types'
 
 const emit = defineEmits<{
     'update:item': [item: GraphFormItem],

@@ -5,7 +5,7 @@ import { Edge } from '@/main/algorithms/search/graph/edge'
 
 describe('Graph', () => {
     test('can add and remove vertices', () => {
-        const g = new Graph<string>()
+        const g = new Graph<string, string>()
         const v1 = new Vertex<string>('v1', 'val1')
         const v2 = new Vertex<string>('v2', 'val2')
         const v3 = new Vertex<string>('v3', 'val3')
@@ -32,7 +32,7 @@ describe('Graph', () => {
     })
 
     test('can add and remove edges', () => {
-        const g = new Graph<string>()
+        const g = new Graph<string, string>()
         const v1 = new Vertex<string>('v1', 'val1')
         const v2 = new Vertex<string>('v2', 'val2')
         const v3 = new Vertex<string>('v3', 'val3')
@@ -41,10 +41,10 @@ describe('Graph', () => {
         g.addVertex(v2)
         g.addVertex(v3)
 
-        const e1 = new Edge<string>(v1, v2, 4)
-        const e2 = new Edge<string>(v1, v3, 3)
-        const e3 = new Edge<string>(v3, v1, 2)
-        const e4 = new Edge<string>(v1, v3, 8)
+        const e1 = new Edge<string, string>(v1, v2, 4, 'e1')
+        const e2 = new Edge<string, string>(v1, v3, 3, 'e2')
+        const e3 = new Edge<string, string>(v3, v1, 2, 'e3')
+        const e4 = new Edge<string, string>(v1, v3, 8, 'e4')
 
         g.addEdge(e1)
         g.addEdge(e2)
