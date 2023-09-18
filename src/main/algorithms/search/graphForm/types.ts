@@ -27,3 +27,11 @@ export enum GraphFormItemType {
     NODE,
     EDGE,
 }
+
+export type VertexValue = {
+
+}
+
+export type EdgeValue = {
+
+}
