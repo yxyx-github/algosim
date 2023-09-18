@@ -24,7 +24,7 @@ export type TRBL<T> = {
 }
 
 export enum GraphFormItemType {
-    NODE,
+    VERTEX,
     EDGE,
 }
 

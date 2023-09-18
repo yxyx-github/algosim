@@ -16,10 +16,11 @@
 <script setup lang="ts">
 import GraphFormItemVisualization from '@/components/app/simulation/search/visualization/GraphFormItemVisualization.vue'
 import Button from 'primevue/button'
-import { computed } from 'vue'
 import type { ComputedRef, WritableComputedRef } from 'vue'
+import { computed } from 'vue'
 import type { GraphForm, GraphFormItem } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { getBlankGraphFormItem, graphFormToItems } from '@/main/algorithms/search/graphForm'
 
 const props = defineProps<{
     modelValue: GraphForm
@@ -34,13 +35,7 @@ const graphForm: WritableComputedRef<GraphForm> = computed({
     set: (value) => emit('update:modelValue', value),
 })
 
-const graphFormItems: ComputedRef<GraphFormItem[]> = computed(() => {
-    let items: GraphFormItem[] = []
-    graphForm.value.forEach(row =>
-        items = items.concat(row)
-    )
-    return items
-})
+const graphFormItems: ComputedRef<GraphFormItem[]> = computed(() => graphFormToItems(graphForm.value))
 
 const rows = computed(() => graphForm.value.length)
 const cols = computed(() => graphForm.value[0]?.length ?? 0)
@@ -53,16 +48,7 @@ function addRow() {
     } else {
         const newRow: GraphFormItem[] = []
         for (let i = 0; i < oldCols; i++) {
-            newRow.push({
-                type: GraphFormItemType.NODE,
-                label: '',
-                coords: { x: i, y: rows.value },
-                connections: { top: false, right: false, bottom: false, left: false },
-                connect: { top: false, right: false, bottom: false, left: false },
-                highlight: { top: false, right: false, bottom: false, left: false },
-                isStart: false,
-                isEnd: false,
-            })
+            newRow.push(getBlankGraphFormItem(i, rows.value))
         }
         graphForm.value.push(newRow)
     }
@@ -73,36 +59,24 @@ function addColumn() {
     if (oldCols === 0) {
         clear()
     } else {
-        graphForm.value.forEach((row, index) => row.push({
-            type: GraphFormItemType.NODE,
-            label: '',
-            coords: { x: oldCols, y: index },
-            connections: { top: false, right: false, bottom: false, left: false },
-            connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
-        }))
+        graphForm.value.forEach((row, index) => row.push(getBlankGraphFormItem(oldCols, index)))
     }
 }
 
 function clear() {
-    graphForm.value = [[{
-        type: GraphFormItemType.NODE,
-        label: '',
-        coords: { x: 0, y: 0 },
-        connections: { top: false, right: false, bottom: false, left: false },
-        connect: { top: false, right: false, bottom: false, left: false },
-        highlight: { top: false, right: false, bottom: false, left: false },
-        isStart: false,
-        isEnd: false,
-    }]]
+    graphForm.value = [[getBlankGraphFormItem(0, 0)]]
 }
 
 clear()
 
 function updateItem(item: GraphFormItem) {
-    graphForm.value[item.coords.y][item.coords.x] = item
+    graphForm.value[item.coords.y][item.coords.x] = {
+        ...item,
+        type: Object.values(item.connections)
+            .filter(v => v)
+            .length === 2
+            ? GraphFormItemType.EDGE
+            : GraphFormItemType.VERTEX }
 }
 </script>
 

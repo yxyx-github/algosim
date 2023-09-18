@@ -23,12 +23,13 @@
         <rect v-if="props.item.connect.left" x="0" y="40" width="50" height="10" class="connected"/>
 
         <text x="45" y="45" class="label">{{ props.item.label }}</text>
-<!--        <text x="45" y="60" class="label">{{ props.item.coords.x }} | {{ props.item.coords.y }}</text>-->
+        <text x="45" y="60" class="label">{{ props.item.type === GraphFormItemType.VERTEX ? 'v' : 'e' }}: {{ props.item.coords.x }} | {{ props.item.coords.y }}</text>
     </svg>
 </template>
 
 <script setup lang="ts">
 import type { GraphFormItem } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { computed } from 'vue'
 
 const emit = defineEmits<{
