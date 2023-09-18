@@ -86,7 +86,10 @@ const algorithms = [
     {
         label: 'Bubblesort',
         value: SortAlgorithm.BUBBLE,
-    },  {
+    }, {
+        label: 'Combsort',
+        value: SortAlgorithm.COMBSORT,
+    }, {
         label: 'Heapsort',
         value: SortAlgorithm.HEAPSORT,
     }, {

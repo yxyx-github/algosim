@@ -8,6 +8,7 @@ export type HighlightedIndex = {
 
 export enum SortAlgorithm {
     BUBBLE,
+    COMBSORT,
     HEAPSORT,
     INSERTION,
     MERGESORT,
