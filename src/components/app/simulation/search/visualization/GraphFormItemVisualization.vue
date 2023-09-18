@@ -1,24 +1,24 @@
 <template>
     <svg :width="size" :height="size" viewBox="0 0 90 90">
-        <rect x="0" y="0" width="90" height="90" class="wrapper"/>
+        <rect x="0" y="0" width="90" height="90" :class="hasConnections ? 'wrapper' : 'none stroke'"/>
 
         <rect v-if="hasConnections" x="0" y="0" width="20" height="20" class="corner"/>
-        <rect x="20" y="0" width="50" height="20" class="selectable" :class="!props.item.connections.top && hasConnections ? 'border' : 'blank'" @click="toggleConnection('top')"/>
+        <rect x="20" y="0" width="50" height="20" class="selectable" :class="hasConnections ? (!props.item.connections.top ? 'border' : 'blank') : 'none'" @click="toggleConnection('top')"/>
         <rect v-if="props.item.highlight.top" x="40" y="0" width="10" height="20" class="highlighted"/>
         <rect v-if="props.item.connect.top" x="40" y="0" width="10" height="50" class="connected"/>
 
         <rect v-if="hasConnections" x="70" y="0" width="20" height="20" class="corner"/>
-        <rect x="70" y="20" width="20" height="50" class="selectable" :class="!props.item.connections.right && hasConnections ? 'border' : 'blank'" @click="toggleConnection('right')"/>
+        <rect x="70" y="20" width="20" height="50" class="selectable" :class="hasConnections ? (!props.item.connections.right ? 'border' : 'blank') : 'none'" @click="toggleConnection('right')"/>
         <rect v-if="props.item.highlight.right" x="70" y="40" width="20" height="10" class="highlighted"/>
         <rect v-if="props.item.connect.right" x="40" y="40" width="50" height="10" class="connected"/>
 
         <rect v-if="hasConnections" x="70" y="70" width="20" height="20" class="corner"/>
-        <rect x="20" y="70" width="50" height="20" class="selectable" :class="!props.item.connections.bottom && hasConnections ? 'border' : 'blank'" @click="toggleConnection('bottom')"/>
+        <rect x="20" y="70" width="50" height="20" class="selectable" :class="hasConnections ? (!props.item.connections.bottom ? 'border' : 'blank') : 'none'" @click="toggleConnection('bottom')"/>
         <rect v-if="props.item.highlight.bottom" x="40" y="70" width="10" height="20" class="highlighted"/>
         <rect v-if="props.item.connect.bottom" x="40" y="40" width="10" height="50" class="connected"/>
 
         <rect v-if="hasConnections" x="0" y="70" width="20" height="20" class="corner"/>
-        <rect x="0" y="20" width="20" height="50" class="selectable" :class="!props.item.connections.left && hasConnections ? 'border' : 'blank'" @click="toggleConnection('left')"/>
+        <rect x="0" y="20" width="20" height="50" class="selectable" :class="hasConnections ? (!props.item.connections.left ? 'border' : 'blank') : 'none'" @click="toggleConnection('left')"/>
         <rect v-if="props.item.highlight.left" x="0" y="40" width="20" height="10" class="highlighted"/>
         <rect v-if="props.item.connect.left" x="0" y="40" width="50" height="10" class="connected"/>
 
@@ -57,6 +57,16 @@ function toggleConnection(side: 'top' | 'right' | 'bottom' | 'left') {
 .wrapper, .blank {
     fill: #dddddd;
 }
+.stroke {
+    stroke: #000000;
+    stroke-width: 1px;
+}
+.none {
+    fill: #ffffff;
+}
+.stripe {
+    fill: #999999;
+}
 .corner, .border {
     fill: #000000;
 }
@@ -72,6 +82,6 @@ function toggleConnection(side: 'top' | 'right' | 'bottom' | 'left') {
     stroke-width: 0px;
 }
 .selectable:hover {
-    stroke-width: 1px
+    stroke-width: 1px;
 }
 </style>
