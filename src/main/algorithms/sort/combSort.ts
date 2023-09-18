@@ -15,20 +15,20 @@ export class CombSort implements SortAlgorithmImplementation {
         let swapped = false
 
         while (gap != 1 || swapped) {
-            gap = Math.floor((gap*10)/13) < 1 ? 1 : Math.floor((gap*10)/13)
+            gap = Math.floor((gap * 10) / 13) < 1 ? 1 : Math.floor((gap * 10) / 13)
             swapped = false;
             if (gap > 1) {
                 progressTracker?.trackNext()
             }
 
-            for (let i = 0; i < numbers.length-gap; i++) {
+            for (let i = 0; i < numbers.length - gap; i++) {
                 pB.step(this.createStep(numbers, i, gap))
-                if (numbers[i] <= numbers[i+gap]) {
+                if (numbers[i] <= numbers[i + gap]) {
                     continue
                 }
                 let temp = numbers[i];
-                numbers[i] = numbers[i+gap];
-                numbers[i+gap] = temp;
+                numbers[i] = numbers[i + gap];
+                numbers[i + gap] = temp;
                 swapped = true;
                 pB.step(this.createStep(numbers, i, gap))
             }
@@ -46,11 +46,11 @@ export class CombSort implements SortAlgorithmImplementation {
             ])
     }
 
-    private calculateGapSteps(n: number) : number {
+    private calculateGapSteps(n: number): number {
         let count = 0;
         while (n > 1) {
             count++
-            n = Math.floor((n*10)/13)
+            n = Math.floor((n * 10) / 13)
         }
         return count
     }
