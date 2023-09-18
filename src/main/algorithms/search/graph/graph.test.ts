@@ -45,6 +45,8 @@ describe('Graph', () => {
         const e2 = new Edge<string, string>(v1, v3, 3, 'e2')
         const e3 = new Edge<string, string>(v3, v1, 2, 'e3')
         const e4 = new Edge<string, string>(v1, v3, 8, 'e4')
+        const e5 = new Edge<string, string>(v2, v3, 9, 'e5')
+        const e6 = new Edge<string, string>(v1, v3, 9, 'e6')
 
         g.addEdge(e1)
         g.addEdge(e2)
@@ -56,6 +58,13 @@ describe('Graph', () => {
         expect(g.getEdges()).to.contain(e3)
         expect(g.getEdges()).to.contain(e4)
         expect(g.getEdges()).to.length(3)
+        expect(g.hasEdge(e1)).to.true
+        expect(g.hasEdge(e2)).to.true
+        expect(g.hasEdge(e3)).to.true
+        expect(g.hasEdge(e4)).to.true
+        expect(g.hasEdge(e5)).to.false
+        expect(g.hasEdge(e6)).to.true
+        expect(g.hasEdge(e6, true)).to.false
     })
 
     test('can add and remove edges between vertices', () => {
@@ -83,6 +92,4 @@ describe('Graph', () => {
         expect(g.getEdges()).toContainEqual(new Edge(v3, v1, weightV1V3, valueV1V3))
         expect(g.getEdges()).to.length(4)
     })
-
-    // TODO: test hasEdge
 })
