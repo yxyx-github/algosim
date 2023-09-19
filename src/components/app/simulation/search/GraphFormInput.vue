@@ -22,33 +22,24 @@ import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const props = defineProps<{
-    modelValue: GraphForm
+    graphForm: GraphForm
 }>()
 
-const emit = defineEmits<{
-    'update:modelValue': [modelValue: GraphForm]
-}>()
+const graphFormItems = computed(() => props.graphForm.toItems())
 
-const graphForm: WritableComputedRef<GraphForm> = computed({
-    get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value),
-})
-
-const graphFormItems = computed(() => graphForm.value.toItems())
-
-const cols = computed(() => graphForm.value.cols())
-const isEmpty = computed(() => graphForm.value.isEmpty())
+const cols = computed(() => props.graphForm.cols())
+const isEmpty = computed(() => props.graphForm.isEmpty())
 
 function addRow() {
-    graphForm.value.addRow()
+    props.graphForm.addRow()
 }
 
 function addColumn() {
-    graphForm.value.addColumn()
+    props.graphForm.addColumn()
 }
 
 function clear() {
-    graphForm.value.clear()
+    props.graphForm.clear()
 }
 </script>
 

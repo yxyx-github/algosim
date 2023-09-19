@@ -6,7 +6,7 @@
                     <Button label="Search" @click="submit"/>
                 </ButtonBar>
             </FColumn>
-            <GraphFormInput v-model="graphForm as any"/>
+            <GraphFormInput :graphForm="graphForm as any"/>
         </FContainer>
     </Form>
 </template>
