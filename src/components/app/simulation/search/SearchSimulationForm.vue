@@ -6,7 +6,7 @@
                     <Button label="Search" @click="submit"/>
                 </ButtonBar>
             </FColumn>
-            <GraphFormInput v-model="graphForm"/>
+            <GraphFormInput v-model="graphForm as any"/>
         </FContainer>
     </Form>
 </template>
@@ -29,7 +29,7 @@ const graphForm = ref(new GraphForm())
 
 function submit() {
     const converter = new GraphFormConverter()
-    const graph: Graph<VertexValue, EdgeValue> = converter.toGraph(graphForm.value)
+    const graph: Graph<VertexValue, EdgeValue> = converter.toGraph(graphForm.value as any) // typecast due to TS issue with reactive values
 }
 </script>
 
