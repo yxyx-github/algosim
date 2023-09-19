@@ -57,15 +57,4 @@ export class GraphForm {
     updateItem(item: GraphFormItem) {
         this.grid[item.data().coords.y][item.data().coords.x] = item
     }
-
-    /*updateItem(data: GraphFormItemData) {
-        this.grid[data.coords.y][data.coords.x] = new GraphFormItem({
-            ...data,
-            type: Object.values(data.connections)
-                .filter(v => v)
-                .length === 2
-                ? GraphFormItemType.EDGE
-                : GraphFormItemType.VERTEX
-        })
-    }*/
 }

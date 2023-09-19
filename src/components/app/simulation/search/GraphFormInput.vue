@@ -5,7 +5,7 @@
                 :style="`grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
         >
             <div v-if="isEmpty"></div>
-            <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item.data()" @update:item="updateItem"/>
+            <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item"/>
         </div>
         <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
         <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
@@ -18,8 +18,7 @@ import GraphFormItemVisualization from '@/components/app/simulation/search/visua
 import Button from 'primevue/button'
 import type { WritableComputedRef } from 'vue'
 import { computed } from 'vue'
-import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
-import type { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
+import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const props = defineProps<{
@@ -50,11 +49,6 @@ function addColumn() {
 
 function clear() {
     graphForm.value.clear()
-}
-
-function updateItem(item: GraphFormItemData) {
-    // TODO: change arg type to GraphFormItem
-    graphForm.value.updateItem(new GraphFormItem(item))
 }
 </script>
 

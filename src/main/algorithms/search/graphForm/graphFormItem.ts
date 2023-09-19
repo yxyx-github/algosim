@@ -24,4 +24,17 @@ export class GraphFormItem {
     data(): GraphFormItemData {
         return this.itemData
     }
+
+    hasConnections(): boolean {
+        return Object.values(this.itemData.connections).includes(true)
+    }
+
+    toggleConnection(side: 'top' | 'right' | 'bottom' | 'left') {
+        this.itemData.connections[side] = !this.itemData.connections[side]
+        this.itemData.type = Object.values(this.itemData.connections)
+            .filter(v => v)
+            .length === 2
+            ? GraphFormItemType.EDGE
+            : GraphFormItemType.VERTEX
+    }
 }
