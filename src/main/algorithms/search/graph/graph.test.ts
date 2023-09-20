@@ -104,10 +104,10 @@ describe('Graph', () => {
 
         expect(g.findVertexById('v1')).to.equal(v1)
         expect(g.findVertexById('v2')).to.equal(v2)
-        expect(g.findVertexById('v3')).to.equal(undefined)
+        expect(g.findVertexById('v3')).to.undefined
         expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val1')).to.equal(v1)
         expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val2')).to.equal(v2)
-        expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val3')).to.equal(undefined)
+        expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val3')).to.undefined
         expect(g.findVertex((v: Vertex<string>) => v.getValue().includes('val'))).to.equal(v1)
     })
 })

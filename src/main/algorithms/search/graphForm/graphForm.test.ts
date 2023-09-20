@@ -25,7 +25,7 @@ describe('GraphForm', () => {
         expect(graphForm.cols()).to.equal(4)
     })
 
-    test('can update item', () => {
+    test('can update and get item', () => {
         const graphForm = new GraphForm()
         graphForm.addRow()
         graphForm.addColumn()
@@ -52,5 +52,9 @@ describe('GraphForm', () => {
         ])
         expect(graphForm.rows()).to.equal(2)
         expect(graphForm.cols()).to.equal(2)
+
+        expect(graphForm.getItem(0, 1)).to.deep.equal(newItem)
+        expect(graphForm.getItem(1, 3)).to.undefined
+        expect(graphForm.getItem(2, 1)).to.undefined
     })
 })

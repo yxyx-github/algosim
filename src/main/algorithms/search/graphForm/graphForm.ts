@@ -20,6 +20,10 @@ export class GraphForm {
         return this.grid
     }
 
+    getItem(x: number, y: number): GraphFormItem | undefined {
+        return this.grid[y]?.[x]
+    }
+
     rows(): number {
         return this.grid.length
     }
