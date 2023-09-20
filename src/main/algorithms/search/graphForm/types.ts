@@ -30,6 +30,8 @@ export enum GraphFormItemType {
     EDGE,
 }
 
+export type Side = 'top' | 'right' | 'bottom' | 'left'
+
 export type VertexValue = {
     item: GraphFormItem
 }

@@ -88,4 +88,11 @@ describe('GraphFormItem', () => {
         expect(input3).to.deep.equal(getItemWithConnections({ top: true, right: true, bottom: false, left: false }))
         expect(input3.data().type).to.equal(GraphFormItemType.EDGE)
     })
+
+    test('can getNeighbourCoords', () => {
+        expect(GraphFormItem.createBlank(0, 1).getNeighbourCoords('top')).to.deep.equal({ x: 0, y: 0 })
+        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords('right')).to.deep.equal({ x: 1, y: 0 })
+        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords('bottom')).to.deep.equal({ x: 0, y: 1 })
+        expect(GraphFormItem.createBlank(1, 0).getNeighbourCoords('left')).to.deep.equal({ x: 0, y: 0 })
+    })
 })

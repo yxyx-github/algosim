@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
-import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
+import type { Side } from '@/main/algorithms/search/graphForm/types'
 import { computed } from 'vue'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
@@ -44,7 +44,7 @@ const size = computed(() => `${props.scale * 9}rem`)
 
 const hasConnections = computed(() => props.item.hasConnections())
 
-function toggleConnection(side: 'top' | 'right' | 'bottom' | 'left') {
+function toggleConnection(side: Side) {
     props.item.toggleConnection(side)
 }
 </script>

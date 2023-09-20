@@ -1,5 +1,6 @@
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import type { Side, TRBL, Coords } from '@/main/algorithms/search/graphForm/types'
 
 export class GraphForm {
     private grid: GraphFormGrid = [[]]
@@ -22,6 +23,34 @@ export class GraphForm {
 
     getItem(x: number, y: number): GraphFormItem | undefined {
         return this.grid[y]?.[x]
+    }
+
+    getConnectedNeighbours(item: GraphFormItem): TRBL<GraphFormItem | undefined> {
+        // @ts-ignore
+        const connectedNeighbours: TRBL<GraphFormItem | undefined> = { top: undefined, right: undefined, bottom: undefined, left: undefined }
+
+        ['top', 'right', 'bottom', 'left'].forEach((side: Side) => {
+            if (item.data().connections[side]) {
+                const neighbourCoords: Coords = item.getNeighbourCoords(side)
+                const neighbour = this.getItem(neighbourCoords.x, neighbourCoords.y)
+                connectedNeighbours[side] = neighbour?.data().connections[this.oppsiteSide(side)] ? neighbour : undefined
+            }
+        })
+
+        return connectedNeighbours
+    }
+
+    private oppsiteSide(side: Side): Side {
+        switch (side) {
+            case 'top':
+                return 'bottom'
+            case 'right':
+                return 'left'
+            case 'bottom':
+                return 'top'
+            case 'left':
+                return 'right'
+        }
     }
 
     rows(): number {

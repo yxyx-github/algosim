@@ -1,5 +1,5 @@
-import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import type { GraphFormItemData, Side } from '@/main/algorithms/search/graphForm/types'
+import { Coords, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 export class GraphFormItem {
     private readonly itemData: GraphFormItemData
@@ -20,6 +20,28 @@ export class GraphFormItem {
             isStart: false,
             isEnd: false,
         })
+    }
+
+    getNeighbourCoords(side: Side): Coords {
+        const neighbourCoords: Coords = {
+            x: this.itemData.coords.x,
+            y: this.itemData.coords.y,
+        }
+        switch (side) {
+            case 'top':
+                neighbourCoords.y--
+                break
+            case 'right':
+                neighbourCoords.x++
+                break
+            case 'bottom':
+                neighbourCoords.y++
+                break
+            case 'left':
+                neighbourCoords.x--
+                break
+        }
+        return neighbourCoords
     }
 
     data(): GraphFormItemData {

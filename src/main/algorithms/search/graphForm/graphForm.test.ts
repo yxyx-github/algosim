@@ -57,4 +57,11 @@ describe('GraphForm', () => {
         expect(graphForm.getItem(1, 3)).to.undefined
         expect(graphForm.getItem(2, 1)).to.undefined
     })
+    test('can getConnectedNeighbours', () => {
+        const graphForm = new GraphForm()
+        graphForm.addRow()
+        graphForm.addColumn()
+        graphForm.addRow()
+        graphForm.addColumn()
+    })
 })
