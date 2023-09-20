@@ -31,7 +31,7 @@ export enum GraphFormItemType {
 }
 
 export type VertexValue = {
-
+    item: GraphFormItem
 }
 
 export type EdgeValue = {
