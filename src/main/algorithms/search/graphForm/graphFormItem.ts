@@ -1,5 +1,6 @@
 import type { GraphFormItemData, Side } from '@/main/algorithms/search/graphForm/types'
-import { Coords, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import type { Coords } from '@/main/algorithms/search/graphForm/types'
 
 export class GraphFormItem {
     private readonly itemData: GraphFormItemData

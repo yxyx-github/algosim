@@ -26,7 +26,6 @@ export class GraphForm {
     }
 
     getConnectedNeighbours(item: GraphFormItem): TRBL<GraphFormItem | undefined> {
-        // @ts-ignore
         const connectedNeighbours: TRBL<GraphFormItem | undefined> = { top: undefined, right: undefined, bottom: undefined, left: undefined };
 
         (['top', 'right', 'bottom', 'left'] as Side[]).forEach((side: Side) => {
