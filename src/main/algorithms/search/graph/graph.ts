@@ -13,6 +13,14 @@ export class Graph<T, S>{
         return this.vertices.some(v => v.getId() === vertex.getId())
     }
 
+    findVertex(condition: (v: Vertex<T>) => boolean): Vertex<T> | undefined {
+        return this.vertices.find(v => condition(v))
+    }
+
+    findVertexById(id: string): Vertex<T> | undefined {
+        return this.findVertex((v: Vertex<T>) => v.getId() === id)
+    }
+
     addVertex(vertex: Vertex<T>) {
         if (!this.hasVertex(vertex)) {
             this.vertices.push(vertex)

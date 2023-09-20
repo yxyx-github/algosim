@@ -93,4 +93,21 @@ describe('Graph', () => {
         expect(g.getEdges()).toContainEqual(new Edge(v3, v1, weightV1V3, valueV1V3))
         expect(g.getEdges()).to.length(4)
     })
+
+    test('can find vertices', () => {
+        const g = new Graph<string, string>()
+        const v1 = new Vertex<string>('v1', 'val1')
+        const v2 = new Vertex<string>('v2', 'val2')
+
+        g.addVertex(v1)
+        g.addVertex(v2)
+
+        expect(g.findVertexById('v1')).to.equal(v1)
+        expect(g.findVertexById('v2')).to.equal(v2)
+        expect(g.findVertexById('v3')).to.equal(undefined)
+        expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val1')).to.equal(v1)
+        expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val2')).to.equal(v2)
+        expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val3')).to.equal(undefined)
+        expect(g.findVertex((v: Vertex<string>) => v.getValue().includes('val'))).to.equal(v1)
+    })
 })
