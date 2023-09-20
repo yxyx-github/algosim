@@ -6,6 +6,7 @@ export class GraphFormItem {
 
     constructor(data: GraphFormItemData) {
         this.itemData = data
+        this.updateType()
     }
 
     static createBlank(x: number, y: number): GraphFormItem {
@@ -31,6 +32,10 @@ export class GraphFormItem {
 
     toggleConnection(side: 'top' | 'right' | 'bottom' | 'left') {
         this.itemData.connections[side] = !this.itemData.connections[side]
+        this.updateType()
+    }
+
+    private updateType() {
         this.itemData.type = Object.values(this.itemData.connections)
             .filter(v => v)
             .length === 2
