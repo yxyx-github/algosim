@@ -1,4 +1,4 @@
-import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { EdgeValue, Side, TRBL, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { Graph } from '@/main/algorithms/search/graph/graph'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
@@ -22,7 +22,7 @@ export class GraphFormConverter {
                         item: item
                     }))
                 } else {
-                    // TODO: check if neighbours also have connections, otherwise also threat as vertex
+                    // TODO: check if neighbours also have connections, otherwise also treat as vertex
                     edgeItems.push(item)
                 }
             })
