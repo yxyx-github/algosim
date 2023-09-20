@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { GraphFormItemData, GraphFormItemType, TRBL } from '@/main/algorithms/search/graphForm/types'
+import type { GraphFormItemData, TRBL } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 describe('GraphFormItem', () => {
     function getItemWithConnections(connections: TRBL<boolean>): GraphFormItem {
