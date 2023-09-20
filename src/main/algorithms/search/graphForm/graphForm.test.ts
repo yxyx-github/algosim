@@ -1,9 +1,22 @@
 import { describe, expect, test } from 'vitest'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { Coords, GraphFormItemType, TRBL } from '@/main/algorithms/search/graphForm/types'
 
 describe('GraphForm', () => {
+    function getItemWithConnections(coords: Coords, connections: TRBL<boolean>): GraphFormItem {
+        return new GraphFormItem({
+            type: GraphFormItemType.VERTEX,
+            label: '',
+            coords: { x: coords.x, y: coords.y },
+            connections: connections,
+            connect: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false },
+            isStart: false,
+            isEnd: false,
+        })
+    }
+
     test('can create GraphForm', () => {
         const graphForm = new GraphForm()
         expect(graphForm.toGrid()).to.deep.equal([[GraphFormItem.createBlank(0, 0)]])
@@ -63,5 +76,25 @@ describe('GraphForm', () => {
         graphForm.addColumn()
         graphForm.addRow()
         graphForm.addColumn()
+
+        const item = getItemWithConnections({ x: 1, y: 1 }, { top: false, right: true, bottom: true, left: true })
+        const topNeighbour = getItemWithConnections({ x: 1, y: 0 }, { top: false, right: false, bottom: true, left: false })
+        const rightNeighbour = getItemWithConnections({ x: 2, y: 1 }, { top: false, right: false, bottom: false, left: false })
+        const bottomNeighbour = getItemWithConnections({ x: 1, y: 2 }, { top: true, right: false, bottom: false, left: false })
+        const leftNeighbour = getItemWithConnections({ x: 0, y: 1 }, { top: false, right: true, bottom: false, left: false })
+
+        graphForm.updateItem(item)
+
+        graphForm.updateItem(topNeighbour)
+        graphForm.updateItem(rightNeighbour)
+        graphForm.updateItem(bottomNeighbour)
+        graphForm.updateItem(leftNeighbour)
+
+        expect(graphForm.getConnectedNeighbours(item)).to.deep.equal({
+            top: undefined,
+            right: undefined,
+            bottom: bottomNeighbour,
+            left: leftNeighbour,
+        })
     })
 })

@@ -27,9 +27,9 @@ export class GraphForm {
 
     getConnectedNeighbours(item: GraphFormItem): TRBL<GraphFormItem | undefined> {
         // @ts-ignore
-        const connectedNeighbours: TRBL<GraphFormItem | undefined> = { top: undefined, right: undefined, bottom: undefined, left: undefined }
+        const connectedNeighbours: TRBL<GraphFormItem | undefined> = { top: undefined, right: undefined, bottom: undefined, left: undefined };
 
-        ['top', 'right', 'bottom', 'left'].forEach((side: Side) => {
+        (['top', 'right', 'bottom', 'left'] as Side[]).forEach((side: Side) => {
             if (item.data().connections[side]) {
                 const neighbourCoords: Coords = item.getNeighbourCoords(side)
                 const neighbour = this.getItem(neighbourCoords.x, neighbourCoords.y)
