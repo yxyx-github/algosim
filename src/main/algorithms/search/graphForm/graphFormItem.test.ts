@@ -34,6 +34,33 @@ describe('GraphFormItem', () => {
         expect(graphFormItem.data()).to.deep.equal(expectedItemData)
     })
 
+    test('can create Edge GraphFormItem', () => {
+        const expectedItemData: GraphFormItemData = {
+            type: GraphFormItemType.EDGE,
+            label: '',
+            coords: { x: 3, y: 4 },
+            connections: { top: false, right: false, bottom: true, left: true },
+            connect: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false },
+            isStart: false,
+            isEnd: false,
+        }
+
+        const graphFormItem = new GraphFormItem({
+            type: GraphFormItemType.VERTEX,
+            label: '',
+            coords: { x: 3, y: 4 },
+            connections: { top: false, right: false, bottom: true, left: true },
+            connect: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false },
+            isStart: false,
+            isEnd: false,
+        })
+
+        expect(graphFormItem).to.deep.equal(new GraphFormItem(expectedItemData))
+        expect(graphFormItem.data()).to.deep.equal(expectedItemData)
+    })
+
     test('GraphFormItem hasConnections', () => {
         expect(GraphFormItem.createBlank(3, 4).hasConnections()).to.false
         expect(getItemWithConnections({ top: false, right: false, bottom: false, left: false }).hasConnections()).to.false

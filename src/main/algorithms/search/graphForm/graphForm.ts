@@ -16,6 +16,10 @@ export class GraphForm {
         return items
     }
 
+    toGrid(): GraphFormGrid {
+        return this.grid
+    }
+
     rows(): number {
         return this.grid.length
     }
