@@ -58,6 +58,10 @@ export class GraphFormItem {
         this.updateType()
     }
 
+    generateItemId(): string {
+        return `x:${this.itemData.coords.x}y:${this.itemData.coords.y}`
+    }
+
     private updateType() {
         this.itemData.type = Object.values(this.itemData.connections)
             .filter(v => v)

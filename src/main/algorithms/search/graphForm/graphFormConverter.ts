@@ -93,13 +93,8 @@ export class GraphFormConverter {
     }
 
     private addItemAsVertex(item: GraphFormItem) {
-        this.graph.addVertex(new Vertex<VertexValue>(this.generateItemId(item), {
+        this.graph.addVertex(new Vertex<VertexValue>(item.generateItemId(), {
             item: item
         }))
-    }
-
-    // TODO: move to GraphFormItem as public method and test
-    private generateItemId(item: GraphFormItem): string {
-        return `x:${item.data().coords.x}y:${item.data().coords.y}`
     }
 }

@@ -95,4 +95,8 @@ describe('GraphFormItem', () => {
         expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords('bottom')).to.deep.equal({ x: 0, y: 1 })
         expect(GraphFormItem.createBlank(1, 0).getNeighbourCoords('left')).to.deep.equal({ x: 0, y: 0 })
     })
+
+    test('can generateItemId', () => {
+        expect(GraphFormItem.createBlank(2, 1).generateItemId()).to.equal('x:2y:1')
+    })
 })
