@@ -122,7 +122,7 @@ describe('GraphForm', () => {
         graphForm.updateItem(bottomNeighbour)
         graphForm.updateItem(leftNeighbour)
 
-        graphForm.validateConnections(item)
+        graphForm.validateItemConnections(item)
 
         expect(graphForm.toGrid()).to.deep.equal([
             [GraphFormItem.createBlank(0, 0), topNeighbour, GraphFormItem.createBlank(2, 0)],

@@ -95,7 +95,7 @@ export class GraphForm {
         this.grid[item.data().coords.y][item.data().coords.x] = item
     }
 
-    validateConnections(item: GraphFormItem) {
+    validateItemConnections(item: GraphFormItem) {
         const neighbours: TRBL<GraphFormItem | undefined> = this.getConnectedNeighbours(item);
         (Object.keys(item.data().connections) as Side[])
             .filter((side: Side) => item.data().connections[side])
@@ -104,5 +104,10 @@ export class GraphForm {
                     item.toggleConnection(side)
                 }
             })
+    }
+
+    // TODO: test
+    validateConnections() {
+        this.toItems().forEach(item => this.validateItemConnections(item))
     }
 }
