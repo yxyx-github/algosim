@@ -1,4 +1,4 @@
-import type { EdgeValue, Side, TRBL, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { EdgeValue, TRBL, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { Graph } from '@/main/algorithms/search/graph/graph'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
@@ -27,6 +27,7 @@ export class GraphFormConverter {
         */
 
         const edgeItems: GraphFormItem[] = []
+        const edgeItemFragments: EdgeItemFragment[] = []
 
         this.graphForm.toItems()
             .filter(item => item.hasConnections())
@@ -43,7 +44,6 @@ export class GraphFormConverter {
                 }
             })
 
-        const edgeItemFragments: EdgeItemFragment[] = []
         let remainingEdgeItems = edgeItems
 
         while (remainingEdgeItems.length > 0) {
@@ -57,21 +57,30 @@ export class GraphFormConverter {
         return this.graph
     }
 
+    // TODO: move to EdgeFragmentGenerator class and test
+    // TODO: create Fragment class
     private generateEdgeItemFragment(item: GraphFormItem): EdgeItemFragment {
         const currentFragment: EdgeItemFragment = { vertexItems: [], edgeItems: [item] }
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(item);
         (Object.values(neighbours)
             .filter(neighbour => neighbour !== undefined) as GraphFormItem[])
-            // TODO: filter vertices => save vertices
+            .filter(neighbour => {
+                if (neighbour.data().type === GraphFormItemType.VERTEX) {
+                    currentFragment.vertexItems.push(neighbour)
+                    return false
+                } else {
+                    return true
+                }
+            })
             .forEach((neighbour: GraphFormItem) => {
                 currentFragment.edgeItems.push(neighbour)
-                const subFragment = this.generateEdgeItemFragment(neighbour)
-                subFragment.edgeItems.forEach((subNeighbour: GraphFormItem) => {
-                    if (!currentFragment.edgeItems.includes(subNeighbour)) {
-                        currentFragment.edgeItems.push(subNeighbour)
+                const subFragment = this.generateEdgeItemFragment(neighbour) // TODO: fix infinite loop in case of edgeItemCircle without vertices
+                subFragment.edgeItems.forEach((subEdgeNeighbour: GraphFormItem) => {
+                    if (!currentFragment.edgeItems.includes(subEdgeNeighbour)) {
+                        currentFragment.edgeItems.push(subEdgeNeighbour)
                     }
                 })
-                // TODO copy vertices from subFragment to currentFragment
+                subFragment.vertexItems.forEach((subVertexNeighbour: GraphFormItem) => currentFragment.vertexItems.push(subVertexNeighbour))
             })
         return currentFragment
     }
