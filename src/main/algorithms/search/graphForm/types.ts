@@ -19,10 +19,7 @@ export type Coords = {
 }
 
 export type TRBL<T> = {
-    top: T,
-    right: T,
-    bottom: T,
-    left: T,
+    [side in Side]: T
 }
 
 export enum GraphFormItemType {

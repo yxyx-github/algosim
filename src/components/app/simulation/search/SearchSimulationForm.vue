@@ -28,8 +28,8 @@ import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 const graphForm = ref(new GraphForm())
 
 function submit() {
-    const converter = new GraphFormConverter()
-    const graph: Graph<VertexValue, EdgeValue> = converter.toGraph(graphForm.value as any) // typecast due to TS issue with reactive values
+    const converter = new GraphFormConverter(graphForm.value as any) // typecast due to TS issue with reactive values
+    const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
 }
 </script>
 
