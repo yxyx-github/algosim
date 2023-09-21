@@ -94,4 +94,15 @@ export class GraphForm {
     updateItem(item: GraphFormItem) {
         this.grid[item.data().coords.y][item.data().coords.x] = item
     }
+
+    validateConnections(item: GraphFormItem) {
+        const neighbours: TRBL<GraphFormItem | undefined> = this.getConnectedNeighbours(item);
+        (Object.keys(item.data().connections) as Side[])
+            .filter((side: Side) => item.data().connections[side])
+            .forEach((side: Side) => {
+                if (neighbours[side]?.data().connections[this.oppsiteSide(side)] !== true) {
+                    item.toggleConnection(side)
+                }
+            })
+    }
 }

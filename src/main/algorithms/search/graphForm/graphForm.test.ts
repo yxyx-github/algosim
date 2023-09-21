@@ -71,6 +71,7 @@ describe('GraphForm', () => {
         expect(graphForm.getItem(1, 3)).to.undefined
         expect(graphForm.getItem(2, 1)).to.undefined
     })
+
     test('can getConnectedNeighbours', () => {
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -97,5 +98,36 @@ describe('GraphForm', () => {
             bottom: bottomNeighbour,
             left: leftNeighbour,
         })
+    })
+
+    test('can validateConnections', () => {
+        const graphForm = new GraphForm()
+        graphForm.addRow()
+        graphForm.addColumn()
+        graphForm.addRow()
+        graphForm.addColumn()
+
+        const item = getItemWithConnections({ x: 1, y: 1 }, { top: false, right: true, bottom: true, left: true })
+        const topNeighbour = getItemWithConnections({ x: 1, y: 0 }, { top: false, right: false, bottom: true, left: false })
+        const rightNeighbour = getItemWithConnections({ x: 2, y: 1 }, { top: false, right: false, bottom: false, left: false })
+        const bottomNeighbour = getItemWithConnections({ x: 1, y: 2 }, { top: true, right: false, bottom: false, left: false })
+        const leftNeighbour = getItemWithConnections({ x: 0, y: 1 }, { top: false, right: true, bottom: false, left: false })
+
+        const expectedItem = getItemWithConnections({ x: 1, y: 1 }, { top: false, right: false, bottom: true, left: true })
+
+        graphForm.updateItem(item)
+
+        graphForm.updateItem(topNeighbour)
+        graphForm.updateItem(rightNeighbour)
+        graphForm.updateItem(bottomNeighbour)
+        graphForm.updateItem(leftNeighbour)
+
+        graphForm.validateConnections(item)
+
+        expect(graphForm.toGrid()).to.deep.equal([
+            [GraphFormItem.createBlank(0, 0), topNeighbour, GraphFormItem.createBlank(2, 0)],
+            [leftNeighbour, expectedItem, rightNeighbour],
+            [GraphFormItem.createBlank(0, 2), bottomNeighbour, GraphFormItem.createBlank(2, 2)],
+        ])
     })
 })

@@ -33,7 +33,7 @@ export class GraphFormConverter {
             .forEach(item => {
                 console.log(item.data())
 
-                this.validateConnections(item)
+                this.graphForm.validateConnections(item)
 
                 if (item.data().type === GraphFormItemType.VERTEX) {
                     // TODO: check item has vertex neighbours -> insert edge
@@ -74,22 +74,6 @@ export class GraphFormConverter {
                 // TODO copy vertices from subFragment to currentFragment
             })
         return currentFragment
-    }
-
-    // TODO: move to GraphForm as public method and test
-    private validateConnections(item: GraphFormItem) {
-        const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(item)
-        const newConnections: TRBL<boolean> = item.data().connections;
-        (Object.keys(newConnections) as Side[])
-            .filter((side: Side) => newConnections[side])
-            .forEach((side: Side) =>
-                // TODO: use toggleConnection() instead
-                newConnections[side] = neighbours[side]?.data().connections[this.graphForm.oppsiteSide(side)] ?? false
-            )
-
-        if (item.data().connections !== newConnections) {
-            this.graphForm.updateItem(new GraphFormItem({ ...item.data(), connections: newConnections }))
-        }
     }
 
     private addItemAsVertex(item: GraphFormItem) {
