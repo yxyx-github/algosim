@@ -59,7 +59,7 @@ export class GraphFormConverter {
 
     private generateEdgeItemFragment(item: GraphFormItem): EdgeItemFragment {
         const currentFragment: EdgeItemFragment = { vertexItems: [], edgeItems: [item] }
-        const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(item)
+        const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(item);
         (Object.values(neighbours)
             .filter(neighbour => neighbour !== undefined) as GraphFormItem[])
             // TODO: filter vertices => save vertices
@@ -79,7 +79,7 @@ export class GraphFormConverter {
     // TODO: move to GraphForm as public method and test
     private validateConnections(item: GraphFormItem) {
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(item)
-        const newConnections: TRBL<boolean> = item.data().connections
+        const newConnections: TRBL<boolean> = item.data().connections;
         (Object.keys(newConnections) as Side[])
             .filter((side: Side) => newConnections[side])
             .forEach((side: Side) =>
