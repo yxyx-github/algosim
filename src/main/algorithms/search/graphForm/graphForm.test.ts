@@ -130,4 +130,12 @@ describe('GraphForm', () => {
             [GraphFormItem.createBlank(0, 2), bottomNeighbour, GraphFormItem.createBlank(2, 2)],
         ])
     })
+
+    test('can generate oppositeSite', () => {
+        const graphForm = new GraphForm()
+        expect(graphForm.oppsiteSide('top')).to.equal('bottom')
+        expect(graphForm.oppsiteSide('right')).to.equal('left')
+        expect(graphForm.oppsiteSide('bottom')).to.equal('top')
+        expect(graphForm.oppsiteSide('left')).to.equal('right')
+    })
 })

@@ -39,7 +39,7 @@ export class GraphForm {
         return connectedNeighbours
     }
 
-    // TODO: move somewhere else and test
+    // TODO: move somewhere else
     oppsiteSide(side: Side): Side {
         switch (side) {
             case 'top':
