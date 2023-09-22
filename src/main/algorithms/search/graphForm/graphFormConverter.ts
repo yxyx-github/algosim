@@ -22,13 +22,6 @@ export class GraphFormConverter {
         // console.log('convert:', this.graphForm)
         // console.log('convert:', this.graphForm.toGrid().map(row => row.map(item => item.data().connections)))
 
-        /*
-            - while graphForm has unvisited items:      // to properly parse non-contiguous graphs
-                - depth search
-                    - store edges until next vertex
-                        -> create edge and cleare stored items
-        */
-
         this.graphForm.validateConnections()
 
         let currentItem: GraphFormItem
