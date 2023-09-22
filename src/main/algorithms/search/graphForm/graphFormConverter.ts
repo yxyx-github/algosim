@@ -48,10 +48,9 @@ export class GraphFormConverter {
             const [side, neighbour] of
             Object.entries(neighbours)
                 .sort((a, b) => this.compareNeighbourEntries(a, b))
-                .filter(([side, neighbour]) => neighbour !== previousItem)
         ) {
             // console.log('side:', neighbour)
-            if (neighbour !== undefined) {
+            if (neighbour !== undefined && neighbour !== previousItem) {
                 if (!this.visitedItems.isVisited(neighbour)) {
                     this.itemDepthSearch(neighbour, itemCollection, currentItem)
                     itemCollection.push(neighbour)
