@@ -5,7 +5,6 @@ import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { VisitedItems } from '@/main/algorithms/search/graphForm/graphFormConverter/visitedItems'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
-import type { Edge } from '@/main/algorithms/search/graph/edge'
 
 export class GraphFormConverter {
     private readonly graph: Graph<VertexValue, EdgeValue>
@@ -37,31 +36,36 @@ export class GraphFormConverter {
         return this.graph
     }
 
-    private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
+    private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[], previousItem?: GraphFormItem) {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
         if (Object.values(neighbours).some(n => n !== undefined)) {
             console.log('currItem:', currentItem)
-            console.log('nbs:', neighbours)
+            // console.log('nbs:', neighbours)
             console.log('----------')
         }
-        for (const [side, neighbour] of Object.entries(neighbours)) { // TODO: sort: edges before vertices
+        for (
+            const [side, neighbour] of
+            Object.entries(neighbours)
+                .sort((a, b) => this.compareNeighbourEntries(a, b))
+                .filter(([side, neighbour]) => neighbour !== previousItem)
+        ) { // TODO: sort: edges before vertices; filter depth search parent
             // console.log('side:', neighbour)
             if (neighbour !== undefined) {
                 if (!this.visitedItems.isVisited(neighbour)) {
-                    this.itemDepthSearch(neighbour, itemCollection)
+                    this.itemDepthSearch(neighbour, itemCollection, currentItem)
                     itemCollection.push(neighbour)
-                }/* else if (neighbour.data().type === GraphFormItemType.VERTEX) {
+                } else if (neighbour.data().type === GraphFormItemType.VERTEX) {
                     // TODO: exception for visited vertexes really necessary?
-                    // TODO: fix: only if no other possible neighbours
+                    // TODO: fix: only if no other unvisited neighbours
                     itemCollection.push(neighbour)
-                }*/
+                }
+                console.log('check for insertion')
+                if (currentItem.data().type === GraphFormItemType.VERTEX && itemCollection.length > 0) {
+                    console.log('insert')
+                    this.insertItemCollection(currentItem, itemCollection)
+                }
             }
-        }
-        // console.log('check for insertion')
-        if (currentItem.data().type === GraphFormItemType.VERTEX && itemCollection.length > 0) {
-            // console.log('insert')
-            this.insertItemCollection(currentItem, itemCollection)
         }
     }
 
@@ -70,9 +74,10 @@ export class GraphFormConverter {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
             const edgeItems = itemCollection.filter((_, index) => index !== 0)
-            this.graph.addEdgeBetween(v1, v2, itemCollection.length - 1, {
+            this.graph.addEdgeBetween(v1, v2, edgeItems.length, {
                 items: edgeItems,
             })
+            console.log('edgeItems:', JSON.stringify(edgeItems))
         } else {
             console.error('Unexpected end of edge')
         }
@@ -90,5 +95,11 @@ export class GraphFormConverter {
         }
         // console.log('new v:', vertex)
         return vertex
+    }
+
+    private compareNeighbourEntries(a: [string, GraphFormItem | undefined], b: [string, GraphFormItem | undefined]): number {
+        const aToNumber = a[1] !== undefined && this.visitedItems.isVisited(a[1]) ? 1 : 0
+        const bToNumber = b[1] !== undefined && this.visitedItems.isVisited(b[1]) ? 1 : 0
+        return aToNumber - bToNumber
     }
 }

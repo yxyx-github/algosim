@@ -29,7 +29,6 @@ describe('GraphFormConverter', () => {
             expect(vertex).to.deep.equal(expectedVertex)
         })
 
-        console.log(graph.getEdges())
         expect(graph.getEdges().length).to.equal(expectedGraph.getEdges().length)
         graph.getEdges().forEach(edge => {
             const expectedEdge = expectedGraph.findEdge((e: Edge<VertexValue, EdgeValue>) =>
