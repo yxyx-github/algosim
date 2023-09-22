@@ -34,5 +34,5 @@ export type VertexValue = {
 }
 
 export type EdgeValue = {
-
+    items: GraphFormItem[]
 }
