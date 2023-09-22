@@ -24,6 +24,8 @@ export class Graph<T, S>{
     addVertex(vertex: Vertex<T>) {
         if (!this.hasVertex(vertex)) {
             this.vertices.push(vertex)
+        } else {
+            console.error('Cannot insert vertex: vertex does already exist')
         }
     }
 
@@ -52,6 +54,8 @@ export class Graph<T, S>{
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
             this.removeEdge(edge)
             this.edges.push(edge)
+        } else {
+            console.error('Cannot insert edge: required vertices are missing')
         }
     }
 

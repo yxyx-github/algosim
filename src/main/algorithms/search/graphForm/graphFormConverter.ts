@@ -46,8 +46,8 @@ export class GraphFormConverter {
     private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
-        // console.log('nbs:', neighbours)
-        // console.log(Object.entries(neighbours))
+        console.log('currItem:', currentItem)
+        console.log('nbs:', neighbours)
         for (const [side, neighbour] of Object.entries(neighbours)) {
             // console.log('side:', neighbour)
             if (neighbour !== undefined) {
@@ -59,7 +59,9 @@ export class GraphFormConverter {
                 }
             }
         }
+        // console.log('check for insertion')
         if (currentItem.data().type === GraphFormItemType.VERTEX && itemCollection.length > 0) {
+            // console.log('insert')
             this.insertItemCollection(currentItem, itemCollection)
         }
     }
@@ -68,7 +70,7 @@ export class GraphFormConverter {
         if (itemCollection[0].data().type === GraphFormItemType.VERTEX) {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
-            const edgeItems = itemCollection.splice(0, 1)
+            const edgeItems = itemCollection.filter((_ , index) => index !== 0)
             this.graph.addEdgeBetween(v1, v2, itemCollection.length - 1, {
                 items: edgeItems,
             })
@@ -80,9 +82,14 @@ export class GraphFormConverter {
 
     private addItemAsVertex(item: GraphFormItem): Vertex<VertexValue> {
         const id: string = item.generateItemId()
-        const vertex: Vertex<VertexValue> = this.graph.findVertexById(id) ?? new Vertex<VertexValue>(id, {
+        const existingVertex = this.graph.findVertexById(id)
+        const vertex: Vertex<VertexValue> = existingVertex ?? new Vertex<VertexValue>(id, {
             item: item
         })
+        if (existingVertex === undefined) {
+            this.graph.addVertex(vertex)
+        }
+        // console.log('new v:', vertex)
         return vertex
     }
 }
