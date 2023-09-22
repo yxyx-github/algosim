@@ -20,6 +20,7 @@ export class GraphFormConverter {
 
     toGraph(): Graph<VertexValue, EdgeValue> {
         // console.log('convert:', this.graphForm)
+        // console.log('convert:', this.graphForm.toGrid().map(row => row.map(item => item.data().connections)))
 
         /*
             - while graphForm has unvisited items:      // to properly parse non-contiguous graphs
@@ -38,7 +39,7 @@ export class GraphFormConverter {
             this.itemDepthSearch(currentItem, itemCollection)
         }
 
-        // console.log(this.graph)
+        console.log(this.graph)
 
         return this.graph
     }
@@ -46,17 +47,21 @@ export class GraphFormConverter {
     private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
-        // console.log('currItem:', currentItem)
-        // console.log('nbs:', neighbours)
-        for (const [side, neighbour] of Object.entries(neighbours)) {
+        if (Object.values(neighbours).some(n => n !== undefined)) {
+            console.log('currItem:', currentItem)
+            console.log('nbs:', neighbours)
+        }
+        for (const [side, neighbour] of Object.entries(neighbours)) { // TODO: sort: edges before vertices
             // console.log('side:', neighbour)
             if (neighbour !== undefined) {
                 if (!this.visitedItems.isVisited(neighbour)) {
                     this.itemDepthSearch(neighbour, itemCollection)
                     itemCollection.push(neighbour)
-                } else if (neighbour.data().type === GraphFormItemType.VERTEX) {
+                }/* else if (neighbour.data().type === GraphFormItemType.VERTEX) {
+                    // TODO: exception for visited vertexes really necessary?
+                    // TODO: fix: only if no other possible neighbours
                     itemCollection.push(neighbour)
-                }
+                }*/
             }
         }
         // console.log('check for insertion')
@@ -70,7 +75,7 @@ export class GraphFormConverter {
         if (itemCollection[0].data().type === GraphFormItemType.VERTEX) {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
-            const edgeItems = itemCollection.filter((_ , index) => index !== 0)
+            const edgeItems = itemCollection.filter((_, index) => index !== 0)
             this.graph.addEdgeBetween(v1, v2, itemCollection.length - 1, {
                 items: edgeItems,
             })
