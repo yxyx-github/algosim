@@ -14,6 +14,7 @@ export enum SortAlgorithm {
     MERGESORT,
     QUICKSORT,
     SELECTION,
+    SHELLSORT,
 }
 
 export enum SortColor {
