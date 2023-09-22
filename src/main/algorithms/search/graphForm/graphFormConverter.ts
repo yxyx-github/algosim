@@ -19,7 +19,7 @@ export class GraphFormConverter {
     }
 
     toGraph(): Graph<VertexValue, EdgeValue> {
-        // console.log('convert:', this.graphForm)
+        console.log('convert:', this.graphForm)
 
         /*
             - while graphForm has unvisited items:      // to properly parse non-contiguous graphs
@@ -38,7 +38,7 @@ export class GraphFormConverter {
             this.itemDepthSearch(currentItem, itemCollection)
         }
 
-        // console.log(this.graph)
+        console.log(this.graph)
 
         return this.graph
     }
