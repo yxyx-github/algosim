@@ -195,6 +195,84 @@ describe('GraphFormConverter', () => {
         assertGraph(converter.toGraph(), expectedGraph)
     })
 
+    test('can convert GraphForm with all items as vertices (except corners)', () => {
+        const item00 = getItemWithConnections({ x: 0, y: 0, }, { top: false, right: true, bottom: true, left: false })
+        const item10 = getItemWithConnections({ x: 1, y: 0, }, { top: false, right: true, bottom: true, left: true })
+        const item20 = getItemWithConnections({ x: 2, y: 0, }, { top: false, right: false, bottom: true, left: true })
+        const item01 = getItemWithConnections({ x: 0, y: 1, }, { top: true, right: true, bottom: true, left: false })
+        const item11 = getItemWithConnections({ x: 1, y: 1, }, { top: true, right: true, bottom: true, left: true })
+        const item21 = getItemWithConnections({ x: 2, y: 1, }, { top: true, right: false, bottom: true, left: true })
+        const item02 = getItemWithConnections({ x: 0, y: 2, }, { top: true, right: true, bottom: false, left: false })
+        const item12 = getItemWithConnections({ x: 1, y: 2, }, { top: true, right: true, bottom: false, left: true })
+        const item22 = getItemWithConnections({ x: 2, y: 2, }, { top: true, right: false, bottom: false, left: true })
+
+        const expectedGraph = new Graph<VertexValue, EdgeValue>()
+        const v1 = new Vertex<VertexValue>('x:1y:0', {
+            item: item10,
+        })
+        expectedGraph.addVertex(v1)
+        const v2 = new Vertex<VertexValue>('x:0y:1', {
+            item: item01,
+        })
+        expectedGraph.addVertex(v2)
+        const v3 = new Vertex<VertexValue>('x:1y:1', {
+            item: item11,
+        })
+        expectedGraph.addVertex(v3)
+        const v4 = new Vertex<VertexValue>('x:2y:1', {
+            item: item21,
+        })
+        expectedGraph.addVertex(v4)
+        const v5 = new Vertex<VertexValue>('x:1y:2', {
+            item: item12,
+        })
+        expectedGraph.addVertex(v5)
+        expectedGraph.addEdgeBetween(v1, v3, 0, {
+            items: [],
+        })
+        expectedGraph.addEdgeBetween(v3, v5, 0, {
+            items: [],
+        })
+        expectedGraph.addEdgeBetween(v2, v3, 0, {
+            items: [],
+        })
+        expectedGraph.addEdgeBetween(v3, v4, 0, {
+            items: [],
+        })
+        expectedGraph.addEdgeBetween(v1, v2, 1, {
+            items: [item00],
+        })
+        expectedGraph.addEdgeBetween(v1, v4, 1, {
+            items: [item20],
+        })
+        expectedGraph.addEdgeBetween(v5, v2, 1, {
+            items: [item02],
+        })
+        expectedGraph.addEdgeBetween(v5, v4, 1, {
+            items: [item22],
+        })
+
+        const graphForm = new GraphForm()
+        graphForm.addRow()
+        graphForm.addColumn()
+        graphForm.addRow()
+        graphForm.addColumn()
+
+        graphForm.updateItem(item00)
+        graphForm.updateItem(item10)
+        graphForm.updateItem(item20)
+        graphForm.updateItem(item01)
+        graphForm.updateItem(item11)
+        graphForm.updateItem(item21)
+        graphForm.updateItem(item02)
+        graphForm.updateItem(item12)
+        graphForm.updateItem(item22)
+
+        const converter = new GraphFormConverter(graphForm)
+
+        assertGraph(converter.toGraph(), expectedGraph)
+    })
+
     // TODO: test non-contiguous graphs
-    // TODO: test all items are vertices (except corners)
+    // TODO: test 3 edges between two vertices
 })
