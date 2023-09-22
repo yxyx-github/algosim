@@ -113,7 +113,7 @@ describe('GraphFormConverter', () => {
         assertGraph(converter.toGraph(), expectedGraph)
     })
 
-    test('can convert GraphForm with two vertex items next with edge items between', () => {
+    test('can convert GraphForm with two vertex items with edge items between', () => {
         const item01 = getItemWithConnections({ x: 0, y: 1, }, { top: false, right: true, bottom: false, left: false })
         const item11 = getItemWithConnections({ x: 1, y: 1, }, { top: false, right: false, bottom: true, left: true })
         const item12 = getItemWithConnections({ x: 1, y: 2, }, { top: true, right: true, bottom: false, left: false })
