@@ -119,8 +119,8 @@ describe('Graph', () => {
         g.addVertex(v1)
         g.addVertex(v2)
 
-        const e12 = new Edge<string>(v1, v2, 3, 'e12')
-        const e21 = new Edge<string>(v2, v1, 4, 'e21')
+        const e12 = new Edge<string, string>(v1, v2, 3, 'e12')
+        const e21 = new Edge<string, string>(v2, v1, 4, 'e21')
 
         g.addEdge(e12)
         g.addEdge(e21)

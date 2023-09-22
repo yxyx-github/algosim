@@ -63,10 +63,13 @@ export class Graph<T, S>{
         }
     }
 
+    // TODO: remove by value comparison
     removeEdge(edge: Edge<T, S>) {
         this.edges = this.edges.filter(e =>
             e.getFrom().getId() !== edge.getFrom().getId() ||
             e.getTo().getId() !== edge.getTo().getId()
         )
     }
+
+    // TODO: implement method to remove all edges between two vertices
 }

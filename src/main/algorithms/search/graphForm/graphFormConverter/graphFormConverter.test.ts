@@ -2,10 +2,11 @@ import { describe, expect, test } from 'vitest'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
 import { Graph } from '@/main/algorithms/search/graph/graph'
-import { Coords, EdgeValue, GraphFormItemType, TRBL, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { Coords, EdgeValue, TRBL, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
-import type { Edge } from '@/main/algorithms/search/graph/edge'
+import { Edge } from '@/main/algorithms/search/graph/edge'
 
 describe('GraphFormConverter', () => {
     function getItemWithConnections(coords: Coords, connections: TRBL<boolean>): GraphFormItem {
@@ -37,8 +38,8 @@ describe('GraphFormConverter', () => {
 
             expect(edge.getFrom()).to.deep.equal(expectedEdge?.getFrom())
             expect(edge.getTo()).to.deep.equal(expectedEdge?.getTo())
-            expect(edge.getWeight()).to.deep.equal(expectedEdge?.getWeight())
-            expectedEdge.getValue().items.forEach(item => {
+            expect(edge.getWeight()).to.deep.equal(expectedEdge?.getWeight());
+            (expectedEdge as Edge<VertexValue, EdgeValue>).getValue().items.forEach(item => {
                 expect(edge.getValue().items).to.contain(item)
             })
             expect(edge.getValue().items.length).to.equal(expectedEdge?.getValue().items.length)
@@ -49,7 +50,7 @@ describe('GraphFormConverter', () => {
         const graphForm = new GraphForm()
         const converter = new GraphFormConverter(graphForm)
 
-        expect(converter.toGraph()).to.deep.equal(new Graph())
+        expect(converter.toGraph()).to.deep.equal(new Graph<VertexValue, EdgeValue>())
     })
 
     test('can convert empty GraphForm with more rows and cols', () => {
@@ -60,7 +61,7 @@ describe('GraphFormConverter', () => {
         graphForm.addColumn()
         const converter = new GraphFormConverter(graphForm)
 
-        expect(converter.toGraph()).to.deep.equal(new Graph())
+        expect(converter.toGraph()).to.deep.equal(new Graph<VertexValue, EdgeValue>())
     })
 
     test('can convert empty GraphForm with more rows and cols and invalid connection', () => {
@@ -76,7 +77,7 @@ describe('GraphFormConverter', () => {
         graphForm.updateItem(item11)
         const converter = new GraphFormConverter(graphForm)
 
-        expect(converter.toGraph()).to.deep.equal(new Graph())
+        expect(converter.toGraph()).to.deep.equal(new Graph<VertexValue, EdgeValue>())
         expect(graphForm).to.deep.equal(expectedGraphForm)
     })
 
@@ -84,7 +85,7 @@ describe('GraphFormConverter', () => {
         const item01 = getItemWithConnections({ x: 0, y: 1, }, { top: false, right: true, bottom: false, left: false })
         const item11 = getItemWithConnections({ x: 1, y: 1, }, { top: false, right: false, bottom: false, left: true })
 
-        const expectedGraph = new Graph()
+        const expectedGraph = new Graph<VertexValue, EdgeValue>()
         const v1 = new Vertex<VertexValue>('x:0y:1', {
             item: item01,
         })
@@ -117,7 +118,7 @@ describe('GraphFormConverter', () => {
         const item12 = getItemWithConnections({ x: 1, y: 2, }, { top: true, right: true, bottom: false, left: false })
         const item22 = getItemWithConnections({ x: 2, y: 2, }, { top: false, right: false, bottom: false, left: true })
 
-        const expectedGraph = new Graph()
+        const expectedGraph = new Graph<VertexValue, EdgeValue>()
         const v1 = new Vertex<VertexValue>('x:0y:1', {
             item: item01,
         })
