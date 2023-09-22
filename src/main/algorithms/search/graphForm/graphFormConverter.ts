@@ -26,13 +26,13 @@ export class GraphFormConverter {
 
         let currentItem: GraphFormItem
 
-        while (this.visitedItems.hasUnvisited()) {
+        while (this.visitedItems.hasUnvisitedVertexItems()) {
             const itemCollection: GraphFormItem[] = [] // TODO: extract to new class EdgeItemCollection
-            currentItem = this.visitedItems.nextUnvisited() as GraphFormItem
+            currentItem = this.visitedItems.nextUnvisitedVertexItem() as GraphFormItem
             this.itemDepthSearch(currentItem, itemCollection)
         }
 
-        console.log(this.graph)
+        // console.log(this.graph)
 
         return this.graph
     }
@@ -43,6 +43,7 @@ export class GraphFormConverter {
         if (Object.values(neighbours).some(n => n !== undefined)) {
             console.log('currItem:', currentItem)
             console.log('nbs:', neighbours)
+            console.log('----------')
         }
         for (const [side, neighbour] of Object.entries(neighbours)) { // TODO: sort: edges before vertices
             // console.log('side:', neighbour)

@@ -1,5 +1,6 @@
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 export class VisitedItems {
     private readonly graphForm: GraphForm
@@ -10,15 +11,21 @@ export class VisitedItems {
         this.itemsVisited = graphForm.toGrid().map(row => row.map(item => initialValue))
     }
 
-    hasUnvisited(): boolean {
-        return this.itemsVisited.some(row => row.some(itemVisited => !itemVisited))
+    hasUnvisitedVertexItems(): boolean {
+        return this.itemsVisited.some((row, y) => row.some((itemVisited, x) => {
+            const currentItem = this.graphForm.toGrid()[y][x]
+            return !itemVisited && currentItem.data().type === GraphFormItemType.VERTEX
+        }))
     }
 
-    nextUnvisited(): GraphFormItem | undefined {
+    nextUnvisitedVertexItem(): GraphFormItem | undefined {
         let item: GraphFormItem | undefined
         this.itemsVisited.forEach((row, y) => row.forEach((itemVisited, x) => {
             if (!itemVisited && item === undefined) {
-                item = this.graphForm.toGrid()[y][x]
+                const currentItem = this.graphForm.toGrid()[y][x]
+                if (currentItem.data().type === GraphFormItemType.VERTEX) {
+                    item = this.graphForm.toGrid()[y][x]
+                }
             }
         }))
         return item
