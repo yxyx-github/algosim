@@ -19,7 +19,7 @@ export class GraphFormConverter {
     }
 
     toGraph(): Graph<VertexValue, EdgeValue> {
-        console.log('convert:', this.graphForm)
+        // console.log('convert:', this.graphForm)
 
         /*
             - while graphForm has unvisited items:      // to properly parse non-contiguous graphs
@@ -38,7 +38,7 @@ export class GraphFormConverter {
             this.itemDepthSearch(currentItem, itemCollection)
         }
 
-        console.log(this.graph)
+        // console.log(this.graph)
 
         return this.graph
     }
@@ -46,8 +46,8 @@ export class GraphFormConverter {
     private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
-        console.log('currItem:', currentItem)
-        console.log('nbs:', neighbours)
+        // console.log('currItem:', currentItem)
+        // console.log('nbs:', neighbours)
         for (const [side, neighbour] of Object.entries(neighbours)) {
             // console.log('side:', neighbour)
             if (neighbour !== undefined) {
