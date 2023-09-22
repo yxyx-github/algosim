@@ -106,7 +106,6 @@ export class GraphForm {
             })
     }
 
-    // TODO: test
     validateConnections() {
         this.toItems().forEach(item => this.validateItemConnections(item))
     }

@@ -40,29 +40,27 @@ export class GraphFormConverter {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
         if (Object.values(neighbours).some(n => n !== undefined)) {
-            console.log('currItem:', currentItem)
+            // console.log('currItem:', currentItem)
             // console.log('nbs:', neighbours)
-            console.log('----------')
+            // console.log('----------')
         }
         for (
             const [side, neighbour] of
             Object.entries(neighbours)
                 .sort((a, b) => this.compareNeighbourEntries(a, b))
                 .filter(([side, neighbour]) => neighbour !== previousItem)
-        ) { // TODO: sort: edges before vertices; filter depth search parent
+        ) {
             // console.log('side:', neighbour)
             if (neighbour !== undefined) {
                 if (!this.visitedItems.isVisited(neighbour)) {
                     this.itemDepthSearch(neighbour, itemCollection, currentItem)
                     itemCollection.push(neighbour)
                 } else if (neighbour.data().type === GraphFormItemType.VERTEX) {
-                    // TODO: exception for visited vertexes really necessary?
-                    // TODO: fix: only if no other unvisited neighbours
                     itemCollection.push(neighbour)
                 }
-                console.log('check for insertion')
+                // console.log('check for insertion')
                 if (currentItem.data().type === GraphFormItemType.VERTEX && itemCollection.length > 0) {
-                    console.log('insert')
+                    // console.log('insert')
                     this.insertItemCollection(currentItem, itemCollection)
                 }
             }
@@ -77,7 +75,7 @@ export class GraphFormConverter {
             this.graph.addEdgeBetween(v1, v2, edgeItems.length, {
                 items: edgeItems,
             })
-            console.log('edgeItems:', JSON.stringify(edgeItems))
+            // console.log('edgeItems:', JSON.stringify(edgeItems))
         } else {
             console.error('Unexpected end of edge')
         }
