@@ -34,11 +34,12 @@ export class InsertionSort implements SortAlgorithmImplementation {
 
     description(): string[] {
         return [`
-            InsertionSort ist ein einfacher stabiler Sortieralgorithmus, bei dem die Sortierung durch Einfügung erfolgt. Das erste Element der Liste kann als bereits sortierter 
-            Teil betrachtet werden. InsertionSort wählt nun immer das nächste Element des unsortierten Teils aus und vergleicht es so lange mit dem bereits sortieren Teil der Liste, 
-            bis die passende Stelle zum Einfügen gefunden wurde. Ist das passiert, erhöht sich der Anteil des sortierten Teils und es wird das nächste Element des unsortierten Teils gewählt. 
-            Die Laufzeitkomplexität des Verfahrens ist von der Anordnung der Eingabewerte abhängig. Sie liegt im Worst Case bei O(n²) und im Best Case bei O(n). 
-            Da der Algorithmus In-Place arbeitet, liegt die Speicherkomplexität bei O(1). Für eine Weiterentwicklung dieses Sortieralgorithmus siehe ShellSort.`
+            Insertionsort ist ein einfacher stabiler Sortieralgorithmus, bei dem die Sortierung durch Einfügung erfolgt. Das erste Element der Liste kann als bereits sortierter 
+            Teil betrachtet werden. InsertionSort wählt nun immer das erste Element des unsortierten Teils aus und vergleicht es so lange mit dem bereits sortieren Teil der Liste, 
+            bis die passende Stelle zum Einfügen gefunden wurde. Wurde die passende Stelle gefunden, wird das Element eingefügt. Dadurch erhöht sich der Anteil des sortierten 
+            Teils und es wird das nächste Element des unsortierten Teils gewählt. Die Laufzeitkomplexität des Verfahrens ist von der Anordnung der Eingabewerte abhängig. Sie 
+            liegt im Worst Case sowie auch im Average Case bei O(n²) und im Best Case bei O(n). Da der Algorithmus In-Place arbeitet, liegt die Speicherkomplexität bei O(1). Einige andere Sortierverfahren 
+            bauen auf Selectionssort auf. Ein Beispiel hierfür ist zum Beispiel Shellsort.`
         ]
     }
 
