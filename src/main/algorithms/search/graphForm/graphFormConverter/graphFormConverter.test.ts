@@ -39,7 +39,7 @@ describe('GraphFormConverter', () => {
 
             expect(edge.getFrom()).to.deep.equal(expectedEdge?.getFrom())
             expect(edge.getTo()).to.deep.equal(expectedEdge?.getTo())
-            expect(edge.getWeight()).to.deep.equal(expectedEdge?.getWeight());
+            expect(edge.getWeight()).to.equal(expectedEdge?.getWeight());
             (expectedEdge as Edge<VertexValue, EdgeValue>).getValue().items.forEach(item => {
                 expect(edge.getValue().items).to.contain(item)
             })
@@ -197,4 +197,5 @@ describe('GraphFormConverter', () => {
     })
 
     // TODO: test non-contiguous graphs
+    // TODO: test all items are vertices (except corners)
 })
