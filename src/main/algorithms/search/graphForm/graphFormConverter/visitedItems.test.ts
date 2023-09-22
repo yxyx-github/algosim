@@ -2,7 +2,8 @@ import { describe, expect, test } from 'vitest'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { VisitedItems } from '@/main/algorithms/search/graphForm/graphFormConverter/visitedItems'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { Coords, GraphFormItemType, TRBL } from '@/main/algorithms/search/graphForm/types'
+import type { Coords, TRBL } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 describe('VisitedItems', () => {
     function getItemWithConnections(coords: Coords, connections: TRBL<boolean>): GraphFormItem {
