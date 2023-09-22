@@ -110,4 +110,24 @@ describe('Graph', () => {
         expect(g.findVertex((v: Vertex<string>) => v.getValue() === 'val3')).to.undefined
         expect(g.findVertex((v: Vertex<string>) => v.getValue().includes('val'))).to.equal(v1)
     })
+
+    test('can find edges', () => {
+        const g = new Graph<string, string>()
+        const v1 = new Vertex<string>('v1', 'val1')
+        const v2 = new Vertex<string>('v2', 'val2')
+
+        g.addVertex(v1)
+        g.addVertex(v2)
+
+        const e12 = new Edge<string>(v1, v2, 3, 'e12')
+        const e21 = new Edge<string>(v2, v1, 4, 'e21')
+
+        g.addEdge(e12)
+        g.addEdge(e21)
+
+        expect(g.findEdge((e: Edge<string, string>) => e.getValue() === 'e12')).to.equal(e12)
+        expect(g.findEdge((e: Edge<string, string>) => e.getValue() === 'e21')).to.equal(e21)
+        expect(g.findEdge((e: Edge<string, string>) => e.getValue() === 'e')).to.undefined
+        expect(g.findEdge((e: Edge<string, string>) => e.getValue().includes('e'))).to.equal(e12)
+    })
 })

@@ -45,6 +45,10 @@ export class Graph<T, S>{
         )
     }
 
+    findEdge(condition: (v: Edge<T, S>) => boolean): Edge<T, S> | undefined {
+        return this.edges.find(e => condition(e))
+    }
+
     addEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number, value: S) {
         this.addEdge(new Edge<T, S>(v1, v2, weight, value))
         this.addEdge(new Edge<T, S>(v2, v1, weight, value))
