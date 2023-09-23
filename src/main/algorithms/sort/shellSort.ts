@@ -1,5 +1,5 @@
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
-import { SortColor, type HighlightedIndex, type SortAlgorithmImplementation, type SortSimulation, type SortSimulationStep } from '@/main/algorithms/sort/types'
+import { SortColor , type SortAlgorithmImplementation, type SortSimulation, type SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
 
