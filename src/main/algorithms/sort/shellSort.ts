@@ -25,7 +25,7 @@ export class ShellSort implements SortAlgorithmImplementation {
                     if (stepWidth == 1){
                         progressTracker?.trackNext()
                     }
-                    for (let pointer = currentElement - stepWidth; pointer >= 0; pointer = pointer - stepWidth) {
+                    for (let pointer = currentElement - stepWidth; pointer >= 0; pointer -= stepWidth) {
                         pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
                         if (numbers[pointer] <= numbers[pointer + stepWidth]) {
                             break;
