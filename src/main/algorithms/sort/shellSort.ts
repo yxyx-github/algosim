@@ -2,7 +2,6 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { SortColor , type SortAlgorithmImplementation, type SortSimulation, type SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
-import {n} from 'vitest/dist/types-63abf2e0'
 
 export class ShellSort implements SortAlgorithmImplementation {
 
@@ -22,7 +21,7 @@ export class ShellSort implements SortAlgorithmImplementation {
 
         for (let stepWidth of stepWidthArray) {
             for (let offset = 0; offset < stepWidth; offset++) {
-                for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement = currentElement + stepWidth) {
+                for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement += stepWidth) {
                     if (stepWidth == 1){
                         progressTracker?.trackNext()
                     }
