@@ -45,12 +45,12 @@ export class ShellSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    private createStep(numbers: number[], pointer: number, currentElement: number, stepwidth: number): SortSimulationStep {
+    private createStep(numbers: number[], pointer: number, currentElement: number, stepWidth: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
                 { color: SortColor.CURRENT, index: pointer },
-                { color: SortColor.CURRENT, index: pointer + stepwidth },
-                ...(pointer + stepwidth === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
+                { color: SortColor.CURRENT, index: pointer + stepWidth },
+                ...(pointer + stepWidth === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
             ])
     }
 
