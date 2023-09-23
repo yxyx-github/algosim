@@ -273,7 +273,40 @@ describe('GraphFormConverter', () => {
         assertGraph(converter.toGraph(), expectedGraph)
     })
 
-    // TODO: test edge circle without vertices
+    test('can convert GraphForm with circle of edge items', () => {
+        const item00 = getItemWithConnections({ x: 0, y: 0, }, { top: false, right: true, bottom: true, left: false })
+        const item10 = getItemWithConnections({ x: 1, y: 0, }, { top: false, right: true, bottom: false, left: true })
+        const item20 = getItemWithConnections({ x: 2, y: 0, }, { top: false, right: false, bottom: true, left: true })
+        const item01 = getItemWithConnections({ x: 0, y: 1, }, { top: true, right: false, bottom: true, left: false })
+        const item11 = getItemWithConnections({ x: 1, y: 1, }, { top: false, right: false, bottom: false, left: false })
+        const item21 = getItemWithConnections({ x: 2, y: 1, }, { top: true, right: false, bottom: true, left: false })
+        const item02 = getItemWithConnections({ x: 0, y: 2, }, { top: true, right: true, bottom: false, left: false })
+        const item12 = getItemWithConnections({ x: 1, y: 2, }, { top: false, right: true, bottom: false, left: true })
+        const item22 = getItemWithConnections({ x: 2, y: 2, }, { top: true, right: false, bottom: false, left: true })
+
+        const expectedGraph = new Graph<VertexValue, EdgeValue>()
+
+        const graphForm = new GraphForm()
+        graphForm.addRow()
+        graphForm.addColumn()
+        graphForm.addRow()
+        graphForm.addColumn()
+
+        graphForm.updateItem(item00)
+        graphForm.updateItem(item10)
+        graphForm.updateItem(item20)
+        graphForm.updateItem(item01)
+        graphForm.updateItem(item11)
+        graphForm.updateItem(item21)
+        graphForm.updateItem(item02)
+        graphForm.updateItem(item12)
+        graphForm.updateItem(item22)
+
+        const converter = new GraphFormConverter(graphForm)
+
+        assertGraph(converter.toGraph(), expectedGraph)
+    })
+
     // TODO: test non-contiguous graphs
     // TODO: test 3 edges between two vertices
 })
