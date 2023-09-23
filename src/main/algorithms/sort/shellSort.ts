@@ -18,7 +18,6 @@ export class ShellSort implements SortAlgorithmImplementation {
             stepwidthArray = [nextStepwidth].concat(stepwidthArray)
         }
 
-        console.log("Stepwidtharray:", stepwidthArray)
         for (let stepwidth of stepwidthArray){
             for (let offset = 0; offset < stepwidth; offset++){
                 for (let currentElement = stepwidth + offset; currentElement < numbers.length; currentElement = currentElement + stepwidth) {
@@ -45,13 +44,13 @@ export class ShellSort implements SortAlgorithmImplementation {
 
 description(): string[] {
     return [`
-        Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus. Die Grundidee ist, die unsortierte Liste in mehrere Teillisten zu unterteilen und diese dann mit Insertionsort zu sortieren. 
-        Es wird ein gewisser Abstand gewählt, der zwischen den Elementen gelten muss und somit die Teilliste erzeugt. Dabei wird beim ersten Element der Liste angefangen und jedes weitere Element der 
+        Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus. Die Grundidee ist, die unsortierte Liste in mehrere Teillisten zu unterteilen und diese dann mit Insertionsort zu sortieren.
+        Es wird ein gewisser Abstand gewählt, der zwischen den Elementen gelten muss und somit die Teilliste erzeugt. Dabei wird beim ersten Element der Liste angefangen und jedes weitere Element der
         Teilliste ergibt sich durch das Aufsummieren des Abstandes, solange dieser Wert noch innerhalb der Liste liegt. Ist die Teilliste sortiert, wird das zweite Element der Liste genommen und das
         Verfahren wiederholt. Dies wird so oft wiederholt, wie der Abstand groß ist, damit jedes Element einmal mit dem Abstand sortiert wurde. Danach wird der Abstand verringert und das Verfahren
         wiederholt. Dies geschieht so lange, bis der Abstand 1 beträgt. Es gibt viele Möglichkeiten, die Abstände zu bestimmen. In dem hier gezeigten Verfahren wird am Anfang die 1 genommen und für die
-        weiteren Abstände die Formel 'Abstand = 4**(i + 1) + 3 * 2**i + 1' verwendet, wobei i im ersten Schritt 0 ist und bei jedem Schritt um 1 erhöht wird. So kommt die Folge 
-        1, 8, 23, 77, 281, ... zustande, die dann rückwärts durchgegangen wird. Diesem Vorgehen konnte eine Laufzeitkomplexität von O(n**(4/3)) nachgewiesen werden. Die mathematisch beste Distanzfolge 
+        weiteren Abstände die Formel 'Abstand = 4**(i + 1) + 3 * 2**i + 1' verwendet, wobei i im ersten Schritt 0 ist und bei jedem Schritt um 1 erhöht wird. So kommt die Folge
+        1, 8, 23, 77, 281, ... zustande, die dann rückwärts durchgegangen wird. Diesem Vorgehen konnte eine Laufzeitkomplexität von O(n**(4/3)) nachgewiesen werden. Die mathematisch beste Distanzfolge
         für Shellsort konnte bisher nicht gefunden werden, man geht jedoch nicht davon aus, dass eine Laufzeitkomplexität von O(n * log(n)) erreicht werden kann. Die Speicherkomplexität liegt bei O(1),
         da das Verfahren in-place sortiert.`
     ]
@@ -64,5 +63,5 @@ description(): string[] {
                 { color: SortColor.CURRENT, index: pointer + stepwidth },
                 ...(pointer + stepwidth === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
             ])
-    } 
+    }
 }
