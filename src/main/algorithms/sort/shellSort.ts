@@ -11,13 +11,13 @@ export class ShellSort implements SortAlgorithmImplementation {
 
         pB.step(SortSimulationStepFactory.create(numbers))
         let item = -1
-        let stepWidthArray : number[] = [1]
-        for (let counter = 0; ;counter++){
-            let nextStepWidth = 4**(counter + 1) + 3 * 2**counter + 1
-            if (nextStepWidth > numbers.length){
-                break;
-            }
+        let stepWidthArray: number[]
+        let nextStepWidth = 1
+        let counter = 0;
+        while (nextStepWidth <= numbers.length) {
             stepWidthArray = [nextStepWidth].concat(stepWidthArray)
+            nextStepWidth = 4**(counter + 1) + 3 * 2**counter + 1;
+            counter++;
         }
 
         for (let stepWidth of stepWidthArray){
