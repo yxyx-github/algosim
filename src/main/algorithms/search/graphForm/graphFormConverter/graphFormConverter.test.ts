@@ -363,6 +363,5 @@ describe('GraphFormConverter', () => {
         assertGraph(converter.toGraph(), expectedGraph)
     })
 
-    // TODO: test non-contiguous graphs
     // TODO: test 3 edges between two vertices
 })
