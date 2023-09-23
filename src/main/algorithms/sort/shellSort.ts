@@ -8,18 +8,18 @@ export class ShellSort implements SortAlgorithmImplementation {
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
-
         pB.step(SortSimulationStepFactory.create(numbers))
-        let item = -1
+
         let stepWidthArray: number[]
-        let nextStepWidth = 1
-        let counter = 0;
+        let nextStepWidth: number = 1
+        let counter: number = 0;
         while (nextStepWidth <= numbers.length) {
             stepWidthArray = [nextStepWidth].concat(stepWidthArray)
             nextStepWidth = 4**(counter + 1) + 3 * 2**counter + 1;
             counter++;
         }
 
+        let item: number = -1
         for (let stepWidth of stepWidthArray){
             for (let offset = 0; offset < stepWidth; offset++){
                 for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement = currentElement + stepWidth) {
