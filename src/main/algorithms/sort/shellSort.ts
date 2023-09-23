@@ -2,6 +2,7 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { SortColor , type SortAlgorithmImplementation, type SortSimulation, type SortSimulationStep } from '@/main/algorithms/sort/types'
 import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
+import {n} from 'vitest/dist/types-63abf2e0'
 
 export class ShellSort implements SortAlgorithmImplementation {
 
@@ -19,8 +20,8 @@ export class ShellSort implements SortAlgorithmImplementation {
             counter++;
         }
 
-        for (let stepWidth of stepWidthArray){
-            for (let offset = 0; offset < stepWidth; offset++){
+        for (let stepWidth of stepWidthArray) {
+            for (let offset = 0; offset < stepWidth; offset++) {
                 for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement = currentElement + stepWidth) {
                     if (stepWidth == 1){
                         progressTracker?.trackNext()
@@ -30,9 +31,7 @@ export class ShellSort implements SortAlgorithmImplementation {
                         if (numbers[pointer] <= numbers[pointer + stepWidth]) {
                             break;
                         }
-                        let temp = numbers[pointer]
-                        numbers[pointer] = numbers[pointer + stepWidth]
-                        numbers[pointer + stepWidth] = temp
+                        this.swap(numbers, pointer, stepWidth)
                         pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
                     }
                 }
@@ -42,6 +41,12 @@ export class ShellSort implements SortAlgorithmImplementation {
         progressTracker?.trackNext()
         pB.step(SortSimulationStepFactory.create(numbers))
         return pB.build()
+    }
+
+    private swap(numbers: number[], pointer: number, stepWidth: number) {
+        let temp = numbers[pointer]
+        numbers[pointer] = numbers[pointer + stepWidth]
+        numbers[pointer + stepWidth] = temp
     }
 
     private createStep(numbers: number[], pointer: number, currentElement: number, stepWidth: number): SortSimulationStep {
