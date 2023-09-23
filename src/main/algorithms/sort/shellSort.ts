@@ -21,25 +21,33 @@ export class ShellSort implements SortAlgorithmImplementation {
 
         for (let stepWidth of stepWidthArray) {
             for (let offset = 0; offset < stepWidth; offset++) {
-                for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement += stepWidth) {
-                    if (stepWidth == 1){
-                        progressTracker?.trackNext()
-                    }
-                    for (let pointer = currentElement - stepWidth; pointer >= 0; pointer -= stepWidth) {
-                        pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
-                        if (numbers[pointer] <= numbers[pointer + stepWidth]) {
-                            break;
-                        }
-                        this.swap(numbers, pointer, stepWidth)
-                        pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
-                    }
-                }
+                this.insertionSortWithOffset(numbers, offset, stepWidth, pB, progressTracker)
             }
         }
 
         progressTracker?.trackNext()
         pB.step(SortSimulationStepFactory.create(numbers))
         return pB.build()
+    }
+
+    private insertionSortWithOffset(numbers: number[], offset: number, stepWidth: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress ) {
+        for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement += stepWidth) {
+            this.insertCurrentElement(numbers, currentElement, stepWidth, pB, progressTracker)
+        }
+    }
+
+    private insertCurrentElement(numbers: number[], currentElement: number, stepWidth: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
+        if (stepWidth == 1){
+            progressTracker?.trackNext()
+        }
+        for (let pointer = currentElement - stepWidth; pointer >= 0; pointer -= stepWidth) {
+            pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
+                if (numbers[pointer] <= numbers[pointer + stepWidth]) {
+                    break;
+                }
+            this.swap(numbers, pointer, stepWidth)
+            pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
+        }
     }
 
     private swap(numbers: number[], pointer: number, stepWidth: number) {
