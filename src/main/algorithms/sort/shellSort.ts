@@ -45,8 +45,17 @@ export class ShellSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-description(): string[] {
-    return [`
+    private createStep(numbers: number[], pointer: number, currentElement: number, stepwidth: number): SortSimulationStep {
+        return SortSimulationStepFactory.create(numbers,
+            [
+                { color: SortColor.CURRENT, index: pointer },
+                { color: SortColor.CURRENT, index: pointer + stepwidth },
+                ...(pointer + stepwidth === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
+            ])
+    }
+
+    description(): string[] {
+        return [`
         Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus. Die Grundidee ist, die unsortierte Liste in mehrere Teillisten zu unterteilen und diese dann mit Insertionsort zu sortieren.
         Es wird ein gewisser Abstand gewählt, der zwischen den Elementen gelten muss und somit die Teilliste erzeugt. Dabei wird beim ersten Element der Liste angefangen und jedes weitere Element der
         Teilliste ergibt sich durch das Aufsummieren des Abstandes, solange dieser Wert noch innerhalb der Liste liegt. Ist die Teilliste sortiert, wird das zweite Element der Liste genommen und das
@@ -56,15 +65,6 @@ description(): string[] {
         1, 8, 23, 77, 281, ... zustande, die dann rückwärts durchgegangen wird. Diesem Vorgehen konnte eine Laufzeitkomplexität von O(n**(4/3)) nachgewiesen werden. Die mathematisch beste Distanzfolge
         für Shellsort konnte bisher nicht gefunden werden, man geht jedoch nicht davon aus, dass eine Laufzeitkomplexität von O(n * log(n)) erreicht werden kann. Die Speicherkomplexität liegt bei O(1),
         da das Verfahren in-place sortiert.`
-    ]
-}
-
-    private createStep(numbers: number[], pointer: number, currentElement: number, stepwidth: number): SortSimulationStep {
-        return SortSimulationStepFactory.create(numbers,
-            [
-                { color: SortColor.CURRENT, index: pointer },
-                { color: SortColor.CURRENT, index: pointer + stepwidth },
-                ...(pointer + stepwidth === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
-            ])
+        ]
     }
 }
