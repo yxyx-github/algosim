@@ -28,7 +28,7 @@
 
         <h3>Unterstützte Algorithmen</h3>
         Die von uns unterstützen Sortieralgorithmen sind:
-        <order-list>
+        <ul class="list-inside list-disc">
             <li>Bubblesort</li>
             <li>Combsort</li>
             <li>Heapsort</li>
@@ -37,14 +37,14 @@
             <li>Quicksort</li>
             <li>Selectionsort</li>
             <li>Shellsort</li>
-        </order-list>
+        </ul>
         Die von uns unterstützen Suchalgorithmen sind:
-        <order-list>
+        <ul class="list-inside list-disc">
             <li>A*</li>
             <li>Breath-First-Search (BFS)</li>
             <li>Depth-First-Search (DFS)</li>
             <li>Dijkstra</li>
-        </order-list>
+        </ul>
         <br>
         <br>
 
