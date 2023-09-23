@@ -9,30 +9,30 @@ export class ShellSort implements SortAlgorithmImplementation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(numbers))
         let item = -1
-        let stepwidthArray : number[] = [1]
+        let stepWidthArray : number[] = [1]
         for (let counter = 0; ;counter++){
-            let nextStepwidth = 4**(counter + 1) + 3 * 2**counter + 1
-            if (nextStepwidth > numbers.length){
+            let nextStepWidth = 4**(counter + 1) + 3 * 2**counter + 1
+            if (nextStepWidth > numbers.length){
                 break;
             }
-            stepwidthArray = [nextStepwidth].concat(stepwidthArray)
+            stepWidthArray = [nextStepWidth].concat(stepWidthArray)
         }
 
-        for (let stepwidth of stepwidthArray){
-            for (let offset = 0; offset < stepwidth; offset++){
-                for (let currentElement = stepwidth + offset; currentElement < numbers.length; currentElement = currentElement + stepwidth) {
-                    if (stepwidth == 1){
+        for (let stepWidth of stepWidthArray){
+            for (let offset = 0; offset < stepWidth; offset++){
+                for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement = currentElement + stepWidth) {
+                    if (stepWidth == 1){
                         progressTracker?.trackNext()
                     }
-                    for (let pointer = currentElement - stepwidth; pointer >= 0; pointer = pointer - stepwidth) {
-                        pB.step(this.createStep(numbers, pointer, currentElement, stepwidth))
-                        if (numbers[pointer] <= numbers[pointer + stepwidth]) {
+                    for (let pointer = currentElement - stepWidth; pointer >= 0; pointer = pointer - stepWidth) {
+                        pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
+                        if (numbers[pointer] <= numbers[pointer + stepWidth]) {
                             break;
                         }
                         item = numbers[pointer]
-                        numbers[pointer] = numbers[pointer + stepwidth]
-                        numbers[pointer + stepwidth] = item
-                        pB.step(this.createStep(numbers, pointer, currentElement, stepwidth))
+                        numbers[pointer] = numbers[pointer + stepWidth]
+                        numbers[pointer + stepWidth] = item
+                        pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
                     }
                 }
             }
