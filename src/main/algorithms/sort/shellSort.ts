@@ -19,7 +19,6 @@ export class ShellSort implements SortAlgorithmImplementation {
             counter++;
         }
 
-        let item: number = -1
         for (let stepWidth of stepWidthArray){
             for (let offset = 0; offset < stepWidth; offset++){
                 for (let currentElement = stepWidth + offset; currentElement < numbers.length; currentElement = currentElement + stepWidth) {
@@ -31,9 +30,9 @@ export class ShellSort implements SortAlgorithmImplementation {
                         if (numbers[pointer] <= numbers[pointer + stepWidth]) {
                             break;
                         }
-                        item = numbers[pointer]
+                        let temp = numbers[pointer]
                         numbers[pointer] = numbers[pointer + stepWidth]
-                        numbers[pointer + stepWidth] = item
+                        numbers[pointer + stepWidth] = temp
                         pB.step(this.createStep(numbers, pointer, currentElement, stepWidth))
                     }
                 }
