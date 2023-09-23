@@ -4,9 +4,11 @@ import type { TrackableProgress } from '@/main/progressTracker/types'
 import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulationStepFactory'
 
 export class ShellSort implements SortAlgorithmImplementation {
+
     sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
+
         pB.step(SortSimulationStepFactory.create(numbers))
         let item = -1
         let stepWidthArray : number[] = [1]
@@ -37,6 +39,7 @@ export class ShellSort implements SortAlgorithmImplementation {
                 }
             }
         }
+
         progressTracker?.trackNext()
         pB.step(SortSimulationStepFactory.create(numbers))
         return pB.build()
