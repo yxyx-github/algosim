@@ -21,9 +21,9 @@ describe('ShellSort', () => {
                 SortSimulationStepFactory.create([5, 4, 2, 7, 10, 1, 2, 2, 4, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 8 }]),
                 SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 8 }]),
                 SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 9 }]),
-                SortSimulationStepFactory.create( [4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
+                SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
                 SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
                 SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
                 SortSimulationStepFactory.create([2, 4, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
                 SortSimulationStepFactory.create([2, 4, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
@@ -62,12 +62,12 @@ describe('ShellSort', () => {
                 SortSimulationStepFactory.create([1, 2, 2, 2, 4, 4, 5, 7, 10, 12], [{ color: SortColor.CURRENT, index: 6 }, { color: SortColor.CURRENT, index: 7 }, { color: SortColor.THRESHOLD, index: 8 }]),
                 SortSimulationStepFactory.create([1, 2, 2, 2, 4, 4, 5, 7, 10, 12], [{ color: SortColor.CURRENT, index: 5 }, { color: SortColor.CURRENT, index: 6 }, { color: SortColor.THRESHOLD, index: 8 }]),
                 SortSimulationStepFactory.create([1, 2, 2, 2, 4, 4, 5, 7, 10, 12], [{ color: SortColor.CURRENT, index: 8 }, { color: SortColor.CURRENT, index: 9 }]),
-                SortSimulationStepFactory.create([1, 2, 2, 2, 4, 4, 5, 7, 10, 12]),
+                SortSimulationStepFactory.create([1, 2, 2, 2, 4, 4, 5, 7, 10, 12])
             ]
         }
 
         const result = new ShellSort().sort(input)
-        expect(result).toEqual(expected)
+        expect(result).to.deep.equal(expected)
     })
 
     test('sort numbers with protocol and track progress', () => {
@@ -80,7 +80,7 @@ describe('ShellSort', () => {
                 SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 9 }]),
                 SortSimulationStepFactory.create( [4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }]),
                 SortSimulationStepFactory.create([4, 4, 2, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
-                SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 2 }]),
+                SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 1 }, { color: SortColor.CURRENT, index: 2 }]),
                 SortSimulationStepFactory.create([4, 2, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
                 SortSimulationStepFactory.create([2, 4, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 0 }, { color: SortColor.CURRENT, index: 1 }, { color: SortColor.THRESHOLD, index: 2 }]),
                 SortSimulationStepFactory.create([2, 4, 4, 7, 10, 1, 2, 2, 5, 12], [{ color: SortColor.CURRENT, index: 2 }, { color: SortColor.CURRENT, index: 3 }]),
@@ -129,7 +129,7 @@ describe('ShellSort', () => {
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
         const result = new ShellSort().sort(input, mockTracker)
-        expect(result).toEqual(expected)
+        expect(result).to.deep.equal(expected)
 
 
         expect(spyInit).toHaveBeenCalledOnce()
