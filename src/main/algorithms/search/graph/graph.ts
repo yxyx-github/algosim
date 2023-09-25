@@ -10,7 +10,7 @@ export class Graph<T, S>{
     }
 
     hasVertex(vertex: Vertex<T>): boolean {
-        return this.vertices.some(v => v.getId() === vertex.getId())
+        return this.vertices.some(v => v === vertex)
     }
 
     findVertex(condition: (v: Vertex<T>) => boolean): Vertex<T> | undefined {
@@ -30,18 +30,33 @@ export class Graph<T, S>{
     }
 
     removeVertex(vertex: Vertex<T>) {
-        this.vertices = this.vertices.filter(v => v.getId() !== vertex.getId())
+        this.vertices = this.vertices.filter(v => v !== vertex)
+    }
+
+    removeVertexById(vertexId: string) {
+        this.vertices = this.vertices.filter(v => v.getId() !== vertexId)
     }
 
     getEdges() {
         return this.edges
     }
 
-    hasEdge(edge: Edge<T, S>, checkWeight: boolean = false) {
+    hasEdge(edge: Edge<T, S>) {
+        return this.edges.some(e => e === edge)
+    }
+
+    hasEdgeBetween(from: Vertex<T>, to: Vertex<T>, weight: number) {
         return this.edges.some(e =>
-            e.getFrom().getId() === edge.getFrom().getId() &&
-            e.getTo().getId() === edge.getTo().getId() &&
-            (e.getWeight() === edge.getWeight() || !checkWeight)
+            e.getFrom() === from &&
+            e.getTo() === to &&
+            e.getWeight() === weight
+        )
+    }
+
+    hasEdgesBetween(from: Vertex<T>, to: Vertex<T>) {
+        return this.edges.some(e =>
+            e.getFrom() === from &&
+            e.getTo() === to
         )
     }
 
@@ -56,20 +71,29 @@ export class Graph<T, S>{
 
     addEdge(edge: Edge<T, S>) {
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
-            this.removeEdge(edge)
+            this.removeEdgeBetween(edge.getFrom(), edge.getTo(), edge.getWeight())
             this.edges.push(edge)
         } else {
             console.error('Cannot insert edge: required vertices are missing')
         }
     }
 
-    // TODO: remove by value comparison
     removeEdge(edge: Edge<T, S>) {
+        this.edges = this.edges.filter(e => e !== edge)
+    }
+
+    removeEdgeBetween(from: Vertex<T>, to: Vertex<T>, weight: number) {
         this.edges = this.edges.filter(e =>
-            e.getFrom().getId() !== edge.getFrom().getId() ||
-            e.getTo().getId() !== edge.getTo().getId()
+            e.getFrom().getId() !== from.getId() ||
+            e.getTo().getId() !== to.getId() ||
+            e.getWeight() !== weight
         )
     }
 
-    // TODO: implement method to remove all edges between two vertices
+    removeEdgesBetween(from: Vertex<T>, to: Vertex<T>) {
+        this.edges = this.edges.filter(e =>
+            e.getFrom().getId() !== from.getId() ||
+            e.getTo().getId() !== to.getId()
+        )
+    }
 }
