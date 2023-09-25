@@ -94,22 +94,18 @@ export class Graph<T, S> {
 
     removeEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
         this.edges = this.edges.filter(e =>
-            !(
-                (
-                    (e.getFrom() === v1 && e.getTo() === v2) ||
-                    (e.getFrom() === v2 && e.getTo() === v1)
-                ) &&
-                e.getWeight() === weight
-            )
+            (
+                (e.getFrom() !== v1 || e.getTo() !== v2) &&
+                (e.getFrom() !== v2 || e.getTo() !== v1)
+            ) ||
+            e.getWeight() !== weight
         )
     }
 
     removeEdgesBetween(v1: Vertex<T>, v2: Vertex<T>) {
         this.edges = this.edges.filter(e =>
-            !(
-                (e.getFrom() === v1 && e.getTo() === v2) ||
-                (e.getFrom() === v2 && e.getTo() === v1)
-            )
+            (e.getFrom() !== v1 || e.getTo() !== v2) &&
+            (e.getFrom() !== v2 || e.getTo() !== v1)
         )
     }
 }
