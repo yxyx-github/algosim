@@ -104,6 +104,9 @@ const algorithms = [
     }, {
         label: 'Selectionsort',
         value: SortAlgorithm.SELECTION,
+    }, {
+        label: 'Shellsort',
+        value: SortAlgorithm.SHELLSORT,
     }
 ]
 
