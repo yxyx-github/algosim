@@ -1,7 +1,7 @@
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { Edge } from '@/main/algorithms/search/graph/edge'
 
-export class Graph<T, S>{
+export class Graph<T, S> {
     private vertices: Vertex<T>[] = []
     private edges: Edge<T, S>[] = []
 
@@ -45,22 +45,24 @@ export class Graph<T, S>{
         return this.edges.some(e => e === edge)
     }
 
-    hasEdgeBetween(from: Vertex<T>, to: Vertex<T>, weight: number) {
+    hasEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
         return this.edges.some(e =>
-            e.getFrom() === from &&
-            e.getTo() === to &&
+            (
+                e.getFrom() === v1 && e.getTo() === v2 ||
+                e.getFrom() === v2 && e.getTo() === v1
+            ) &&
             e.getWeight() === weight
         )
     }
 
-    hasEdgesBetween(from: Vertex<T>, to: Vertex<T>) {
+    hasEdgesBetween(v1: Vertex<T>, v2: Vertex<T>) {
         return this.edges.some(e =>
-            e.getFrom() === from &&
-            e.getTo() === to
+            e.getFrom() === v1 && e.getTo() === v2 ||
+            e.getFrom() === v2 && e.getTo() === v1
         )
     }
 
-    findEdge(condition: (v: Edge<T, S>) => boolean): Edge<T, S> | undefined {
+    findEdge(condition: (e: Edge<T, S>) => boolean): Edge<T, S> | undefined {
         return this.edges.find(e => condition(e))
     }
 
@@ -71,7 +73,15 @@ export class Graph<T, S>{
 
     addEdge(edge: Edge<T, S>) {
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
-            this.removeEdgeBetween(edge.getFrom(), edge.getTo(), edge.getWeight())
+            // TODO: extract into separate method
+            const existingEdge = this.findEdge(e =>
+                e.getFrom() === edge.getFrom() &&
+                e.getTo() === edge.getTo() &&
+                e.getWeight() === edge.getWeight()
+            )
+            if (existingEdge !== undefined) {
+                this.removeEdge(existingEdge)
+            }
             this.edges.push(edge)
         } else {
             console.error('Cannot insert edge: required vertices are missing')
@@ -82,18 +92,24 @@ export class Graph<T, S>{
         this.edges = this.edges.filter(e => e !== edge)
     }
 
-    removeEdgeBetween(from: Vertex<T>, to: Vertex<T>, weight: number) {
+    removeEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
         this.edges = this.edges.filter(e =>
-            e.getFrom().getId() !== from.getId() ||
-            e.getTo().getId() !== to.getId() ||
-            e.getWeight() !== weight
+            !(
+                (
+                    (e.getFrom() === v1 && e.getTo() === v2) ||
+                    (e.getFrom() === v2 && e.getTo() === v1)
+                ) &&
+                e.getWeight() === weight
+            )
         )
     }
 
-    removeEdgesBetween(from: Vertex<T>, to: Vertex<T>) {
+    removeEdgesBetween(v1: Vertex<T>, v2: Vertex<T>) {
         this.edges = this.edges.filter(e =>
-            e.getFrom().getId() !== from.getId() ||
-            e.getTo().getId() !== to.getId()
+            !(
+                (e.getFrom() === v1 && e.getTo() === v2) ||
+                (e.getFrom() === v2 && e.getTo() === v1)
+            )
         )
     }
 }

@@ -149,7 +149,7 @@ describe('Graph', () => {
         expect(g2.getEdges()).to.not.deep.contain(new Edge(v3, v1, weightV1V3, valueV1V3))
         expect(g2.getEdges()).to.not.deep.contain(new Edge(v1, v3, weightV1V3Alt, valueV1V3))
         expect(g2.getEdges()).to.not.deep.contain(new Edge(v3, v1, weightV1V3Alt, valueV1V3))
-        expect(g2.getEdges()).to.length(4)
+        expect(g2.getEdges()).to.length(2)
     })
 
     test('can find vertices', () => {
