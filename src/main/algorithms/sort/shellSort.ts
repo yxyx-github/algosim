@@ -10,7 +10,7 @@ export class ShellSort implements SortAlgorithmImplementation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(numbers))
 
-        let stepWidthArray: number[]
+        let stepWidthArray: number[] = []
         let nextStepWidth: number = 1
         let counter: number = 0;
         while (nextStepWidth <= numbers.length) {
