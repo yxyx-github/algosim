@@ -73,7 +73,7 @@ export class Graph<T, S> {
 
     addEdge(edge: Edge<T, S>) {
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
-            // TODO: extract into separate method
+            // TODO: don't check
             const existingEdge = this.findEdge(e =>
                 e.getFrom() === edge.getFrom() &&
                 e.getTo() === edge.getTo() &&
@@ -92,6 +92,7 @@ export class Graph<T, S> {
         this.edges = this.edges.filter(e => e !== edge)
     }
 
+    // TODO: remove
     removeEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
         this.edges = this.edges.filter(e =>
             (
@@ -102,6 +103,7 @@ export class Graph<T, S> {
         )
     }
 
+    // TODO: add optional arg weight
     removeEdgesBetween(v1: Vertex<T>, v2: Vertex<T>) {
         this.edges = this.edges.filter(e =>
             (e.getFrom() !== v1 || e.getTo() !== v2) &&

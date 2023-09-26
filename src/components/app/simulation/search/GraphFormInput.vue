@@ -6,32 +6,53 @@
         <Button @click="addFirstColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
         <div
                 class="grid gap-0 max-w-fit max-h-min cursor-crosshair"
-                :style="`grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
+                :style="`grid-template-rows: repeat(${rows}, minmax(0, 1fr)) 2rem; grid-template-columns: repeat(${cols}, minmax(0, 1fr)) 2rem;`"
         >
             <div v-if="isEmpty"></div>
-            <GraphFormItemVisualization v-else v-for="(item, index) in graphFormItems" :key="index" class="w-full h-full" :item="item"/>
+            <template v-else>
+                <template v-for="(row, index) in graphFormItemGrid" :key="index">
+                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
+                    <FColumn v-for="(item, index) in row" :key="index" justifyItems="around" class="w-[2rem]">
+                        <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-up" severity="secondary" aria-label="Move Top" v-tooltip.top="'Move Top'"/>
+                        <Button @click="" class="w-full h-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Row" v-tooltip.top="'Delete Row'"/>
+                        <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-down" severity="secondary" aria-label="Move Bottom" v-tooltip.top="'Move Bottom'"/>
+                    </FColumn>
+                    <template v-if="index === graphFormItemGrid.length - 1">
+                        <FRow v-for="(item, index) in row" :key="index" justifyItems="around">
+                            <Button @click="" class="w-[2rem]" icon="pi pi-arrow-left" severity="secondary" aria-label="Move Left" v-tooltip.top="'Move Left'"/>
+                            <Button @click="" class="w-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Column" v-tooltip.top="'Delete Column'"/>
+                            <Button @click="" class="w-[2rem]" icon="pi pi-arrow-right" severity="secondary" aria-label="Move Right" v-tooltip.top="'Move Right'"/>
+                        </FRow>
+                    </template>
+                </template>
+            </template>
         </div>
         <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
         <div></div>
         <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
         <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
     </div>
+    <div>
+        rows: {{ rows }}
+        cols: {{ cols }}
+    </div>
 </template>
 
 <script setup lang="ts">
 import GraphFormItemVisualization from '@/components/app/simulation/search/visualization/GraphFormItemVisualization.vue'
 import Button from 'primevue/button'
-import type { WritableComputedRef } from 'vue'
 import { computed } from 'vue'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
-import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import FRow from '@/components/lib/layout/FRow.vue'
+import FColumn from '@/components/lib/layout/FColumn.vue'
 
 const props = defineProps<{
     graphForm: GraphForm
 }>()
 
-const graphFormItems = computed(() => props.graphForm.toItems())
+const graphFormItemGrid = computed(() => props.graphForm.toGrid())
 
+const rows = computed(() => props.graphForm.rows())
 const cols = computed(() => props.graphForm.cols())
 const isEmpty = computed(() => props.graphForm.isEmpty())
 
