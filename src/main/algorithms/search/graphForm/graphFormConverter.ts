@@ -40,6 +40,7 @@ export class GraphFormConverter {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
         if (Object.values(neighbours).some(n => n !== undefined)) {
+            console.log('currItem:', `${currentItem.generateItemId()}`)
             // console.log('currItem:', currentItem)
             // console.log('nbs:', neighbours)
             // console.log('----------')
@@ -66,14 +67,21 @@ export class GraphFormConverter {
         }
     }
 
+    // TODO: weight++
     private insertItemCollection(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
         if (itemCollection[0].data().type === GraphFormItemType.VERTEX) {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
             const edgeItems = itemCollection.filter((_, index) => index !== 0)
-            this.graph.addEdgeBetween(v1, v2, edgeItems.length, {
-                items: edgeItems,
-            })
+            // TODO: if edgeItems is empty then check if edge does already exist
+            const existingEdge = edgeItems.length === 0 ? this.graph.findEdge(e =>
+                e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === edgeItems.length
+            ) : undefined
+            if (edgeItems.length !== 0 || existingEdge === undefined) {
+                this.graph.addEdgeBetween(v1, v2, edgeItems.length, {
+                    items: edgeItems,
+                })
+            }
             // console.log('edgeItems:', JSON.stringify(edgeItems))
         } else {
             console.error('Unexpected end of edge')
