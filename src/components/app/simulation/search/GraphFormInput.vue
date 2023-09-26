@@ -12,18 +12,16 @@
             <template v-else>
                 <template v-for="(row, index) in graphFormItemGrid" :key="index">
                     <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
-                    <FColumn v-for="(item, index) in row" :key="index" justifyItems="around" class="w-[2rem]">
+                    <FColumn justifyItems="around" class="w-[2rem]">
                         <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-up" severity="secondary" aria-label="Move Top" v-tooltip.top="'Move Top'"/>
                         <Button @click="" class="w-full h-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Row" v-tooltip.top="'Delete Row'"/>
                         <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-down" severity="secondary" aria-label="Move Bottom" v-tooltip.top="'Move Bottom'"/>
                     </FColumn>
-                    <template v-if="index === graphFormItemGrid.length - 1">
-                        <FRow v-for="(item, index) in row" :key="index" justifyItems="around">
-                            <Button @click="" class="w-[2rem]" icon="pi pi-arrow-left" severity="secondary" aria-label="Move Left" v-tooltip.top="'Move Left'"/>
-                            <Button @click="" class="w-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Column" v-tooltip.top="'Delete Column'"/>
-                            <Button @click="" class="w-[2rem]" icon="pi pi-arrow-right" severity="secondary" aria-label="Move Right" v-tooltip.top="'Move Right'"/>
-                        </FRow>
-                    </template>
+                    <FRow v-if="index === graphFormItemGrid.length - 1" v-for="(item, index) in row" :key="index" justifyItems="around">
+                        <Button @click="" class="w-[2rem]" icon="pi pi-arrow-left" severity="secondary" aria-label="Move Left" v-tooltip.top="'Move Left'"/>
+                        <Button @click="" class="w-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Column" v-tooltip.top="'Delete Column'"/>
+                        <Button @click="" class="w-[2rem]" icon="pi pi-arrow-right" severity="secondary" aria-label="Move Right" v-tooltip.top="'Move Right'"/>
+                    </FRow>
                 </template>
             </template>
         </div>

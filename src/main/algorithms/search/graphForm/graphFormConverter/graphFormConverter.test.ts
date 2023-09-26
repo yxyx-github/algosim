@@ -30,7 +30,7 @@ describe('GraphFormConverter', () => {
         })
 
         graph.getEdges().map(edge =>
-            console.log(`${edge.getFrom().getId()} ==${edge.getWeight()}=> ${edge.getTo().getId()}`)
+            console.log(`${edge.getFrom().getId()} ==${edge.getWeight()}=> ${edge.getTo().getId()} - ${edge.getValue().items.map(item => item.generateItemId())}`)
         )
         expect(graph.getEdges().length).to.equal(expectedGraph.getEdges().length)
         graph.getEdges().forEach(edge => {
@@ -393,7 +393,7 @@ describe('GraphFormConverter', () => {
         expectedGraph.addEdgeBetween(v1, v2, 1, {
             items: [item11],
         })
-        expectedGraph.addEdgeBetween(v1, v2, 3, { // TODO: implement multi graph that allows two edges with the same weight
+        expectedGraph.addEdgeBetween(v1, v2, 3, {
             items: [item02, item12, item22],
         })
 

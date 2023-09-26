@@ -40,7 +40,7 @@ export class GraphFormConverter {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
         if (Object.values(neighbours).some(n => n !== undefined)) {
-            console.log('currItem:', `${currentItem.generateItemId()}`)
+            // console.log('currItem:', `${currentItem.generateItemId()}`)
             // console.log('currItem:', currentItem)
             // console.log('nbs:', neighbours)
             // console.log('----------')
