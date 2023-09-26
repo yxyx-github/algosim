@@ -32,10 +32,6 @@
         <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
         <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
     </div>
-    <div>
-        rows: {{ rows }}
-        cols: {{ cols }}
-    </div>
 </template>
 
 <script setup lang="ts">
