@@ -390,9 +390,9 @@ describe('GraphFormConverter', () => {
         expectedGraph.addEdgeBetween(v1, v2, 1, {
             items: [item11],
         })
-        /*expectedGraph.addEdgeBetween(v1, v2, 3, { // TODO: implement multi graph that allows two edges with the same weight
+        expectedGraph.addEdgeBetween(v1, v2, 3, { // TODO: implement multi graph that allows two edges with the same weight
             items: [item02, item12, item22],
-        })*/
+        })
 
         const graphForm = new GraphForm()
         graphForm.addRow()

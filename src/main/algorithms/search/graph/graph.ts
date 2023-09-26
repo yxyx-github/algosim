@@ -73,15 +73,6 @@ export class Graph<T, S> {
 
     addEdge(edge: Edge<T, S>) {
         if (this.hasVertex(edge.getFrom()) && this.hasVertex(edge.getTo())) {
-            // TODO: don't check
-            const existingEdge = this.findEdge(e =>
-                e.getFrom() === edge.getFrom() &&
-                e.getTo() === edge.getTo() &&
-                e.getWeight() === edge.getWeight()
-            )
-            if (existingEdge !== undefined) {
-                this.removeEdge(existingEdge)
-            }
             this.edges.push(edge)
         } else {
             console.error('Cannot insert edge: required vertices are missing')
@@ -92,22 +83,16 @@ export class Graph<T, S> {
         this.edges = this.edges.filter(e => e !== edge)
     }
 
-    // TODO: remove
-    removeEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number) {
+    removeEdgesBetween(v1: Vertex<T>, v2: Vertex<T>, weight?: number) {
         this.edges = this.edges.filter(e =>
             (
                 (e.getFrom() !== v1 || e.getTo() !== v2) &&
                 (e.getFrom() !== v2 || e.getTo() !== v1)
             ) ||
-            e.getWeight() !== weight
-        )
-    }
-
-    // TODO: add optional arg weight
-    removeEdgesBetween(v1: Vertex<T>, v2: Vertex<T>) {
-        this.edges = this.edges.filter(e =>
-            (e.getFrom() !== v1 || e.getTo() !== v2) &&
-            (e.getFrom() !== v2 || e.getTo() !== v1)
+            (
+                weight !== undefined &&
+                e.getWeight() !== weight
+            )
         )
     }
 }

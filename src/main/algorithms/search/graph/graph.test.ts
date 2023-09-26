@@ -67,15 +67,15 @@ describe('Graph', () => {
 
         expect(g.getEdges()).to.contain(e1)
         expect(g.getEdges()).to.contain(e2)
-        expect(g.getEdges()).to.not.contain(e3)
+        expect(g.getEdges()).to.contain(e3)
         expect(g.getEdges()).to.contain(e4)
         expect(g.getEdges()).to.contain(e5)
         expect(g.getEdges()).to.contain(e6)
         expect(g.getEdges()).to.not.contain(e7)
-        expect(g.getEdges()).to.length(5)
+        expect(g.getEdges()).to.length(6)
         expect(g.hasEdge(e1)).to.true
         expect(g.hasEdge(e2)).to.true
-        expect(g.hasEdge(e3)).to.false
+        expect(g.hasEdge(e3)).to.true
         expect(g.hasEdge(e4)).to.true
         expect(g.hasEdge(e5)).to.true
         expect(g.hasEdge(e6)).to.true
@@ -85,15 +85,15 @@ describe('Graph', () => {
 
         expect(g.getEdges()).to.contain(e1)
         expect(g.getEdges()).to.not.contain(e2)
-        expect(g.getEdges()).to.not.contain(e3)
+        expect(g.getEdges()).to.contain(e3)
         expect(g.getEdges()).to.contain(e4)
         expect(g.getEdges()).to.contain(e5)
         expect(g.getEdges()).to.contain(e6)
         expect(g.getEdges()).to.not.contain(e7)
-        expect(g.getEdges()).to.length(4)
+        expect(g.getEdges()).to.length(5)
         expect(g.hasEdge(e1)).to.true
         expect(g.hasEdge(e2)).to.false
-        expect(g.hasEdge(e3)).to.false
+        expect(g.hasEdge(e3)).to.true
         expect(g.hasEdge(e4)).to.true
         expect(g.hasEdge(e5)).to.true
         expect(g.hasEdge(e6)).to.true
@@ -129,10 +129,10 @@ describe('Graph', () => {
             expect(g.getEdges()).to.deep.contain(new Edge(v3, v1, weightV1V3, valueV1V3))
             expect(g.getEdges()).to.deep.contain(new Edge(v1, v3, weightV1V3Alt, valueV1V3))
             expect(g.getEdges()).to.deep.contain(new Edge(v3, v1, weightV1V3Alt, valueV1V3))
-            expect(g.getEdges()).to.length(6)
+            expect(g.getEdges()).to.length(8)
         })
 
-        g1.removeEdgeBetween(v1, v3, 7)
+        g1.removeEdgesBetween(v1, v3, 7)
         g2.removeEdgesBetween(v1, v3)
 
         expect(g1.getEdges()).to.deep.contain(new Edge(v1, v2, weightV1V2, valueV1V2))
