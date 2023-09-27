@@ -103,7 +103,7 @@ describe('GraphFormConverter', () => {
             item: item11,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==0=>${v2.getId()}`, `${v2.getId()}==0=>${v1.getId()}`, v1, v2, 0, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
             items: [],
         })
 
@@ -136,7 +136,7 @@ describe('GraphFormConverter', () => {
             item: item22,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==3=>${v2.getId()}`, `${v2.getId()}==3=>${v1.getId()}`, v1, v2, 3, {
             items: [item11, item12],
         })
 
@@ -176,10 +176,10 @@ describe('GraphFormConverter', () => {
             item: item11,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==0=>${v2.getId()}`, `${v2.getId()}==0=>${v1.getId()}`, v1, v2, 0, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
             items: [],
         })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==7=>${v1.getId()}`, `${v1.getId()}==7=>${v1.getId()}`, v1, v1, 7, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==8=>${v1.getId()}`, `${v1.getId()}==8=>${v1.getId()}`, v1, v1, 8, {
             items: [item00, item10, item20, item21, item22, item12, item02],
         })
 
@@ -236,28 +236,28 @@ describe('GraphFormConverter', () => {
             item: item12,
         })
         expectedGraph.addVertex(v5)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==0=>${v3.getId()}`, `${v3.getId()}==0=>${v1.getId()}`, v1, v3, 0, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v3.getId()}`, `${v3.getId()}==1=>${v1.getId()}`, v1, v3, 1, {
             items: [],
         })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==0=>${v5.getId()}`, `${v5.getId()}==0=>${v3.getId()}`, v3, v5, 0, {
+        expectedGraph.addEdgeBetween(`${v3.getId()}==1=>${v5.getId()}`, `${v5.getId()}==1=>${v3.getId()}`, v3, v5, 1, {
             items: [],
         })
-        expectedGraph.addEdgeBetween(`${v2.getId()}==0=>${v3.getId()}`, `${v3.getId()}==0=>${v2.getId()}`, v2, v3, 0, {
+        expectedGraph.addEdgeBetween(`${v2.getId()}==1=>${v3.getId()}`, `${v3.getId()}==1=>${v2.getId()}`, v2, v3, 1, {
             items: [],
         })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==0=>${v4.getId()}`, `${v4.getId()}==0=>${v3.getId()}`, v3, v4, 0, {
+        expectedGraph.addEdgeBetween(`${v3.getId()}==1=>${v4.getId()}`, `${v4.getId()}==1=>${v3.getId()}`, v3, v4, 1, {
             items: [],
         })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
             items: [item00],
         })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v4.getId()}`, `${v4.getId()}==1=>${v1.getId()}`, v1, v4, 1, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v1.getId()}`, v1, v4, 2, {
             items: [item20],
         })
-        expectedGraph.addEdgeBetween(`${v5.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v5.getId()}`, v5, v2, 1, {
+        expectedGraph.addEdgeBetween(`${v5.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v5.getId()}`, v5, v2, 2, {
             items: [item02],
         })
-        expectedGraph.addEdgeBetween(`${v5.getId()}==1=>${v4.getId()}`, `${v4.getId()}==1=>${v5.getId()}`, v5, v4, 1, {
+        expectedGraph.addEdgeBetween(`${v5.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v5.getId()}`, v5, v4, 2, {
             items: [item22],
         })
 
@@ -344,10 +344,10 @@ describe('GraphFormConverter', () => {
             item: item22,
         })
         expectedGraph.addVertex(v4)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
             items: [item01],
         })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==1=>${v4.getId()}`, `${v4.getId()}==1=>${v3.getId()}`, v3, v4, 1, {
+        expectedGraph.addEdgeBetween(`${v3.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v3.getId()}`, v3, v4, 2, {
             items: [item21],
         })
 
@@ -392,13 +392,13 @@ describe('GraphFormConverter', () => {
             item: item21,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==3=>${v2.getId()}`, `${v2.getId()}==3=>${v1.getId()}`, v1, v2, 3, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==4=>${v2.getId()}`, `${v2.getId()}==4=>${v1.getId()}`, v1, v2, 4, {
             items: [item00, item10, item20],
         })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
             items: [item11],
         })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==3=>${v2.getId()}`, `${v2.getId()}==3=>${v1.getId()}`, v1, v2, 3, {
+        expectedGraph.addEdgeBetween(`${v1.getId()}==4=>${v2.getId()}`, `${v2.getId()}==4=>${v1.getId()}`, v1, v2, 4, {
             items: [item02, item12, item22],
         })
 

@@ -67,18 +67,18 @@ export class GraphFormConverter {
         }
     }
 
-    // TODO: weight++
     private insertItemCollection(currentItem: GraphFormItem, itemCollection: GraphFormItem[]) {
         if (itemCollection[0].data().type === GraphFormItemType.VERTEX) {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
             const edgeItems = itemCollection.filter((_, index) => index !== 0)
-            // TODO: if edgeItems is empty then check if edge does already exist
+            const weight = edgeItems.length + 1
             const existingEdge = edgeItems.length === 0 ? this.graph.findEdge(e =>
-                e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === edgeItems.length
+                e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === weight
             ) : undefined
             if (edgeItems.length !== 0 || existingEdge === undefined) {
-                this.graph.addEdgeBetween(`${v1.getId()}==${edgeItems.length}=>${v2.getId()}`, `${v2.getId()}==${edgeItems.length}=>${v1.getId()}`, v1, v2, edgeItems.length, {
+                // TODO: include EdgeItems in id: sort items by coordinates -> improve test
+                this.graph.addEdgeBetween(`${v1.getId()}==${weight}=>${v2.getId()}`, `${v2.getId()}==${weight}=>${v1.getId()}`, v1, v2, weight, {
                     items: edgeItems,
                 })
             }
