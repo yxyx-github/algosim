@@ -1,71 +1,26 @@
 <template>
-<!--    <div class="grid gap-2 max-w-fit max-h-min" :class="isEmpty ? 'grid-rows-[2rem_2rem_2rem] grid-cols-[2rem_2rem_2rem]' : 'grid-rows-[2rem_1fr_2rem] grid-cols-[2rem_1fr_2rem]'">
-        <div></div>
-        <Button @click="addFirstRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
-        <div></div>
-        <Button @click="addFirstColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
-        <div
-            class="grid gap-0 max-w-fit max-h-min cursor-crosshair"
-            :style="`grid-template-rows: repeat(${rows}, minmax(0, 1fr)); grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
-        >
-            <div v-if="isEmpty"></div>
-            <template v-else>
-                <template v-for="(row, index) in graphFormItemGrid" :key="index">
-                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
-                </template>
-            </template>
-        </div>
-        <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
-        <div></div>
-        <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
-        <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
-    </div>-->
-<!--    <div class="grid gap-2 max-w-fit max-h-min" :class="isEmpty ? 'grid-rows-[2rem_2rem_2rem] grid-cols-[2rem_2rem_2rem]' : 'grid-rows-[2rem_1fr_2rem_2rem] grid-cols-[2rem_1fr_2rem_2rem]'">
-        <div></div>
-        <Button @click="addFirstRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
-        <div v-if="!isEmpty"></div>
-        <div></div>
-
-        <Button @click="addFirstColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
-        <div
-            class="grid gap-0 max-w-fit max-h-min cursor-crosshair"
-            :style="`grid-template-rows: repeat(${rows}, minmax(0, 1fr)); grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
-        >
-            <div v-if="isEmpty"></div>
-            <template v-else>
-                <template v-for="(row, index) in graphFormItemGrid" :key="index">
-                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
-                </template>
-            </template>
-        </div>
-        <FColumn v-if="!isEmpty" class="border-2 border-blue-400">
-            <FColumn v-for="(row, index) in graphFormItemGrid" :key="index" justifyItems="around" class="w-[2rem]">
-                <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-up" severity="secondary" aria-label="Move Up" v-tooltip.top="'Move Up'"/>
-                <Button @click="" class="w-full h-[2rem]" icon="pi pi-minus" severity="danger" aria-label="Delete Row" v-tooltip.top="'Delete Row'"/>
-                <Button @click="" class="w-full h-[2rem]" icon="pi pi-arrow-down" severity="secondary" aria-label="Move Down" v-tooltip.top="'Move Down'"/>
-            </FColumn>
-        </FColumn>
-        <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
-
-        <template v-if="!isEmpty">
-            <div></div>
-            <FRow class="border-2 border-green-400" justifyItems="around" :gap="0">
-                <FRow v-for="(item, index) in graphFormItemGrid[0]/*[graphFormItemGrid[0][0]]*/" :key="index" justifyItems="around" :shrink="true" :grow="false" :gap="0">
-                    <Button @click="" class="max-w-[2rem] shrink" icon="pi pi-arrow-left" severity="secondary" aria-label="Move Left" v-tooltip.top="'Move Left'"/>
-                    <Button @click="" class="max-w-[2rem] shrink" icon="pi pi-minus" severity="danger" aria-label="Delete Column" v-tooltip.top="'Delete Column'"/>
-                    <Button @click="" class="max-w-[2rem] shrink" icon="pi pi-arrow-right" severity="secondary" aria-label="Move Right" v-tooltip.top="'Move Right'"/>
-                </FRow>
-            </FRow>
-            <div></div>
-            <div></div>
-        </template>
-
-        <div></div>
-        <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
-        <div v-if="!isEmpty"></div>
-        <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
-    </div>-->
     <div class="grid gap-2 max-w-fit max-h-min" :class="isEmpty ? 'grid-rows-[2rem_2rem_2rem] grid-cols-[2rem_2rem_2rem]' : 'grid-rows-[2rem_1fr_2rem] grid-cols-[2rem_1fr_2rem]'">
+        <div></div>
+        <Button @click="addFirstRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
+        <div></div>
+        <Button @click="addFirstColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
+        <div
+            class="grid gap-0 max-w-fit max-h-min cursor-crosshair"
+            :style="`grid-template-rows: repeat(${rows}, minmax(0, 1fr)); grid-template-columns: repeat(${cols}, minmax(0, 1fr));`"
+        >
+            <div v-if="isEmpty"></div>
+            <template v-else>
+                <template v-for="(row, index) in graphFormItemGrid" :key="index">
+                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
+                </template>
+            </template>
+        </div>
+        <Button @click="addColumn" class="w-[2rem]" icon="pi pi-plus" severity="secondary" aria-label="Add Column" v-tooltip.top="'Add Column'"/>
+        <div></div>
+        <Button @click="addRow" class="w-full" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
+        <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
+    </div>
+<!--    <div class="grid gap-2 max-w-fit max-h-min" :class="isEmpty ? 'grid-rows-[2rem_2rem_2rem] grid-cols-[2rem_2rem_2rem]' : 'grid-rows-[2rem_1fr_2rem] grid-cols-[2rem_1fr_2rem]'">
         <div></div>
         <Button @click="addFirstRow" class="w-[calc(100%-2rem)]" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
         <div></div>
@@ -95,7 +50,7 @@
         <div></div>
         <Button @click="addRow" class="w-[calc(100%-2rem)]" icon="pi pi-plus" severity="secondary" aria-label="Add Row" v-tooltip.top="'Add Row'"/>
         <Button @click="clear" class="w-full" icon="pi pi-trash" severity="danger" aria-label="Clear" v-tooltip.top="'Clear'"/>
-    </div>
+    </div>-->
 </template>
 
 <script setup lang="ts">
