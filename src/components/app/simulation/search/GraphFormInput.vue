@@ -51,11 +51,11 @@ const cols = computed(() => props.graphForm.cols())
 const isEmpty = computed(() => props.graphForm.isEmpty())
 
 function addFirstRow() {
-    console.log('addFirstRow')
+    props.graphForm.addRow(0)
 }
 
 function addFirstColumn() {
-    console.log('addFirstColumn')
+    props.graphForm.addColumn(0)
 }
 
 function addRow() {

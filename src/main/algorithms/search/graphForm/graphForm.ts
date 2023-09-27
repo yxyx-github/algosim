@@ -65,25 +65,34 @@ export class GraphForm {
         return this.rows() === 0 && this.cols() === 0
     }
 
-    addRow() {
+    addRow(insertBefore: number = this.grid.length) {
         const oldCols = this.cols()
         if (oldCols === 0) {
             this.clear()
         } else {
             const newRow: GraphFormItem[] = []
             for (let i = 0; i < oldCols; i++) {
-                newRow.push(GraphFormItem.createBlank(i, this.rows()))
+                newRow.push(GraphFormItem.createBlank(i, insertBefore))
             }
-            this.grid.push(newRow)
+            for (let i = insertBefore; i < this.grid.length; i++) {
+                this.grid[i] = this.grid[i].map(item => new GraphFormItem({ ...item.data(), coords: { x: item.data().coords.x, y: item.data().coords.y + 1 } }))
+            }
+            this.grid.splice(insertBefore, 0, newRow)
         }
     }
 
-    addColumn() {
+    addColumn(insertBefore: number = this.grid[0]?.length ?? 0) {
         const oldCols = this.cols()
         if (oldCols === 0) {
             this.clear()
         } else {
-            this.grid.forEach((row, index) => row.push(GraphFormItem.createBlank(oldCols, index)))
+            this.grid.forEach((row, index) => {
+                for (let i = insertBefore; i < row.length; i++) {
+                    const item = this.grid[index][i]
+                    this.grid[index][i] = new GraphFormItem({ ...item.data(), coords: { x: item.data().coords.x + 1, y: item.data().coords.y } })
+                }
+                row.splice(insertBefore, 0, GraphFormItem.createBlank(insertBefore, index))
+            })
         }
     }
 
