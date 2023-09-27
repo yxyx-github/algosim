@@ -33,7 +33,11 @@ function updateSimulation(sim: SearchSimulation) {
 }
 
 function updateDescription(desc: string[]) {
-    description.value = desc
+    // TODO: find cause of infinite update loop caused by hot reloading of SearchSimulationForm and remove workaround
+    // console.log('updSearchDesc:', desc)
+    if (JSON.stringify(description.value) !== JSON.stringify(desc)) {
+        description.value = desc
+    }
 }
 </script>
 
