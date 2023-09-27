@@ -66,9 +66,13 @@ export class Graph<T, S> {
         return this.edges.find(e => condition(e))
     }
 
-    addEdgeBetween(v1: Vertex<T>, v2: Vertex<T>, weight: number, value: S) {
-        this.addEdge(new Edge<T, S>(v1, v2, weight, value))
-        this.addEdge(new Edge<T, S>(v2, v1, weight, value))
+    findEdgeById(id: string): Edge<T, S> | undefined {
+        return this.findEdge((e: Edge<T, S>) => e.getId() === id)
+    }
+
+    addEdgeBetween(id1: string, id2: string, v1: Vertex<T>, v2: Vertex<T>, weight: number, value: S) {
+        this.addEdge(new Edge<T, S>(id1, v1, v2, weight, value))
+        this.addEdge(new Edge<T, S>(id2, v2, v1, weight, value))
     }
 
     addEdge(edge: Edge<T, S>) {

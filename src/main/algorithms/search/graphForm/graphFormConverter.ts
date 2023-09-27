@@ -78,7 +78,7 @@ export class GraphFormConverter {
                 e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === edgeItems.length
             ) : undefined
             if (edgeItems.length !== 0 || existingEdge === undefined) {
-                this.graph.addEdgeBetween(v1, v2, edgeItems.length, {
+                this.graph.addEdgeBetween(`${v1.getId()}==${edgeItems.length}=>${v2.getId()}`, `${v2.getId()}==${edgeItems.length}=>${v1.getId()}`, v1, v2, edgeItems.length, {
                     items: edgeItems,
                 })
             }
