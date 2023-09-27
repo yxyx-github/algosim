@@ -18,8 +18,6 @@ export class GraphFormConverter {
     }
 
     toGraph(): Graph<VertexValue, EdgeValue> {
-        // console.log('convert:', this.graphForm)
-        // console.log('convert:', this.graphForm.toGrid().map(row => row.map(item => item.data().connections)))
 
         this.graphForm.validateConnections()
 
@@ -31,26 +29,17 @@ export class GraphFormConverter {
             this.itemDepthSearch(currentItem, itemCollection)
         }
 
-        // console.log(this.graph)
-
         return this.graph
     }
 
     private itemDepthSearch(currentItem: GraphFormItem, itemCollection: GraphFormItem[], previousItem?: GraphFormItem) {
         this.visitedItems.setVisited(currentItem)
         const neighbours: TRBL<GraphFormItem | undefined> = this.graphForm.getConnectedNeighbours(currentItem)
-        if (Object.values(neighbours).some(n => n !== undefined)) {
-            // console.log('currItem:', `${currentItem.generateItemId()}`)
-            // console.log('currItem:', currentItem)
-            // console.log('nbs:', neighbours)
-            // console.log('----------')
-        }
         for (
             const [side, neighbour] of
             Object.entries(neighbours)
                 .sort((a, b) => this.compareNeighbourEntries(a, b))
         ) {
-            // console.log('side:', neighbour)
             if (neighbour !== undefined && neighbour !== previousItem) {
                 if (!this.visitedItems.isVisited(neighbour)) {
                     this.itemDepthSearch(neighbour, itemCollection, currentItem)
@@ -58,9 +47,7 @@ export class GraphFormConverter {
                 } else if (neighbour.data().type === GraphFormItemType.VERTEX) {
                     itemCollection.push(neighbour)
                 }
-                // console.log('check for insertion')
                 if (currentItem.data().type === GraphFormItemType.VERTEX && itemCollection.length > 0) {
-                    // console.log('insert')
                     this.insertItemCollection(currentItem, itemCollection)
                 }
             }
@@ -82,7 +69,6 @@ export class GraphFormConverter {
                     items: edgeItems,
                 })
             }
-            // console.log('edgeItems:', JSON.stringify(edgeItems))
         } else {
             console.error('Unexpected end of edge')
         }
@@ -98,7 +84,6 @@ export class GraphFormConverter {
         if (existingVertex === undefined) {
             this.graph.addVertex(vertex)
         }
-        // console.log('new v:', vertex)
         return vertex
     }
 
