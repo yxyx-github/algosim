@@ -32,9 +32,9 @@ import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import type { ComputedRef } from 'vue'
 import { computed, watchEffect } from 'vue'
 import { SearchFactory } from '@/main/algorithms/search/algorithms'
-import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import Input from '@/components/lib/forms/Input.vue'
 import Dropdown from 'primevue/dropdown'
+import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const emit = defineEmits<{
     submit: [simulation: SearchSimulation],
@@ -44,12 +44,12 @@ const emit = defineEmits<{
 
 const values = reactive<{
     algorithm: undefined | SearchAlgorithm
-    startVertex: Vertex<VertexValue> | null
-    endVertex: Vertex<VertexValue> | null
+    start: GraphFormItem | undefined
+    end: GraphFormItem | undefined
 }>({
     algorithm: undefined,
-    startVertex: null,
-    endVertex: null,
+    start: undefined,
+    end: undefined,
 })
 
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SearchFactory.create(values.algorithm).description()))
@@ -70,8 +70,14 @@ function reset() {
 reset()
 
 function submit() {
+    if (values.algorithm === undefined) return
+
     const converter = new GraphFormConverter(graphForm.value as any) // typecast due to TS issue with reactive values
     const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
+    const startVertex = undefined as any // TODO: graph.findVertex
+    const endVertex = undefined as any // TODO: graph.findVertex
+    const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
+    emit('submit', searched)
 }
 </script>
 

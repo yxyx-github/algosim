@@ -11,7 +11,7 @@
             <div v-if="isEmpty"></div>
             <template v-else>
                 <template v-for="(row, index) in graphFormItemGrid" :key="index">
-                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :item="item"/>
+                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full z-0 hover:z-10 hover:outline outline-indigo-600" :item="item"/>
                 </template>
             </template>
         </div>
