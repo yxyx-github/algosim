@@ -1,6 +1,7 @@
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Side, TRBL, Coords } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 export class GraphForm {
     private grid: GraphFormGrid = [[]]
@@ -100,10 +101,12 @@ export class GraphForm {
 
     clear() {
         this.grid = [[GraphFormItem.createBlank(0, 0)]]
+        this.validateStartEnd()
     }
 
     updateItem(item: GraphFormItem) {
         this.grid[item.data().coords.y][item.data().coords.x] = item
+        this.validateStartEnd()
     }
 
     validateItemConnections(item: GraphFormItem) {
@@ -121,6 +124,20 @@ export class GraphForm {
         this.toItems().forEach(item => this.validateItemConnections(item))
     }
 
+    vertexItems(): GraphFormItem[] {
+        return this.toItems().filter(item => item.data().type === GraphFormItemType.VERTEX)
+    }
+
+    // TODO: test
+    validateStartEnd() {
+        if (this.startItem !== null && !this.vertexItems().includes(this.startItem)) {
+            this.setStartItem(null)
+        }
+        if (this.endItem !== null && !this.vertexItems().includes(this.endItem)) {
+            this.setEndItem(null)
+        }
+    }
+
     // TODO: test
     getStartItem(): GraphFormItem | null {
         return this.startItem
@@ -129,6 +146,7 @@ export class GraphForm {
     // TODO: test
     setStartItem(item: GraphFormItem | null) {
         this.startItem = item
+        this.validateStartEnd()
     }
 
     // TODO: test
@@ -139,5 +157,6 @@ export class GraphForm {
     // TODO: test
     setEndItem(item: GraphFormItem | null) {
         this.endItem = item
+        this.validateStartEnd()
     }
 }

@@ -84,7 +84,8 @@ function reset() {
 reset()
 
 function submit() {
-    if (values.algorithm === undefined) return
+    graphForm.value.validateStartEnd()
+    if (values.algorithm === undefined || graphForm.value.getStartItem() === null || graphForm.value.getEndItem() === null) return
 
     const converter = new GraphFormConverter(graphForm.value as any) // typecast due to TS issue with reactive values
     const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()

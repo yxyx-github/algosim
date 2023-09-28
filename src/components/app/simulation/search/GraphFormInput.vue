@@ -16,7 +16,7 @@
                         'z-10 outline outline-green-600': isStartItem(item),
                         'z-10 outline outline-blue-600': isEndItem(item),
                         'opacity-20': props.enableSelect !== EnableSelect.NONE && !vertexItems.includes(item),
-                    }" :item="item" @click="selectItem(item)"/>
+                    }" :item="item" @click="selectItem(item)" @update="props.graphForm.validateStartEnd()"/>
                 </template>
             </template>
         </div>
@@ -63,7 +63,7 @@ import GraphFormItemVisualization from '@/components/app/simulation/search/visua
 import Button from 'primevue/button'
 import { computed } from 'vue'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
-import { EnableSelect, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
 import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const emit = defineEmits<{
@@ -79,7 +79,7 @@ const props = withDefaults(defineProps<{
 
 // const graphFormItemGrid = computed(() => [])
 const graphFormItemGrid = computed(() => props.graphForm.toGrid())
-const vertexItems = computed(() => props.graphForm.toItems().filter(item => item.data().type === GraphFormItemType.VERTEX))
+const vertexItems = computed(() => props.graphForm.vertexItems())
 
 const rows = computed(() => props.graphForm.rows())
 const cols = computed(() => props.graphForm.cols())

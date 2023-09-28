@@ -33,6 +33,8 @@ import type { Side } from '@/main/algorithms/search/graphForm/types'
 import { computed } from 'vue'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
+const emit = defineEmits(['update'])
+
 const props = withDefaults(defineProps<{
     item: GraphFormItem,
     scale?: number,
@@ -46,6 +48,7 @@ const hasConnections = computed(() => props.item.hasConnections())
 
 function toggleConnection(side: Side) {
     props.item.toggleConnection(side)
+    emit('update')
 }
 </script>
 
