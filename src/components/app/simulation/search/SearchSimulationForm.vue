@@ -5,11 +5,17 @@
                 <Input label="Algorithm:">
                     <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
                 </Input>
+                <Input label="Start vertex:">
+                    <ToggleButton v-model="enableSelectStart" onLabel="Select" offLabel="Select" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
+                </Input>
+                <Input label="End vertex:">
+                    <ToggleButton v-model="enableSelectEnd" onLabel="Select" offLabel="Select" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
+                </Input>
                 <ButtonBar>
                     <Button label="Search" @click="submit"/>
                 </ButtonBar>
             </FColumn>
-            <GraphFormInput :graphForm="graphForm as any"/>
+            <GraphFormInput :graphForm="graphForm as any" v-model:enableSelect="values.enableSelect"/>
         </FContainer>
     </Form>
 </template>
@@ -21,20 +27,20 @@ import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import FColumn from '@/components/lib/layout/FColumn.vue'
 import FContainer from '@/components/lib/layout/FContainer.vue'
 import GraphFormInput from '@/components/app/simulation/search/GraphFormInput.vue'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
 import { Graph } from '@/main/algorithms/search/graph/graph'
 import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types'
-import { reactive } from 'vue'
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, WritableComputedRef } from 'vue'
 import { computed, watchEffect } from 'vue'
 import { SearchFactory } from '@/main/algorithms/search/algorithms'
 import Input from '@/components/lib/forms/Input.vue'
 import Dropdown from 'primevue/dropdown'
-import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import ToggleButton from 'primevue/togglebutton'
+import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
 
 const emit = defineEmits<{
     submit: [simulation: SearchSimulation],
@@ -44,12 +50,20 @@ const emit = defineEmits<{
 
 const values = reactive<{
     algorithm: undefined | SearchAlgorithm
-    start: GraphFormItem | undefined
-    end: GraphFormItem | undefined
+    enableSelect: EnableSelect
 }>({
     algorithm: undefined,
-    start: undefined,
-    end: undefined,
+    enableSelect: EnableSelect.NONE,
+})
+
+const enableSelectStart: WritableComputedRef<boolean> = computed({
+    get: () => values.enableSelect === EnableSelect.START,
+    set: enable => values.enableSelect = enable ? EnableSelect.START : EnableSelect.NONE,
+})
+
+const enableSelectEnd: WritableComputedRef<boolean> = computed({
+    get: () => values.enableSelect === EnableSelect.END,
+    set: enable => values.enableSelect = enable ? EnableSelect.END : EnableSelect.NONE,
 })
 
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SearchFactory.create(values.algorithm).description()))

@@ -4,6 +4,8 @@ import type { Side, TRBL, Coords } from '@/main/algorithms/search/graphForm/type
 
 export class GraphForm {
     private grid: GraphFormGrid = [[]]
+    private startItem: GraphFormItem | null = null
+    private endItem: GraphFormItem | null = null
 
     constructor() {
         this.clear()
@@ -117,5 +119,25 @@ export class GraphForm {
 
     validateConnections() {
         this.toItems().forEach(item => this.validateItemConnections(item))
+    }
+
+    // TODO: test
+    getStartItem(): GraphFormItem | null {
+        return this.startItem
+    }
+
+    // TODO: test
+    setStartItem(item: GraphFormItem | null) {
+        this.startItem = item
+    }
+
+    // TODO: test
+    getEndItem(): GraphFormItem | null {
+        return this.endItem
+    }
+
+    // TODO: test
+    setEndItem(item: GraphFormItem | null) {
+        this.endItem = item
     }
 }

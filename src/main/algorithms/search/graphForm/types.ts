@@ -9,8 +9,6 @@ export type GraphFormItemData = {
     connections: TRBL<boolean>,
     connect: TRBL<boolean>,
     highlight: TRBL<boolean>,
-    isStart: boolean,
-    isEnd: boolean,
 }
 
 export type Coords = {
@@ -28,6 +26,12 @@ export enum GraphFormItemType {
 }
 
 export type Side = 'top' | 'right' | 'bottom' | 'left'
+
+export enum EnableSelect {
+    NONE,
+    START,
+    END,
+}
 
 export type VertexValue = {
     item: GraphFormItem

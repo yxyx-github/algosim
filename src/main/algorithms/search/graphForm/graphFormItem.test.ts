@@ -12,8 +12,6 @@ describe('GraphFormItem', () => {
             connections: connections,
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
     }
 
@@ -25,8 +23,6 @@ describe('GraphFormItem', () => {
             connections: { top: false, right: false, bottom: false, left: false },
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         }
 
         const graphFormItem = GraphFormItem.createBlank(3, 4)
@@ -43,8 +39,6 @@ describe('GraphFormItem', () => {
             connections: { top: false, right: false, bottom: true, left: true },
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         }
 
         const graphFormItem = new GraphFormItem({
@@ -54,8 +48,6 @@ describe('GraphFormItem', () => {
             connections: { top: false, right: false, bottom: true, left: true },
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
 
         expect(graphFormItem).to.deep.equal(new GraphFormItem(expectedItemData))

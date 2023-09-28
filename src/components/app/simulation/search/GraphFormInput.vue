@@ -11,7 +11,12 @@
             <div v-if="isEmpty"></div>
             <template v-else>
                 <template v-for="(row, index) in graphFormItemGrid" :key="index">
-                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full z-0 hover:z-10 hover:outline outline-indigo-600" :item="item"/>
+                    <GraphFormItemVisualization v-for="(item, index) in row" :key="index" class="w-full h-full" :class="{
+                        'z-0 hover:z-10 hover:outline outline-indigo-600': canSelectItem(item),
+                        'z-10 outline outline-green-600': isStartItem(item),
+                        'z-10 outline outline-blue-600': isEndItem(item),
+                        'opacity-20': props.enableSelect !== EnableSelect.NONE && !vertexItems.includes(item),
+                    }" :item="item" @click="selectItem(item)"/>
                 </template>
             </template>
         </div>
@@ -58,15 +63,23 @@ import GraphFormItemVisualization from '@/components/app/simulation/search/visua
 import Button from 'primevue/button'
 import { computed } from 'vue'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
-import FRow from '@/components/lib/layout/FRow.vue'
-import FColumn from '@/components/lib/layout/FColumn.vue'
+import { EnableSelect, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
-const props = defineProps<{
-    graphForm: GraphForm
+const emit = defineEmits<{
+    'update:enableSelect': [value: EnableSelect],
 }>()
+
+const props = withDefaults(defineProps<{
+    graphForm: GraphForm
+    enableSelect: EnableSelect
+}>(), {
+    enableSelect: EnableSelect.NONE,
+})
 
 // const graphFormItemGrid = computed(() => [])
 const graphFormItemGrid = computed(() => props.graphForm.toGrid())
+const vertexItems = computed(() => props.graphForm.toItems().filter(item => item.data().type === GraphFormItemType.VERTEX))
 
 const rows = computed(() => props.graphForm.rows())
 const cols = computed(() => props.graphForm.cols())
@@ -91,6 +104,30 @@ function addColumn() {
 
 function clear() {
     props.graphForm.clear()
+}
+
+function canSelectItem(item: GraphFormItem) {
+    return props.enableSelect !== EnableSelect.NONE && vertexItems.value.includes(item) && item.hasConnections()
+}
+
+function isStartItem(item: GraphFormItem) {
+    return props.graphForm.getStartItem() === item
+}
+
+function isEndItem(item: GraphFormItem) {
+    return props.graphForm.getEndItem() === item
+}
+
+function selectItem(item: GraphFormItem) {
+    if (canSelectItem(item)) {
+        if (props.enableSelect === EnableSelect.START) {
+            props.graphForm.setStartItem(item)
+        }
+        if (props.enableSelect === EnableSelect.END) {
+            props.graphForm.setEndItem(item)
+        }
+        emit('update:enableSelect', EnableSelect.NONE)
+    }
 }
 </script>
 

@@ -17,8 +17,6 @@ describe('GraphFormConverter', () => {
             connections: connections,
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
     }
 
@@ -29,9 +27,9 @@ describe('GraphFormConverter', () => {
             expect(vertex).to.deep.equal(expectedVertex)
         })
 
-        graph.getEdges().map(edge =>
+        /*graph.getEdges().map(edge =>
             console.log(`${edge.getFrom().getId()} ==${edge.getWeight()}=> ${edge.getTo().getId()} - ${edge.getValue().items.map(item => item.generateItemId())}`)
-        )
+        )*/
         expect(graph.getEdges().length).to.equal(expectedGraph.getEdges().length)
         graph.getEdges().forEach(edge => {
             const foundExpectedEdge = expectedGraph.findEdge((e: Edge<VertexValue, EdgeValue>) =>

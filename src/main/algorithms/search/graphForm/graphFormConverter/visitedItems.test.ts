@@ -14,8 +14,6 @@ describe('VisitedItems', () => {
             connections: connections,
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
     }
 

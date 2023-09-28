@@ -13,8 +13,6 @@ describe('GraphForm', () => {
             connections: connections,
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
     }
 
@@ -57,8 +55,6 @@ describe('GraphForm', () => {
             connections: { top: false, right: false, bottom: true, left: true },
             connect: { top: false, right: false, bottom: false, left: false },
             highlight: { top: false, right: false, bottom: false, left: false },
-            isStart: false,
-            isEnd: false,
         })
 
         expect(graphForm.toGrid()).to.deep.equal([
