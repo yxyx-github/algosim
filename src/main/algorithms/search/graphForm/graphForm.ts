@@ -130,10 +130,10 @@ export class GraphForm {
 
     // TODO: test
     validateStartEnd() {
-        if (this.startItem !== null && !this.vertexItems().includes(this.startItem)) {
+        if (this.startItem !== null && (!this.vertexItems().includes(this.startItem) || !this.startItem.hasConnections())) {
             this.setStartItem(null)
         }
-        if (this.endItem !== null && !this.vertexItems().includes(this.endItem)) {
+        if (this.endItem !== null && (!this.vertexItems().includes(this.endItem) || !this.endItem.hasConnections())) {
             this.setEndItem(null)
         }
     }
