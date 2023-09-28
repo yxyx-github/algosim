@@ -140,4 +140,87 @@ describe('GraphForm', () => {
         expect(graphForm.oppsiteSide('bottom')).to.equal('top')
         expect(graphForm.oppsiteSide('left')).to.equal('right')
     })
+
+    test('can set valid start and end item and reset after clear', () => {
+        const graphForm = new GraphForm()
+        graphForm.addColumn()
+        graphForm.addRow()
+
+        const startItem = new GraphFormItem({ ...GraphFormItem.createBlank(0, 0).data(), connections: { top: false, right: true, bottom: false, left: false} })
+        const endItem = new GraphFormItem({ ...GraphFormItem.createBlank(1, 0).data(), connections: { top: false, right: false, bottom: false, left: true} })
+
+        graphForm.updateItem(startItem)
+        graphForm.updateItem(endItem)
+
+        graphForm.setStartItem(startItem)
+        graphForm.setEndItem(endItem)
+
+        expect(graphForm.getStartItem()).to.equal(startItem)
+        expect(graphForm.getEndItem()).to.equal(endItem)
+
+        graphForm.clear()
+
+        expect(graphForm.getStartItem()).to.null
+        expect(graphForm.getEndItem()).to.null
+    })
+
+    test('can set valid start and end item and validate after updateItem', () => {
+        const graphForm = new GraphForm()
+        graphForm.addColumn()
+        graphForm.addRow()
+
+        const startItem = new GraphFormItem({ ...GraphFormItem.createBlank(0, 0).data(), connections: { top: false, right: true, bottom: false, left: false} })
+        const endItem = new GraphFormItem({ ...GraphFormItem.createBlank(1, 0).data(), connections: { top: false, right: false, bottom: false, left: true} })
+
+        graphForm.updateItem(startItem)
+        graphForm.updateItem(endItem)
+
+        graphForm.setStartItem(startItem)
+        graphForm.setEndItem(endItem)
+
+        expect(graphForm.getStartItem()).to.equal(startItem)
+        expect(graphForm.getEndItem()).to.equal(endItem)
+
+        const newStartItem = new GraphFormItem({ ...GraphFormItem.createBlank(1, 0).data(), connections: { top: false, right: false, bottom: false, left: true } })
+        const newEndItem = new GraphFormItem({ ...GraphFormItem.createBlank(0, 0).data(), connections: { top: false, right: true, bottom: false, left: false } })
+
+        graphForm.updateItem(newStartItem)
+        graphForm.updateItem(newEndItem)
+
+        expect(graphForm.getStartItem()).to.null
+        expect(graphForm.getEndItem()).to.null
+    })
+
+    test('cannot set invalid start and end item', () => {
+        const graphForm = new GraphForm()
+        graphForm.addColumn()
+        graphForm.addRow()
+
+        const startItem = GraphFormItem.createBlank(0, 0)
+        const endItem = GraphFormItem.createBlank(1, 0)
+
+        graphForm.updateItem(startItem)
+        graphForm.updateItem(endItem)
+
+        graphForm.setStartItem(startItem)
+        graphForm.setEndItem(endItem)
+
+        expect(graphForm.getStartItem()).to.null
+        expect(graphForm.getEndItem()).to.null
+    })
+
+    test('can detect not included start or end item as invalid', () => {
+        const graphForm = new GraphForm()
+        graphForm.addColumn()
+        graphForm.addRow()
+
+        expect(graphForm.getStartItem()).to.null
+        expect(graphForm.getEndItem()).to.null
+
+        graphForm.setStartItem(GraphFormItem.createBlank(0, 0))
+        graphForm.setEndItem(GraphFormItem.createBlank(1, 0))
+
+        expect(graphForm.getStartItem()).to.null
+        expect(graphForm.getEndItem()).to.null
+    })
 })

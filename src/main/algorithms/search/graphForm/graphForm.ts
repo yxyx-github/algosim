@@ -128,7 +128,6 @@ export class GraphForm {
         return this.toItems().filter(item => item.data().type === GraphFormItemType.VERTEX)
     }
 
-    // TODO: test
     validateStartEnd() {
         if (this.startItem !== null && (!this.vertexItems().includes(this.startItem) || !this.startItem.hasConnections())) {
             this.setStartItem(null)
@@ -138,23 +137,19 @@ export class GraphForm {
         }
     }
 
-    // TODO: test
     getStartItem(): GraphFormItem | null {
         return this.startItem
     }
 
-    // TODO: test
     setStartItem(item: GraphFormItem | null) {
         this.startItem = item
         this.validateStartEnd()
     }
 
-    // TODO: test
     getEndItem(): GraphFormItem | null {
         return this.endItem
     }
 
-    // TODO: test
     setEndItem(item: GraphFormItem | null) {
         this.endItem = item
         this.validateStartEnd()
