@@ -41,6 +41,7 @@ import Input from '@/components/lib/forms/Input.vue'
 import Dropdown from 'primevue/dropdown'
 import ToggleButton from 'primevue/togglebutton'
 import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
+import { Vertex } from '@/main/algorithms/search/graph/vertex'
 
 const emit = defineEmits<{
     submit: [simulation: SearchSimulation],
@@ -76,23 +77,27 @@ const algorithms = [
     }
 ]
 
-const graphForm = ref(new GraphForm())
+const graphForm = ref(new GraphForm()) // typecasts due to TS issue with reactive values necessary
 
 function reset() {
     emit('reset')
 }
+
 reset()
 
 function submit() {
-    graphForm.value.validateStartEnd()
-    if (values.algorithm === undefined || graphForm.value.getStartItem() === null || graphForm.value.getEndItem() === null) return
+    (graphForm.value as GraphForm).validateStartEnd()
+    if (values.algorithm === undefined || (graphForm.value as GraphForm).getStartItem() === null || (graphForm.value as GraphForm).getEndItem() === null) return
 
-    const converter = new GraphFormConverter(graphForm.value as any) // typecast due to TS issue with reactive values
+    const converter = new GraphFormConverter(graphForm.value as GraphForm)
     const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
-    const startVertex = undefined as any // TODO: graph.findVertex
-    const endVertex = undefined as any // TODO: graph.findVertex
-    const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
-    emit('submit', searched)
+    const startVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (graphForm.value as GraphForm).getStartItem())
+    const endVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (graphForm.value as GraphForm).getEndItem())
+
+    if (startVertex !== undefined && endVertex !== undefined) {
+        const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
+        emit('submit', searched)
+    } // TODO: error message
 }
 </script>
 
