@@ -65,6 +65,7 @@ export class GraphFormConverter {
             ) : undefined
             if (edgeItems.length !== 0 || existingEdge === undefined) {
                 // TODO: include EdgeItems in id: sort items by coordinates -> improve test
+                // TODO: sort EdgeItems: edge.from -> edge.to
                 this.graph.addEdgeBetween(`${v1.getId()}==${weight}=>${v2.getId()}`, `${v2.getId()}==${weight}=>${v1.getId()}`, v1, v2, weight, {
                     items: edgeItems,
                 })

@@ -106,7 +106,7 @@ function submit() {
 
     if (startVertex !== undefined && endVertex !== undefined) {
         const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
-        // emit('submit', searched)
+        emit('submit', searched)
     } else {
         toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });
     }
