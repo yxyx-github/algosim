@@ -42,6 +42,9 @@ import Dropdown from 'primevue/dropdown'
 import ToggleButton from 'primevue/togglebutton'
 import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
+import { useToast } from 'primevue/usetoast'
+
+const toast = useToast()
 
 const emit = defineEmits<{
     submit: [simulation: SearchSimulation],
@@ -87,7 +90,14 @@ reset()
 
 function submit() {
     (graphForm.value as GraphForm).validateStartEnd()
-    if (values.algorithm === undefined || (graphForm.value as GraphForm).getStartItem() === null || (graphForm.value as GraphForm).getEndItem() === null) return
+    if (values.algorithm === undefined) {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 });
+        return
+    }
+    if ((graphForm.value as GraphForm).getStartItem() === null || (graphForm.value as GraphForm).getEndItem() === null) {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 });
+        return
+    }
 
     const converter = new GraphFormConverter(graphForm.value as GraphForm)
     const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
@@ -96,8 +106,10 @@ function submit() {
 
     if (startVertex !== undefined && endVertex !== undefined) {
         const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
-        emit('submit', searched)
-    } // TODO: error message
+        // emit('submit', searched)
+    } else {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });
+    }
 }
 </script>
 

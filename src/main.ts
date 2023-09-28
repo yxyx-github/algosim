@@ -10,6 +10,7 @@ import PrimeVue from 'primevue/config'
 import App from './App.vue'
 import router from './router'
 import Tooltip from 'primevue/tooltip'
+import ToastService from 'primevue/toastservice'
 
 const app = createApp(App)
 
@@ -17,6 +18,7 @@ app.use(createPinia())
 app.use(router)
 // app.use(PrimeVue, { unstyled: true, pt: Tailwind })
 app.use(PrimeVue)
+app.use(ToastService)
 app.directive('tooltip', Tooltip)
 
 app.mount('#app')
