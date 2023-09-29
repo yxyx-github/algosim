@@ -29,7 +29,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
     }
 
     private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, visitedVertices: Vertex<VertexValue>[]): SearchSimulationStep {
-        const highlightedGrid = structuredClone(grid)
+        const highlightedGrid = this.cloneGrid(grid)
         visitedVertices.forEach(v => {
             const x = v.getValue().item.data().coords.x
             const y = v.getValue().item.data().coords.y
@@ -41,6 +41,14 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
             })
         })
         return { grid: highlightedGrid }
+    }
+
+    private cloneGrid(grid: GraphFormGrid): GraphFormGrid {
+        return grid.map(row =>
+            row.map(item =>
+                new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
+            )
+        )
     }
 
     description(): string[] {
