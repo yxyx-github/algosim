@@ -105,7 +105,7 @@ function submit() {
     const endVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (graphForm.value as GraphForm).getEndItem())
 
     if (startVertex !== undefined && endVertex !== undefined) {
-        const searched = SearchFactory.create(values.algorithm).run(graph, startVertex, endVertex)
+        const searched = SearchFactory.create(values.algorithm).run(graph, (graphForm.value as GraphForm).toGrid(), startVertex, endVertex)
         emit('submit', searched)
     } else {
         toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });

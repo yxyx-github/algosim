@@ -10,7 +10,7 @@ export enum SearchAlgorithm {
 
 // TODO: extend AlgorithmImplementation
 export interface SearchAlgorithmImplementation {
-    run: (graph: Graph<VertexValue, EdgeValue>, start: Vertex<VertexValue>, end: Vertex<VertexValue>) => SearchSimulation,
+    run: (graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>) => SearchSimulation,
     description: () => string[],
 }
 

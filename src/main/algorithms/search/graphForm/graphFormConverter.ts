@@ -5,6 +5,7 @@ import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { VisitedItems } from '@/main/algorithms/search/graphForm/graphFormConverter/visitedItems'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
+import { Edge } from '@/main/algorithms/search/graph/edge'
 
 export class GraphFormConverter {
     private readonly graph: Graph<VertexValue, EdgeValue>
@@ -59,6 +60,8 @@ export class GraphFormConverter {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
             const edgeItems = itemCollection.filter((_, index) => index !== 0)
+            // @ts-ignore
+            const reversedEdgeItems = edgeItems.toReversed()
             const weight = edgeItems.length + 1
             const existingEdge = edgeItems.length === 0 ? this.graph.findEdge(e =>
                 e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === weight
@@ -66,9 +69,19 @@ export class GraphFormConverter {
             if (edgeItems.length !== 0 || existingEdge === undefined) {
                 // TODO: include EdgeItems in id: sort items by coordinates -> improve test
                 // TODO: sort EdgeItems: edge.from -> edge.to
-                this.graph.addEdgeBetween(`${v1.getId()}==${weight}=>${v2.getId()}`, `${v2.getId()}==${weight}=>${v1.getId()}`, v1, v2, weight, {
+                this.graph.addEdge(
+                    new Edge<VertexValue, EdgeValue>(this.generateEdgeId(v1, v2, weight, reversedEdgeItems), v1, v2, weight, {
+                        items: reversedEdgeItems,
+                    })
+                )
+                this.graph.addEdge(
+                    new Edge<VertexValue, EdgeValue>(this.generateEdgeId(v2, v1, weight, reversedEdgeItems), v2, v1, weight, {
+                        items: edgeItems,
+                    })
+                )
+                /*this.graph.addEdgeBetween(`${v1.getId()}==${weight}=>${v2.getId()}`, `${v2.getId()}==${weight}=>${v1.getId()}`, v1, v2, weight, {
                     items: edgeItems,
-                })
+                })*/
             }
         } else {
             console.error('Unexpected end of edge')
@@ -86,6 +99,10 @@ export class GraphFormConverter {
             this.graph.addVertex(vertex)
         }
         return vertex
+    }
+
+    private generateEdgeId(v1: Vertex<VertexValue>, v2: Vertex<VertexValue>, weight: number, edgeItems: GraphFormItem[]): string {
+        return `${v1.getId()}==${weight}==${edgeItems.map(item => `${item.generateItemId()}`)}=>${v2.getId()}`
     }
 
     private compareNeighbourEntries(a: [string, GraphFormItem | undefined], b: [string, GraphFormItem | undefined]): number {
