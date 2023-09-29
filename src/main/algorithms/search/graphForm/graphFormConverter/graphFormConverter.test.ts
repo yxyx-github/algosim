@@ -20,6 +20,14 @@ describe('GraphFormConverter', () => {
         })
     }
 
+    function generateEdgeId(v1: Vertex<VertexValue>, v2: Vertex<VertexValue>, weight: number, edgeItems: GraphFormItem[]): string {
+        return `${v1.getId()}==${weight}==${edgeItems.map(item => `${item.generateItemId()}`)}=>${v2.getId()}`
+    }
+
+    function generateEdge(v1: Vertex<VertexValue>, v2: Vertex<VertexValue>, weight: number, edgeItems: GraphFormItem[]): Edge<VertexValue, EdgeValue> {
+        return new Edge<VertexValue, EdgeValue>(generateEdgeId(v1, v2, weight, edgeItems), v1, v2, weight, { items: edgeItems })
+    }
+
     function assertGraph(graph: Graph<VertexValue, EdgeValue>, expectedGraph: Graph<VertexValue, EdgeValue>) {
         expect(graph.getVertices().length).to.equal(expectedGraph.getVertices().length)
         graph.getVertices().forEach(vertex => {
@@ -27,16 +35,14 @@ describe('GraphFormConverter', () => {
             expect(vertex).to.deep.equal(expectedVertex)
         })
 
-        graph.getEdges().map(edge =>
+        /*graph.getEdges().map(edge =>
             // console.log(`${edge.getFrom().getId()} ==${edge.getWeight()}=> ${edge.getTo().getId()} - ${edge.getValue().items.map(item => item.generateItemId())}`)
             console.log(edge.getId())
-        )
+        )*/
         expect(graph.getEdges().length).to.equal(expectedGraph.getEdges().length)
         graph.getEdges().forEach(edge => {
             const foundExpectedEdge = expectedGraph.findEdge((e: Edge<VertexValue, EdgeValue>) =>
-                e.getTo().getId() === edge.getTo().getId() &&
-                e.getFrom().getId() === edge.getFrom().getId() &&
-                e.getWeight() === edge.getWeight()
+                e.getId() === edge.getId()
             )
 
             expect(foundExpectedEdge).to.not.undefined
@@ -46,11 +52,7 @@ describe('GraphFormConverter', () => {
             expect(edge.getFrom()).to.deep.equal(expectedEdge.getFrom())
             expect(edge.getTo()).to.deep.equal(expectedEdge.getTo())
             expect(edge.getWeight()).to.equal(expectedEdge.getWeight());
-            // TODO: cannot test items because no non-random id can be generated
-            /*(expectedEdge as Edge<VertexValue, EdgeValue>).getValue().items.forEach(item => {
-                expect(edge.getValue().items).to.contain(item)
-            })*/
-            expect(edge.getValue().items.length).to.equal(expectedEdge.getValue().items.length)
+            expect(edge.getValue().items).to.deep.equal(expectedEdge.getValue().items)
         })
     }
 
@@ -102,9 +104,8 @@ describe('GraphFormConverter', () => {
             item: item11,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
-            items: [],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v2, 1, []))
+        expectedGraph.addEdge(generateEdge(v2, v1, 1, [].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -135,9 +136,8 @@ describe('GraphFormConverter', () => {
             item: item22,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==3=>${v2.getId()}`, `${v2.getId()}==3=>${v1.getId()}`, v1, v2, 3, {
-            items: [item11, item12],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v2, 3, [item11, item12]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 3, [item11, item12].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -175,12 +175,10 @@ describe('GraphFormConverter', () => {
             item: item11,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v2.getId()}`, `${v2.getId()}==1=>${v1.getId()}`, v1, v2, 1, {
-            items: [],
-        })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==8=>${v1.getId()}`, `${v1.getId()}==8=>${v1.getId()}`, v1, v1, 8, {
-            items: [item00, item10, item20, item21, item22, item12, item02],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v2, 1, []))
+        expectedGraph.addEdge(generateEdge(v2, v1, 1, [].reverse()))
+        expectedGraph.addEdge(generateEdge(v1, v1, 8, [item00, item10, item20, item21, item22, item12, item02]))
+        expectedGraph.addEdge(generateEdge(v1, v1, 8, [item00, item10, item20, item21, item22, item12, item02].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -235,30 +233,22 @@ describe('GraphFormConverter', () => {
             item: item12,
         })
         expectedGraph.addVertex(v5)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==1=>${v3.getId()}`, `${v3.getId()}==1=>${v1.getId()}`, v1, v3, 1, {
-            items: [],
-        })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==1=>${v5.getId()}`, `${v5.getId()}==1=>${v3.getId()}`, v3, v5, 1, {
-            items: [],
-        })
-        expectedGraph.addEdgeBetween(`${v2.getId()}==1=>${v3.getId()}`, `${v3.getId()}==1=>${v2.getId()}`, v2, v3, 1, {
-            items: [],
-        })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==1=>${v4.getId()}`, `${v4.getId()}==1=>${v3.getId()}`, v3, v4, 1, {
-            items: [],
-        })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
-            items: [item00],
-        })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v1.getId()}`, v1, v4, 2, {
-            items: [item20],
-        })
-        expectedGraph.addEdgeBetween(`${v5.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v5.getId()}`, v5, v2, 2, {
-            items: [item02],
-        })
-        expectedGraph.addEdgeBetween(`${v5.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v5.getId()}`, v5, v4, 2, {
-            items: [item22],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v3, 1, []))
+        expectedGraph.addEdge(generateEdge(v3, v1, 1, [].reverse()))
+        expectedGraph.addEdge(generateEdge(v3, v5, 1, []))
+        expectedGraph.addEdge(generateEdge(v5, v3, 1, [].reverse()))
+        expectedGraph.addEdge(generateEdge(v2, v3, 1, []))
+        expectedGraph.addEdge(generateEdge(v3, v2, 1, [].reverse()))
+        expectedGraph.addEdge(generateEdge(v3, v4, 1, []))
+        expectedGraph.addEdge(generateEdge(v4, v3, 1, [].reverse()))
+        expectedGraph.addEdge(generateEdge(v1, v2, 2, [item00]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 2, [item00].reverse()))
+        expectedGraph.addEdge(generateEdge(v1, v4, 2, [item20]))
+        expectedGraph.addEdge(generateEdge(v4, v1, 2, [item20].reverse()))
+        expectedGraph.addEdge(generateEdge(v5, v2, 2, [item02]))
+        expectedGraph.addEdge(generateEdge(v2, v5, 2, [item02].reverse()))
+        expectedGraph.addEdge(generateEdge(v5, v4, 2, [item22]))
+        expectedGraph.addEdge(generateEdge(v4, v5, 2, [item22].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -343,12 +333,10 @@ describe('GraphFormConverter', () => {
             item: item22,
         })
         expectedGraph.addVertex(v4)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
-            items: [item01],
-        })
-        expectedGraph.addEdgeBetween(`${v3.getId()}==2=>${v4.getId()}`, `${v4.getId()}==2=>${v3.getId()}`, v3, v4, 2, {
-            items: [item21],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v2, 2, [item01]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 2, [item01].reverse()))
+        expectedGraph.addEdge(generateEdge(v3, v4, 2, [item21]))
+        expectedGraph.addEdge(generateEdge(v4, v3, 2, [item21].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()
@@ -391,15 +379,12 @@ describe('GraphFormConverter', () => {
             item: item21,
         })
         expectedGraph.addVertex(v2)
-        expectedGraph.addEdgeBetween(`${v1.getId()}==4=>${v2.getId()}`, `${v2.getId()}==4=>${v1.getId()}`, v1, v2, 4, {
-            items: [item00, item10, item20],
-        })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==2=>${v2.getId()}`, `${v2.getId()}==2=>${v1.getId()}`, v1, v2, 2, {
-            items: [item11],
-        })
-        expectedGraph.addEdgeBetween(`${v1.getId()}==4=>${v2.getId()}`, `${v2.getId()}==4=>${v1.getId()}`, v1, v2, 4, {
-            items: [item02, item12, item22],
-        })
+        expectedGraph.addEdge(generateEdge(v1, v2, 4, [item00, item10, item20]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 4, [item00, item10, item20].reverse()))
+        expectedGraph.addEdge(generateEdge(v1, v2, 2, [item11]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 2, [item11].reverse()))
+        expectedGraph.addEdge(generateEdge(v1, v2, 4, [item02, item12, item22]))
+        expectedGraph.addEdge(generateEdge(v2, v1, 4, [item02, item12, item22].reverse()))
 
         const graphForm = new GraphForm()
         graphForm.addRow()

@@ -67,21 +67,16 @@ export class GraphFormConverter {
                 e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === weight
             ) : undefined
             if (edgeItems.length !== 0 || existingEdge === undefined) {
-                // TODO: include EdgeItems in id: sort items by coordinates -> improve test
-                // TODO: sort EdgeItems: edge.from -> edge.to
                 this.graph.addEdge(
                     new Edge<VertexValue, EdgeValue>(this.generateEdgeId(v1, v2, weight, reversedEdgeItems), v1, v2, weight, {
                         items: reversedEdgeItems,
                     })
                 )
                 this.graph.addEdge(
-                    new Edge<VertexValue, EdgeValue>(this.generateEdgeId(v2, v1, weight, reversedEdgeItems), v2, v1, weight, {
+                    new Edge<VertexValue, EdgeValue>(this.generateEdgeId(v2, v1, weight, edgeItems), v2, v1, weight, {
                         items: edgeItems,
                     })
                 )
-                /*this.graph.addEdgeBetween(`${v1.getId()}==${weight}=>${v2.getId()}`, `${v2.getId()}==${weight}=>${v1.getId()}`, v1, v2, weight, {
-                    items: edgeItems,
-                })*/
             }
         } else {
             console.error('Unexpected end of edge')
