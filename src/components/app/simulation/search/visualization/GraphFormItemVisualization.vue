@@ -49,8 +49,10 @@ const size = computed(() => `${props.scale * 9}rem`)
 const hasConnections = computed(() => props.item.hasConnections())
 
 function toggleConnection(side: Side) {
-    props.item.toggleConnection(side)
-    emit('update')
+    if (!props.readOnly) {
+        props.item.toggleConnection(side)
+        emit('update')
+    }
 }
 </script>
 

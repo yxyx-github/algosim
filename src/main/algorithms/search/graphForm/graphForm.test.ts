@@ -21,6 +21,18 @@ describe('GraphForm', () => {
         expect(graphForm.toGrid()).to.deep.equal([[GraphFormItem.createBlank(0, 0)]])
     })
 
+    test('can create GraphForm from grid', () => {
+        const expectedGrid = [
+            [GraphFormItem.createBlank(0, 0), GraphFormItem.createBlank(1, 0), GraphFormItem.createBlank(2, 0), GraphFormItem.createBlank(3, 0), GraphFormItem.createBlank(4, 0), GraphFormItem.createBlank(5, 0)],
+            [GraphFormItem.createBlank(0, 1), GraphFormItem.createBlank(1, 1), GraphFormItem.createBlank(2, 1), GraphFormItem.createBlank(3, 1), GraphFormItem.createBlank(4, 1), GraphFormItem.createBlank(5, 1)],
+            [GraphFormItem.createBlank(0, 2), GraphFormItem.createBlank(1, 2), GraphFormItem.createBlank(2, 2), GraphFormItem.createBlank(3, 2), GraphFormItem.createBlank(4, 2), GraphFormItem.createBlank(5, 2)],
+            [GraphFormItem.createBlank(0, 3), GraphFormItem.createBlank(1, 3), GraphFormItem.createBlank(2, 3), GraphFormItem.createBlank(3, 3), GraphFormItem.createBlank(4, 3), GraphFormItem.createBlank(5, 3)],
+            [GraphFormItem.createBlank(0, 4), GraphFormItem.createBlank(1, 4), GraphFormItem.createBlank(2, 4), GraphFormItem.createBlank(3, 4), GraphFormItem.createBlank(4, 4), GraphFormItem.createBlank(5, 4)],
+        ]
+        const graphForm = new GraphForm(expectedGrid)
+        expect(graphForm.toGrid()).to.deep.equal(expectedGrid)
+    })
+
     test('can add rows and columns', () => {
         const graphForm = new GraphForm()
         graphForm.addRow()

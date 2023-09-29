@@ -1,6 +1,7 @@
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 export type GraphFormGrid = GraphFormItem[][]
+export type GraphFormItemDataGrid = GraphFormItemData[][]
 
 export type GraphFormItemData = {
     type: GraphFormItemType,

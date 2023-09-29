@@ -8,8 +8,12 @@ export class GraphForm {
     private startItem: GraphFormItem | null = null
     private endItem: GraphFormItem | null = null
 
-    constructor() {
-        this.clear()
+    constructor(grid?: GraphFormGrid) {
+        if (grid === undefined) {
+            this.clear()
+        } else {
+            this.grid = grid
+        }
     }
 
     toItems(): GraphFormItem[] {

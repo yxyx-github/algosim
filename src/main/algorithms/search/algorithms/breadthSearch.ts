@@ -1,10 +1,9 @@
 import type { SearchAlgorithmImplementation, SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import type { Graph } from '@/main/algorithms/search/graph/graph'
-import type { EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { EdgeValue, GraphFormGrid, GraphFormItemDataGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 export class BreadthSearch implements SearchAlgorithmImplementation {
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
@@ -37,16 +36,23 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
             highlightedGrid[y][x] = new GraphFormItem({
                 ...item.data(),
                 // TODO: improve highlighting
-                connections: { top: true, right: true, bottom: true, left: true }
+                highlight: { top: true, right: true, bottom: true, left: true }
             })
         })
-        return { grid: highlightedGrid }
+        return { dataGrid: this.toDataGrid(highlightedGrid) }
     }
 
     private cloneGrid(grid: GraphFormGrid): GraphFormGrid {
         return grid.map(row =>
             row.map(item =>
                 new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
+            )
+        )
+    }
+    private toDataGrid(grid: GraphFormGrid): GraphFormItemDataGrid {
+        return grid.map(row =>
+            row.map(item =>
+                item.data()
             )
         )
     }
