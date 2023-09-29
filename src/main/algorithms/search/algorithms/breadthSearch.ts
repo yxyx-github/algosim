@@ -20,7 +20,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         edgesToNeighbours.forEach(e => {
             const to = e.getTo()
             if (!visitedVertices.includes(to) && !neighbours.includes(to)) {
-                this.createStep(graph, grid, start, visitedVertices)
+                pb.step(this.createStep(graph, grid, start, visitedVertices))
                 neighbours.push(to)
             }
             visitedVertices.push(to)
@@ -28,7 +28,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         neighbours.forEach(neighbour => this.breadthSearch(graph, grid, neighbour, visitedVertices, pb))
     }
 
-    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, visitedVertices: Vertex<VertexValue>[]) {
+    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, visitedVertices: Vertex<VertexValue>[]): SearchSimulationStep {
         const highlightedGrid = structuredClone(grid)
         visitedVertices.forEach(v => {
             const x = v.getValue().item.data().coords.x
@@ -36,9 +36,11 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
             const item = highlightedGrid[y][x]
             highlightedGrid[y][x] = new GraphFormItem({
                 ...item.data(),
-                // TODO: highlight
+                // TODO: improve highlighting
+                connections: { top: true, right: true, bottom: true, left: true }
             })
         })
+        return { grid: highlightedGrid }
     }
 
     description(): string[] {

@@ -16,7 +16,7 @@
                         'z-10 outline outline-green-600': isStartItem(item),
                         'z-10 outline outline-blue-600': isEndItem(item),
                         'opacity-20': props.enableSelect !== EnableSelect.NONE && !vertexItems.includes(item),
-                    }" :item="item" @click="selectItem(item)" @update="() => props.graphForm.validateStartEnd()"/>
+                    }" :item="item" @click="selectItem(item)" @update="() => props.graphForm.validateStartEnd()" :readOnly="false"/>
                 </template>
             </template>
         </div>
