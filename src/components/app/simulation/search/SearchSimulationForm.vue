@@ -1,6 +1,6 @@
 <template>
     <Form @submit.prevent="submit">
-        <FContainer :direction="{ mb: 'col', md: 'row' }">
+        <FContainer :direction="{ mb: 'col', md: 'row' }" alignItems="start">
             <FColumn>
                 <Input label="Algorithm:">
                     <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
