@@ -1,6 +1,6 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
 import { Graph } from '@/main/algorithms/search/graph/graph'
-import type { EdgeValue, GraphFormGrid, GraphFormItemDataGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
 
 export enum SearchAlgorithm {
@@ -14,7 +14,7 @@ export interface SearchAlgorithmImplementation {
 }
 
 export interface SearchSimulationStep extends SimulationStep {
-    dataGrid: GraphFormItemDataGrid
+    grid: GraphFormGrid
 }
 
 export interface SearchSimulation extends Simulation<SearchSimulationStep> {}

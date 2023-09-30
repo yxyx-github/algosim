@@ -1,6 +1,6 @@
 import type { SearchAlgorithmImplementation, SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import type { Graph } from '@/main/algorithms/search/graph/graph'
-import type { EdgeValue, GraphFormGrid, GraphFormItemDataGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import type { EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
@@ -8,6 +8,7 @@ import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 export class BreadthSearch implements SearchAlgorithmImplementation {
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
+        pb.setStepCloner((step: SearchSimulationStep) => ({ grid: this.cloneGrid(step.grid) }))
         let visitedVertices: Vertex<VertexValue>[] = []
         this.breadthSearch(graph, grid, start, visitedVertices, pb)
         return pb.build()
@@ -39,20 +40,13 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                 highlight: { top: true, right: true, bottom: true, left: true }
             })
         })
-        return { dataGrid: this.toDataGrid(highlightedGrid) }
+        return { grid: highlightedGrid }
     }
 
     private cloneGrid(grid: GraphFormGrid): GraphFormGrid {
         return grid.map(row =>
             row.map(item =>
                 new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
-            )
-        )
-    }
-    private toDataGrid(grid: GraphFormGrid): GraphFormItemDataGrid {
-        return grid.map(row =>
-            row.map(item =>
-                item.data()
             )
         )
     }
