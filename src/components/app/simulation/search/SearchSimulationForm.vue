@@ -27,22 +27,22 @@ import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import FColumn from '@/components/lib/layout/FColumn.vue'
 import FContainer from '@/components/lib/layout/FContainer.vue'
 import GraphFormInput from '@/components/app/simulation/search/GraphFormInput.vue'
-import { ref, reactive } from 'vue'
+import type { ComputedRef, WritableComputedRef } from 'vue'
+import { computed, reactive, ref, watchEffect } from 'vue'
 import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
 import { Graph } from '@/main/algorithms/search/graph/graph'
 import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types'
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
-import type { ComputedRef, WritableComputedRef } from 'vue'
-import { computed, watchEffect } from 'vue'
 import { SearchFactory } from '@/main/algorithms/search/algorithms'
 import Input from '@/components/lib/forms/Input.vue'
 import Dropdown from 'primevue/dropdown'
 import ToggleButton from 'primevue/togglebutton'
-import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { useToast } from 'primevue/usetoast'
+import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
 const toast = useToast()
 
@@ -56,7 +56,7 @@ const values = reactive<{
     algorithm: undefined | SearchAlgorithm
     enableSelect: EnableSelect
 }>({
-    algorithm: undefined,
+    algorithm: SearchAlgorithm.BREADTH_SEARCH/*undefined*/,
     enableSelect: EnableSelect.NONE,
 })
 
@@ -80,7 +80,26 @@ const algorithms = [
     }
 ]
 
-const graphForm = ref(new GraphForm()) // typecasts due to TS issue with reactive values necessary
+const gf = new GraphForm([
+    [
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 0, 'y': 0 }, 'connections': { 'top': false, 'right': true, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 1, 'y': 0 }, 'connections': { 'top': false, 'right': true, 'bottom': true, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 2, 'y': 0 }, 'connections': { 'top': false, 'right': false, 'bottom': false, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+    ], [
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 0, 'y': 1 }, 'connections': { 'top': false, 'right': false, 'bottom': true, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 1, 'label': '', 'coords': { 'x': 1, 'y': 1 }, 'connections': { 'top': true, 'right': false, 'bottom': true, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 2, 'y': 1 }, 'connections': { 'top': false, 'right': false, 'bottom': true, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+    ], [
+        new GraphFormItem({ 'type': 1, 'label': '', 'coords': { 'x': 0, 'y': 2 }, 'connections': { 'top': true, 'right': true, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 1, 'y': 2 }, 'connections': { 'top': true, 'right': true, 'bottom': false, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+        new GraphFormItem({ 'type': 1, 'label': '', 'coords': { 'x': 2, 'y': 2 }, 'connections': { 'top': true, 'right': false, 'bottom': false, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+    ]
+])
+gf.setStartItem(gf.toItems()[0])
+gf.setEndItem(gf.toItems()[2])
+
+// const graphForm = ref(new GraphForm()) // typecasts due to TS issue with reactive values necessary
+const graphForm = ref(gf) // typecasts due to TS issue with reactive values necessary
 
 function reset() {
     emit('reset')
