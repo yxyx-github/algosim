@@ -36,8 +36,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
             const item = highlightedGrid[y][x]
             highlightedGrid[y][x] = new GraphFormItem({
                 ...item.data(),
-                // TODO: improve highlighting
-                highlight: { top: true, right: true, bottom: true, left: true }
+                highlight: { ...item.data().highlight, center: true }
             })
         })
         return { grid: highlightedGrid }

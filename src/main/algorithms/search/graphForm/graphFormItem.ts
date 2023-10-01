@@ -17,7 +17,7 @@ export class GraphFormItem {
             coords: { x: x, y: y },
             connections: { top: false, right: false, bottom: false, left: false },
             connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false, center: false },
         })
     }
 

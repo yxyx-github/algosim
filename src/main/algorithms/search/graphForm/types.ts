@@ -8,7 +8,7 @@ export type GraphFormItemData = {
     coords: Coords,
     connections: TRBL<boolean>,
     connect: TRBL<boolean>,
-    highlight: TRBL<boolean>,
+    highlight: TRBLC<boolean>,
 }
 
 export type Coords = {
@@ -19,6 +19,10 @@ export type Coords = {
 export type TRBL<T> = {
     [side in Side]: T
 }
+
+export type TRBLC<T> = {
+    center: T
+} & TRBL<T>
 
 export enum GraphFormItemType {
     VERTEX,

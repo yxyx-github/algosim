@@ -13,7 +13,7 @@ describe('VisitedItems', () => {
             coords: { x: coords.x, y: coords.y },
             connections: connections,
             connect: { top: false, right: false, bottom: false, left: false },
-            highlight: { top: false, right: false, bottom: false, left: false },
+            highlight: { top: false, right: false, bottom: false, left: false, center: false },
         })
     }
 
