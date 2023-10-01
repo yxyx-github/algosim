@@ -22,8 +22,6 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
 
     private breadthSearch(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
         const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
-        // visitedVertices.push(current)
-        // this.createStep(graph, grid, current, startItemCoords, visitedVertices, pb)
         const neighbours: Vertex<VertexValue>[] = []
         edgesToNeighbours.forEach(e => {
             const to = e.getTo()
