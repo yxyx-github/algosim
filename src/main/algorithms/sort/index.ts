@@ -6,10 +6,13 @@ import { MergeSort } from '@/main/algorithms/sort/mergeSort'
 import { InsertionSort } from '@/main/algorithms/sort/insertionSort'
 import { HeapSort } from '@/main/algorithms/sort/heapSort'
 import { CombSort } from '@/main/algorithms/sort/combSort'
+import { ShellSort } from '@/main/algorithms/sort/shellSort'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
         switch (algorithm) {
+            case SortAlgorithm.SHELLSORT:
+                return new ShellSort()
             case SortAlgorithm.SELECTION:
                 return new SelectionSort()
             case SortAlgorithm.QUICKSORT:
