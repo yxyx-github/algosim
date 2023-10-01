@@ -10,7 +10,12 @@ import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 
 const props = defineProps<{ step: SearchSimulationStep }>()
 
-const graphForm = computed(() => new GraphForm(props.step.grid))
+const graphForm = computed(() => {
+    const gf = new GraphForm(props.step.grid)
+    gf.setStartItem(props.step.start ?? null)
+    gf.setEndItem(props.step.end ?? null)
+    return gf
+})
 </script>
 
 <style scoped>
