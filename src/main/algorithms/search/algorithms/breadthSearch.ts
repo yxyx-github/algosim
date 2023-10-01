@@ -16,14 +16,14 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
 
     private breadthSearch(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
         const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === start)
+        visitedVertices.push(start)
+        pb.step(this.createStep(graph, grid, start, visitedVertices))
         const neighbours: Vertex<VertexValue>[] = []
         edgesToNeighbours.forEach(e => {
             const to = e.getTo()
             if (!visitedVertices.includes(to) && !neighbours.includes(to)) {
-                pb.step(this.createStep(graph, grid, start, visitedVertices))
                 neighbours.push(to)
             }
-            visitedVertices.push(to)
         })
         neighbours.forEach(neighbour => this.breadthSearch(graph, grid, neighbour, visitedVertices, pb))
     }
