@@ -1,6 +1,7 @@
 import type { SearchAlgorithmImplementation, SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import type { Graph } from '@/main/algorithms/search/graph/graph'
 import type { Coords, EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
@@ -17,6 +18,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         const vertexQueue: Vertex<VertexValue>[] = [start]
         const current: Vertex<VertexValue> = start
 
+        const path: GraphFormItem[] = [start.getValue().item]
         this.createStep(graph, grid, start, startItemCoords, endItemCoords, visitedVertices, pb)
 
         while (vertexQueue.length > 0) {
@@ -31,15 +33,49 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                     vertexQueue.push(to)
 
                     this.createEdgeSteps(graph, grid, edge, startItemCoords, endItemCoords, visitedVertices, pb)
+                    path.push(...edge.getValue().items)
                     visitedVertices.push(to)
                     this.createStep(graph, grid, to, startItemCoords, endItemCoords, visitedVertices, pb)
+                    path.push(to.getValue().item)
 
                     if (to === end) break
                 }
             }
         }
 
+        this.createPathStep(graph, grid, path, startItemCoords, endItemCoords, pb)
+
         return pb.build()
+    }
+
+    private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+        const highlightedGrid = this.cloneGrid(grid)
+        path.forEach(item => {
+            const x = item.data().coords.x
+            const y = item.data().coords.y
+            const highlightedItem = highlightedGrid[y][x]
+            if (highlightedItem.data().type === GraphFormItemType.EDGE) {
+                highlightedGrid[y][x] = new GraphFormItem({
+                    ...highlightedItem.data(),
+                    connect: {
+                        top: highlightedItem.data().connections.top,
+                        right: highlightedItem.data().connections.right,
+                        bottom: highlightedItem.data().connections.bottom,
+                        left: highlightedItem.data().connections.left,
+                    }
+                })
+            } else {
+                highlightedGrid[y][x] = new GraphFormItem({
+                    ...highlightedItem.data(),
+                    highlight: { ...highlightedItem.data().highlight, center: true }
+                })
+            }
+        })
+        pb.step({
+            grid: highlightedGrid,
+            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+        })
     }
 
     private createEdgeSteps(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, edge: Edge<VertexValue, EdgeValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
