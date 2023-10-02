@@ -24,7 +24,7 @@
 
         <rect v-if="props.item.data().highlight.center" x="40" y="40" width="10" height="10" class="highlighted"/>
         <text x="45" y="45" class="label">{{ props.item.data().label }}</text>
-        <text x="45" y="60" class="label">{{ props.item.data().type === GraphFormItemType.VERTEX ? 'v' : 'e' }}: {{ props.item.data().coords.x }} | {{ props.item.data().coords.y }}</text>
+<!--        <text x="45" y="60" class="label">{{ props.item.data().type === GraphFormItemType.VERTEX ? 'v' : 'e' }}: {{ props.item.data().coords.x }} | {{ props.item.data().coords.y }}</text>-->
     </svg>
 </template>
 
@@ -80,6 +80,8 @@ function toggleConnection(side: Side) {
 .label {
     dominant-baseline: middle;
     text-anchor: middle;
+    font-size: 10px;
+    font-weight: bold;
 }
 .selectable {
     stroke: #ff0000;

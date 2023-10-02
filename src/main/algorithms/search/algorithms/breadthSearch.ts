@@ -50,7 +50,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
 
     private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid = this.cloneGrid(grid)
-        path.forEach(item => {
+        path.forEach((item, index) => {
             const x = item.data().coords.x
             const y = item.data().coords.y
             const highlightedItem = highlightedGrid[y][x]
@@ -62,12 +62,14 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                         right: highlightedItem.data().connections.right,
                         bottom: highlightedItem.data().connections.bottom,
                         left: highlightedItem.data().connections.left,
-                    }
+                    },
+                    label: index.toString(),
                 })
             } else {
                 highlightedGrid[y][x] = new GraphFormItem({
                     ...highlightedItem.data(),
-                    highlight: { ...highlightedItem.data().highlight, center: true }
+                    highlight: { ...highlightedItem.data().highlight, center: true },
+                    label: index.toString(),
                 })
             }
         })
@@ -95,7 +97,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                         right: highlightedItem.data().connections.right,
                         bottom: highlightedItem.data().connections.bottom,
                         left: highlightedItem.data().connections.left,
-                    }
+                    },
                 })
             })
             pb.step({
