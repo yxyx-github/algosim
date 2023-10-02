@@ -29,7 +29,12 @@ export enum GraphFormItemType {
     EDGE,
 }
 
-export type Side = 'top' | 'right' | 'bottom' | 'left'
+export enum Side {
+    TOP = 'top',
+    RIGHT = 'right',
+    BOTTOM = 'bottom',
+    LEFT = 'left',
+}
 
 export enum EnableSelect {
     NONE,

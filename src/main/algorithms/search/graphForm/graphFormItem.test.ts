@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { GraphFormItemData, TRBL } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType, Side } from '@/main/algorithms/search/graphForm/types'
 
 describe('GraphFormItem', () => {
     function getItemWithConnections(connections: TRBL<boolean>): GraphFormItem {
@@ -82,10 +82,10 @@ describe('GraphFormItem', () => {
     })
 
     test('can getNeighbourCoords', () => {
-        expect(GraphFormItem.createBlank(0, 1).getNeighbourCoords('top')).to.deep.equal({ x: 0, y: 0 })
-        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords('right')).to.deep.equal({ x: 1, y: 0 })
-        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords('bottom')).to.deep.equal({ x: 0, y: 1 })
-        expect(GraphFormItem.createBlank(1, 0).getNeighbourCoords('left')).to.deep.equal({ x: 0, y: 0 })
+        expect(GraphFormItem.createBlank(0, 1).getNeighbourCoords(Side.TOP)).to.deep.equal({ x: 0, y: 0 })
+        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords(Side.RIGHT)).to.deep.equal({ x: 1, y: 0 })
+        expect(GraphFormItem.createBlank(0, 0).getNeighbourCoords(Side.BOTTOM)).to.deep.equal({ x: 0, y: 1 })
+        expect(GraphFormItem.createBlank(1, 0).getNeighbourCoords(Side.LEFT)).to.deep.equal({ x: 0, y: 0 })
     })
 
     test('can generateItemId', () => {

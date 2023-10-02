@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Coords, TRBL } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType, Side } from '@/main/algorithms/search/graphForm/types'
 
 describe('GraphForm', () => {
     function getItemWithConnections(coords: Coords, connections: TRBL<boolean>): GraphFormItem {
@@ -147,10 +147,10 @@ describe('GraphForm', () => {
 
     test('can generate oppositeSite', () => {
         const graphForm = new GraphForm()
-        expect(graphForm.oppsiteSide('top')).to.equal('bottom')
-        expect(graphForm.oppsiteSide('right')).to.equal('left')
-        expect(graphForm.oppsiteSide('bottom')).to.equal('top')
-        expect(graphForm.oppsiteSide('left')).to.equal('right')
+        expect(graphForm.oppsiteSide(Side.TOP)).to.equal(Side.BOTTOM)
+        expect(graphForm.oppsiteSide(Side.RIGHT)).to.equal(Side.LEFT)
+        expect(graphForm.oppsiteSide(Side.BOTTOM)).to.equal(Side.TOP)
+        expect(graphForm.oppsiteSide(Side.LEFT)).to.equal(Side.RIGHT)
     })
 
     test('can set valid start and end item and reset after clear', () => {

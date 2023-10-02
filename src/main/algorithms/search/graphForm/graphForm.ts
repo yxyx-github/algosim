@@ -1,7 +1,6 @@
-import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
+import type { Coords, GraphFormGrid, TRBL } from '@/main/algorithms/search/graphForm/types'
+import { GraphFormItemType, Side } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import type { Side, TRBL, Coords } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 
 export class GraphForm {
     private grid: GraphFormGrid = [[]]
@@ -35,7 +34,7 @@ export class GraphForm {
     getConnectedNeighbours(item: GraphFormItem): TRBL<GraphFormItem | undefined> {
         const connectedNeighbours: TRBL<GraphFormItem | undefined> = { top: undefined, right: undefined, bottom: undefined, left: undefined };
 
-        (['top', 'right', 'bottom', 'left'] as Side[]).forEach((side: Side) => {
+        ([Side.TOP, Side.RIGHT, Side.BOTTOM, Side.LEFT] as Side[]).forEach((side: Side) => {
             if (item.data().connections[side]) {
                 const neighbourCoords: Coords = item.getNeighbourCoords(side)
                 const neighbour = this.getItem(neighbourCoords.x, neighbourCoords.y)
@@ -49,14 +48,14 @@ export class GraphForm {
     // TODO: move somewhere else
     oppsiteSide(side: Side): Side {
         switch (side) {
-            case 'top':
-                return 'bottom'
-            case 'right':
-                return 'left'
-            case 'bottom':
-                return 'top'
-            case 'left':
-                return 'right'
+            case Side.TOP:
+                return Side.BOTTOM
+            case Side.RIGHT:
+                return Side.LEFT
+            case Side.BOTTOM:
+                return Side.TOP
+            case Side.LEFT:
+                return Side.RIGHT
         }
     }
 
