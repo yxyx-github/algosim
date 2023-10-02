@@ -77,6 +77,10 @@ const algorithms = [
     {
         label: 'Breadthsearch',
         value: SearchAlgorithm.BREADTH_SEARCH,
+    },
+    {
+        label: 'Depth-First search',
+        value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
     }
 ]
 
