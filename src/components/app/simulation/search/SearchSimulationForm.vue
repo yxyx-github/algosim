@@ -100,7 +100,7 @@ const gf = new GraphForm([
     ]
 ])
 gf.setStartItem(gf.toItems()[0])
-gf.setEndItem(gf.toItems()[2])
+gf.setEndItem(gf.toItems()[5])
 
 // const graphForm = ref(new GraphForm()) // typecasts due to TS issue with reactive values necessary
 const graphForm = ref(gf) // typecasts due to TS issue with reactive values necessary
