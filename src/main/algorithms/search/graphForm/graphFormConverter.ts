@@ -60,8 +60,7 @@ export class GraphFormConverter {
             const v1: Vertex<VertexValue> = this.addItemAsVertex(currentItem)
             const v2: Vertex<VertexValue> = this.addItemAsVertex(itemCollection[0])
             const edgeItems = itemCollection.filter((_, index) => index !== 0)
-            // @ts-ignore
-            const reversedEdgeItems = edgeItems.toReversed()
+            const reversedEdgeItems = Array.from(edgeItems).reverse()
             const weight = edgeItems.length + 1
             const existingEdge = edgeItems.length === 0 ? this.graph.findEdge(e =>
                 e.getFrom() === v1 && e.getTo() === v2 && e.getWeight() === weight
