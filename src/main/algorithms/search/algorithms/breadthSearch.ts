@@ -22,17 +22,21 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         while (vertexQueue.length > 0) {
             const current: Vertex<VertexValue> = vertexQueue.shift() as Vertex<VertexValue>
 
+            if (current === end) break
+
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
-            edgesToNeighbours.forEach(e => {
-                const to = e.getTo()
+            for (const edge of edgesToNeighbours) {
+                const to = edge.getTo()
                 if (!visitedVertices.includes(to) && !vertexQueue.includes(to)) {
                     vertexQueue.push(to)
 
-                    this.createEdgeSteps(graph, grid, e, startItemCoords, endItemCoords, visitedVertices, pb)
+                    this.createEdgeSteps(graph, grid, edge, startItemCoords, endItemCoords, visitedVertices, pb)
                     visitedVertices.push(to)
                     this.createStep(graph, grid, to, startItemCoords, endItemCoords, visitedVertices, pb)
+
+                    if (to === end) break
                 }
-            })
+            }
         }
 
         return pb.build()
