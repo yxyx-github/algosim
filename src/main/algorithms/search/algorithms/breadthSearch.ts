@@ -62,7 +62,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                     }
                 })
             })
-            return pb.step({
+            pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
                 end: highlightedGrid[endItemCoords.y][endItemCoords.x],
@@ -73,7 +73,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
     private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid = this.cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
-        return pb.step({
+        pb.step({
             grid: highlightedGrid,
             start: highlightedGrid[startItemCoords.y][startItemCoords.x],
             end: highlightedGrid[endItemCoords.y][endItemCoords.x],
