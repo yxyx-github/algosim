@@ -20,29 +20,33 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
-        this.createStep(graph.getVertices(), grid, startItemCoords, endItemCoords, pb)
+        let highlightedGrid = this.createStep(graph.getVertices(), grid)
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
-        start.getValue().completed = true
         start.getValue().distance = 0
 
         while (!queue.isEmpty()) {
-            this.createStep(graph.getVertices(), grid, startItemCoords, endItemCoords, pb)
+            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
             current.getValue().completed = true
 
             if (current === end) break
-
-            this.checkEdges(graph, current)
+            this.checkEdges(graph, current, startItemCoords, endItemCoords, grid, pb)
         }
 
         this.createPathStep(grid, end, startItemCoords, pb)
         return pb.build()
     }
 
-    private checkEdges(graph: Graph<VertexDijkstraValue, EdgeValue>, current: Vertex<VertexDijkstraValue>) {
+    private checkEdges(graph: Graph<VertexDijkstraValue, EdgeValue>, current: Vertex<VertexDijkstraValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+        let highlightedGrid = this.createStep(graph.getVertices(), grid)
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
+
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
+            this.visualiseEdgeSteps(edge, start, end, highlightedGrid, pb)
             const to = edge.getTo()
             if (to.getValue().completed??false) {
                 return
@@ -52,7 +56,30 @@ export class Dijkstra implements SearchAlgorithmImplementation {
                 to.getValue().distance = distance
                 to.getValue().predecessor = edge
             }
+            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
         })
+    }
+
+    private visualiseEdgeSteps(edge: Edge<VertexDijkstraValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+        let highlightedGrid = cloneGrid(grid)
+        edge.getValue().items.forEach(item => {
+            highlightedGrid = cloneGrid(highlightedGrid)
+            const x = item.data().coords.x
+            const y = item.data().coords.y
+            const highlightedItem = highlightedGrid[y][x]
+            highlightedGrid[y][x] = new GraphFormItem({
+                ...highlightedItem.data(),
+                connect: {
+                    top: highlightedItem.data().connections.top,
+                    right: highlightedItem.data().connections.right,
+                    bottom: highlightedItem.data().connections.bottom,
+                    left: highlightedItem.data().connections.left,
+                },
+            })
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
+        })
+
     }
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDijkstraValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
@@ -116,14 +143,10 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
 
-    private createStep(vertices: Vertex<VertexDijkstraValue>[], grid: GraphFormGrid, startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private createStep(vertices: Vertex<VertexDijkstraValue>[], grid: GraphFormGrid) {
         const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, vertices)
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-        })
+        return highlightedGrid
     }
 
     private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexDijkstraValue>[]) {
