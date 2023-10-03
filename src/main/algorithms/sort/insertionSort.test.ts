@@ -28,7 +28,7 @@ describe('InsertionSort', () => {
             ]
         }
 
-        const result = new InsertionSort().sort(input)
+        const result = new InsertionSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -51,7 +51,7 @@ describe('InsertionSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new InsertionSort().sort(input, mockTracker)
+        const result = new InsertionSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()

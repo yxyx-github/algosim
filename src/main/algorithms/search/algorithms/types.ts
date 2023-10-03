@@ -3,6 +3,7 @@ import { Graph } from '@/main/algorithms/search/graph/graph'
 import type { EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import type { AlgorithmImplementation } from '@/main/algorithms/types'
 
 export enum SearchAlgorithm {
     BREADTH_SEARCH,
@@ -10,10 +11,8 @@ export enum SearchAlgorithm {
     DIJKSTRA,
 }
 
-// TODO: extend AlgorithmImplementation
-export interface SearchAlgorithmImplementation {
+export interface SearchAlgorithmImplementation extends AlgorithmImplementation<SearchSimulationStep> {
     run: (graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>) => SearchSimulation,
-    description: () => string[],
 }
 
 export interface SearchSimulationStep extends SimulationStep {

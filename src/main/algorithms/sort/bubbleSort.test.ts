@@ -30,7 +30,7 @@ describe('BubbleSort', () => {
             ],
         }
 
-        const result = new BubbleSort().sort(input)
+        const result = new BubbleSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -55,7 +55,7 @@ describe('BubbleSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new BubbleSort().sort(input, mockTracker)
+        const result = new BubbleSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()
