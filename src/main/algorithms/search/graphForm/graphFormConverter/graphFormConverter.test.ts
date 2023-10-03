@@ -35,10 +35,6 @@ describe('GraphFormConverter', () => {
             expect(vertex).to.deep.equal(expectedVertex)
         })
 
-        /*graph.getEdges().map(edge =>
-            // console.log(`${edge.getFrom().getId()} ==${edge.getWeight()}=> ${edge.getTo().getId()} - ${edge.getValue().items.map(item => item.generateItemId())}`)
-            console.log(edge.getId())
-        )*/
         expect(graph.getEdges().length).to.equal(expectedGraph.getEdges().length)
         graph.getEdges().forEach(edge => {
             const foundExpectedEdge = expectedGraph.findEdge((e: Edge<VertexValue, EdgeValue>) =>
