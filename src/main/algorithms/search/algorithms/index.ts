@@ -17,7 +17,7 @@ export class SearchFactory {
 export function cloneGrid(grid: GraphFormGrid): GraphFormGrid {
     return grid.map(row =>
         row.map(item =>
-            new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
+            new GraphFormItem(JSON.parse(JSON.stringify(item.data())))
         )
     )
 }
