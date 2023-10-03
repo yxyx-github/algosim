@@ -1,10 +1,10 @@
 <template>
     <FColumn>
         <FContainer :direction="{ mb: 'col', md: 'row' }">
-            <FColumn>
+            <FColumn :grow="!$slots.simulation">
                 <slot name="form"/>
             </FColumn>
-            <FColumn :grow="true">
+            <FColumn v-if="$slots.simulation" :grow="true">
                 <slot name="simulation"/>
             </FColumn>
         </FContainer>

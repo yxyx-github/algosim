@@ -19,6 +19,7 @@ export interface FlexProps {
     gap?: { [key in Threshold]?: number } | number
     wrap?: { [key in Threshold]?: boolean } | boolean
     grow?: { [key in Threshold]?: boolean } | boolean
+    shrink?: { [key in Threshold]?: boolean } | boolean
     is?: any
 }
 
@@ -29,6 +30,7 @@ const props = withDefaults(defineProps<FlexProps>(), {
     gap: 4,
     wrap: false,
     grow: false,
+    shrink: false,
     is: h('div'),
 })
 
@@ -39,6 +41,7 @@ const containerClass = computed(() => `
         ${buildClass(props.gap, value => `gap-${value}`)}
         ${buildClass(props.wrap, value => `${value ? 'flex-wrap' : 'flex-nowrap'}`)}
         ${buildClass(props.grow, value => `${value ? 'grow' : 'grow-0'}`)}
+        ${buildClass(props.shrink, value => `${value ? 'shrink' : 'shrink-0'}`)}
     `)
 
 function buildClass(data: { [key in Threshold]: any } | any, buildSingle: (value: any) => string) {

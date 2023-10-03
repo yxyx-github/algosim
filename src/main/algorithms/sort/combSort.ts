@@ -6,7 +6,7 @@ import { SortColor } from '@/main/algorithms/sort/types'
 
 export class CombSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(this.calculateGapSteps(numbers.length))
         const pB = new ProtocolBuilder<SortSimulationStep>()
 
