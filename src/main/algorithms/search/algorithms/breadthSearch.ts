@@ -6,12 +6,12 @@ import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
-import { cloneGrid } from '@/main/algorithms/search/algorithms/index'
+import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 
 export class BreadthSearch implements SearchAlgorithmImplementation {
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
-        pb.setStepCloner((step: SearchSimulationStep) => this.cloneSimulationStep(step))
+        pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
@@ -129,17 +129,6 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
                 highlight: { ...item.data().highlight, center: true },
             })
         })
-    }
-
-    private cloneSimulationStep(step: SearchSimulationStep): SearchSimulationStep {
-        const startCoords = step.start?.data().coords
-        const endCoords = step.end?.data().coords
-        const clonedGrid = cloneGrid(step.grid)
-        return {
-            grid: clonedGrid,
-            start: startCoords !== undefined ? clonedGrid[startCoords.y][startCoords.x] : undefined,
-            end: endCoords !== undefined ? clonedGrid[endCoords.y][endCoords.x] : undefined,
-        }
     }
 
     description(): string[] {
