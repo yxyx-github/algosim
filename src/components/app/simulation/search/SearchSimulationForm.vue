@@ -81,6 +81,10 @@ const algorithms = [
     {
         label: 'Depth-First search',
         value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
+    },
+    {
+      label: 'Dijkstra',
+      value: SearchAlgorithm.DIJKSTRA,
     }
 ]
 

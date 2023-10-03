@@ -7,6 +7,7 @@ import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphForm
 export enum SearchAlgorithm {
     BREADTH_SEARCH,
     DEPTH_FIRST_SEARCH,
+    DIJKSTRA,
 }
 
 // TODO: extend AlgorithmImplementation
