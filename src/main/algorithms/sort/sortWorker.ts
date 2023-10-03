@@ -8,7 +8,7 @@ self.onmessage = (e: MessageEvent<SortWorkerRequest>) => {
     const progressTracker = new ProgressTracker(e.data.progressTrackerConfig)
     progressTracker.onTrack((progress) => self.postMessage({ name: 'progress', value: progress }))
 
-    const sorted = SortFactory.create(e.data.algorithm).sort(e.data.numbersToSort, progressTracker)
+    const sorted = SortFactory.create(e.data.algorithm).run(e.data.numbersToSort, progressTracker)
 
     self.postMessage({ name: 'resultCount', value: sorted.steps.length })
 

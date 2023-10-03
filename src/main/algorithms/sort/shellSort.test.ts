@@ -66,7 +66,7 @@ describe('ShellSort', () => {
             ]
         }
 
-        const result = new ShellSort().sort(input)
+        const result = new ShellSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -128,7 +128,7 @@ describe('ShellSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new ShellSort().sort(input, mockTracker)
+        const result = new ShellSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
 

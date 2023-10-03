@@ -33,7 +33,7 @@ describe('CombSort', () => {
             ],
         }
 
-        const result = new CombSort().sort(input)
+        const result = new CombSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -61,7 +61,7 @@ describe('CombSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new CombSort().sort(input, mockTracker)
+        const result = new CombSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()

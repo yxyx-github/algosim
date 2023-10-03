@@ -46,7 +46,7 @@ describe('MergeSort', () => {
             ]
         }
 
-        const result = new MergeSort().sort(input)
+        const result = new MergeSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -87,7 +87,7 @@ describe('MergeSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new MergeSort().sort(input, mockTracker)
+        const result = new MergeSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()

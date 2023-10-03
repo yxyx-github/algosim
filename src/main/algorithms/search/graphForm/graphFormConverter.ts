@@ -25,7 +25,7 @@ export class GraphFormConverter {
         let currentItem: GraphFormItem
 
         while (this.visitedItems.hasUnvisitedVertexItems()) {
-            const itemCollection: GraphFormItem[] = [] // TODO: extract to new class EdgeItemCollection
+            const itemCollection: GraphFormItem[] = []
             currentItem = this.visitedItems.nextUnvisitedVertexItem() as GraphFormItem
             this.itemDepthSearch(currentItem, itemCollection)
         }
