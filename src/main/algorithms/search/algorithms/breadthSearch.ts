@@ -6,6 +6,7 @@ import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
+import { cloneGrid } from '@/main/algorithms/search/algorithms/index'
 
 export class BreadthSearch implements SearchAlgorithmImplementation {
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
@@ -49,7 +50,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
     }
 
     private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = this.cloneGrid(grid)
+        const highlightedGrid = cloneGrid(grid)
         path.forEach((item, index) => {
             const x = item.data().coords.x
             const y = item.data().coords.y
@@ -84,7 +85,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         const highlightedItems: GraphFormItem[] = []
         edge.getValue().items.forEach(item => {
             highlightedItems.push(item)
-            const highlightedGrid = this.cloneGrid(grid)
+            const highlightedGrid = cloneGrid(grid)
             this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
             highlightedItems.forEach(item => {
                 const x = item.data().coords.x
@@ -109,7 +110,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
     }
 
     private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = this.cloneGrid(grid)
+        const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
         pb.step({
             grid: highlightedGrid,
@@ -130,18 +131,10 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
         })
     }
 
-    private cloneGrid(grid: GraphFormGrid): GraphFormGrid {
-        return grid.map(row =>
-            row.map(item =>
-                new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
-            )
-        )
-    }
-
     private cloneSimulationStep(step: SearchSimulationStep): SearchSimulationStep {
         const startCoords = step.start?.data().coords
         const endCoords = step.end?.data().coords
-        const clonedGrid = this.cloneGrid(step.grid)
+        const clonedGrid = cloneGrid(step.grid)
         return {
             grid: clonedGrid,
             start: startCoords !== undefined ? clonedGrid[startCoords.y][startCoords.x] : undefined,
