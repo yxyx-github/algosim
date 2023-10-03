@@ -6,12 +6,13 @@ import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
+import {cloneGrid, cloneSearchSimulationStep} from '@/main/algorithms/search/algorithms/index'
 
 export class Dijkstra implements SearchAlgorithmImplementation {
 
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
-        pb.setStepCloner((step: SearchSimulationStep) => this.cloneSimulationStep(step))
+        pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
@@ -21,8 +22,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         priorityQueue.offer(start, 0)
         completedVertices.add(start)
 
-        const path: GraphFormItem[] = [start.getValue().item]
-        this.createStep(graph, grid, start, startItemCoords, endItemCoords, completedVertices, priorityQueue, pb)
+
+        this.createStep(graph, grid, start, startItemCoords, endItemCoords, completedVertices, pb)
 
         while (!priorityQueue.isEmpty()) {
             const current: { priority: number, value: Vertex<VertexValue> } = priorityQueue.poll() as { priority: number, value: Vertex<VertexValue> }
@@ -53,13 +54,28 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             }
         }
 
+        const path: GraphFormItem[] = []
+
+        if (completedVertices.has(end)) {
+            path.push(end.getValue().item)
+
+            let current = end;
+            while (predecessorMap.has(current)) {
+                const predecessor: Vertex<VertexValue> = predecessorMap.get(current) as Vertex<VertexValue>
+                path.push(predecessor.getValue().item)
+                current = predecessor
+            }
+        }
+        path.reverse()
+
         this.createPathStep(graph, grid, path, startItemCoords, endItemCoords, pb)
 
         return pb.build()
     }
 
+
     private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = this.cloneGrid(grid)
+        const highlightedGrid = cloneGrid(grid)
         path.forEach((item, index) => {
             const x = item.data().coords.x
             const y = item.data().coords.y
@@ -94,7 +110,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         const highlightedItems: GraphFormItem[] = []
         edge.getValue().items.forEach(item => {
             highlightedItems.push(item)
-            const highlightedGrid = this.cloneGrid(grid)
+            const highlightedGrid = cloneGrid(grid)
             this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
             highlightedItems.forEach(item => {
                 const x = item.data().coords.x
@@ -118,8 +134,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         })
     }
 
-    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = this.cloneGrid(grid)
+    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Set<Vertex<VertexValue>>, pb: ProtocolBuilder<SearchSimulationStep>) {
+        const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
         pb.step({
             grid: highlightedGrid,
@@ -128,7 +144,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         })
     }
 
-    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexValue>[]) {
+    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Set<Vertex<VertexValue>>) {
         vertices.forEach(v => {
             const x = v.getValue().item.data().coords.x
             const y = v.getValue().item.data().coords.y
@@ -138,25 +154,6 @@ export class Dijkstra implements SearchAlgorithmImplementation {
                 highlight: { ...item.data().highlight, center: true },
             })
         })
-    }
-
-    private cloneGrid(grid: GraphFormGrid): GraphFormGrid {
-        return grid.map(row =>
-            row.map(item =>
-                new GraphFormItem(JSON.parse(JSON.stringify(item.data()))) // TODO: figure out why structuredClone() does not work
-            )
-        )
-    }
-
-    private cloneSimulationStep(step: SearchSimulationStep): SearchSimulationStep {
-        const startCoords = step.start?.data().coords
-        const endCoords = step.end?.data().coords
-        const clonedGrid = this.cloneGrid(step.grid)
-        return {
-            grid: clonedGrid,
-            start: startCoords !== undefined ? clonedGrid[startCoords.y][startCoords.x] : undefined,
-            end: endCoords !== undefined ? clonedGrid[endCoords.y][endCoords.x] : undefined,
-        }
     }
 
     description(): string[] {
