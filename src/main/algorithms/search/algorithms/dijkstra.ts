@@ -1,142 +1,124 @@
-import type { SearchAlgorithmImplementation, SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
+import type {
+    SearchAlgorithmImplementation,
+    SearchSimulation,
+    SearchSimulationStep
+} from '@/main/algorithms/search/algorithms/types'
 import type { Graph } from '@/main/algorithms/search/graph/graph'
 import type { Coords, EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
-import {cloneGrid, cloneSearchSimulationStep} from '@/main/algorithms/search/algorithms/index'
 
 export class Dijkstra implements SearchAlgorithmImplementation {
 
-    run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
+    run(graph: Graph<VertexDijkstraValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexDijkstraValue>, end: Vertex<VertexDijkstraValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
         pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
+
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
-        const completedVertices: Set<Vertex<VertexValue>> = new Set()
-        const predecessorMap: Map<Vertex<VertexValue>, Vertex<VertexValue>> = new Map()
-        const priorityQueue: PriorityQueue<Vertex<VertexValue>> = new PriorityQueue<Vertex<VertexValue>>()
-        priorityQueue.offer(start, 0)
-        completedVertices.add(start)
+        this.createStep(graph.getVertices(), grid, startItemCoords, endItemCoords, pb)
 
+        const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
+        start.getValue().completed = true
+        start.getValue().distance = 0
 
-        this.createStep(graph, grid, start, startItemCoords, endItemCoords, completedVertices, pb)
+        while (!queue.isEmpty()) {
+            this.createStep(graph.getVertices(), grid, startItemCoords, endItemCoords, pb)
 
-        while (!priorityQueue.isEmpty()) {
-            const current: { priority: number, value: Vertex<VertexValue> } = priorityQueue.poll() as { priority: number, value: Vertex<VertexValue> }
-            completedVertices.add(current.value)
+            const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
+            current.getValue().completed = true
 
-            if (current.value === end) break
+            if (current === end) break
 
-            const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current.value)
-
-            for (const edge of edgesToNeighbours) {
-                const to = edge.getTo()
-                if (completedVertices.has(to)) {
-                    continue
-                }
-
-                const distance = edge.getWeight() + current.priority
-                const currentQueueEntry = priorityQueue.getData().find(e => e.value === edge.getTo())
-
-                if (currentQueueEntry != undefined) {
-                    if (currentQueueEntry.priority > distance) {
-                        currentQueueEntry.priority = distance;
-                        predecessorMap.set(to, current.value)
-                    }
-                } else {
-                    priorityQueue.offer(to, distance)
-                    predecessorMap.set(to, current.value)
-                }
-            }
+            this.checkEdges(graph, current)
         }
 
-        const path: GraphFormItem[] = []
-
-        if (completedVertices.has(end)) {
-            path.push(end.getValue().item)
-
-            let current = end;
-            while (predecessorMap.has(current)) {
-                const predecessor: Vertex<VertexValue> = predecessorMap.get(current) as Vertex<VertexValue>
-                path.push(predecessor.getValue().item)
-                current = predecessor
-            }
-        }
-        path.reverse()
-
-        this.createPathStep(graph, grid, path, startItemCoords, endItemCoords, pb)
-
+        this.createPathStep(grid, end, startItemCoords, pb)
         return pb.build()
     }
 
-
-    private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = cloneGrid(grid)
-        path.forEach((item, index) => {
-            const x = item.data().coords.x
-            const y = item.data().coords.y
-            const highlightedItem = highlightedGrid[y][x]
-            if (highlightedItem.data().type === GraphFormItemType.EDGE) {
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    connect: {
-                        top: highlightedItem.data().connections.top,
-                        right: highlightedItem.data().connections.right,
-                        bottom: highlightedItem.data().connections.bottom,
-                        left: highlightedItem.data().connections.left,
-                    },
-                    label: index.toString(),
-                })
-            } else {
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    highlight: { ...highlightedItem.data().highlight, center: true },
-                    label: index.toString(),
-                })
+    private checkEdges(graph: Graph<VertexDijkstraValue, EdgeValue>, current: Vertex<VertexDijkstraValue>) {
+        graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
+            const to = edge.getTo()
+            if (to.getValue().completed??false) {
+                return
             }
-        })
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+            const distance = edge.getWeight() + (current.getValue().distance??0)
+            if ((to.getValue().distance??Infinity) > distance) {
+                to.getValue().distance = distance
+                to.getValue().predecessor = edge
+            }
         })
     }
 
-    private createEdgeSteps(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, edge: Edge<VertexValue, EdgeValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedItems: GraphFormItem[] = []
-        edge.getValue().items.forEach(item => {
-            highlightedItems.push(item)
-            const highlightedGrid = cloneGrid(grid)
-            this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
-            highlightedItems.forEach(item => {
-                const x = item.data().coords.x
-                const y = item.data().coords.y
-                const highlightedItem = highlightedGrid[y][x]
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    connect: {
-                        top: highlightedItem.data().connections.top,
-                        right: highlightedItem.data().connections.right,
-                        bottom: highlightedItem.data().connections.bottom,
-                        left: highlightedItem.data().connections.left,
-                    },
-                })
-            })
+    private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDijkstraValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+        const highlightedGrid: GraphFormGrid = cloneGrid(grid)
+        if (!(end.getValue().completed??false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-                end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+                end: highlightedGrid[end.getValue().item.data().coords.y][end.getValue().item.data().coords.x],
+            })
+            return
+        }
+
+        let current: Vertex<VertexDijkstraValue> = end;
+        this.highlightVertex(highlightedGrid, end)
+
+        while (current.getValue().predecessor != undefined) {
+            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<VertexDijkstraValue, EdgeValue>)
+            current = current.getValue().predecessor?.getFrom() as Vertex<VertexDijkstraValue>
+            this.highlightVertex(highlightedGrid, current)
+
+        }
+        pb.step({
+            grid: highlightedGrid,
+            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+            end: highlightedGrid[end.getValue().item.data().coords.y][end.getValue().item.data().coords.x],
+        })
+    }
+
+    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDijkstraValue>) {
+        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed??false)) {
+            return
+        }
+        const x = vertex.getValue().item.data().coords.x
+        const y = vertex.getValue().item.data().coords.y
+        const item = grid[y][x]
+
+        grid[y][x] = new GraphFormItem({
+            ...item.data(),
+            highlight: {...item.data().highlight, center: vertex.getValue().completed??false},
+            label: vertex.getValue().distance?.toString()??""
+        })
+    }
+
+    private highlightEdge(grid: GraphFormGrid, edge: Edge<VertexDijkstraValue, EdgeValue>) {
+        edge.getValue().items.forEach(item => {
+            const x = item.data().coords.x
+            const y = item.data().coords.y
+            const highlightedItem = grid[y][x]
+
+            grid[y][x] = new GraphFormItem({
+                ...highlightedItem.data(),
+                connect: {
+                    top: highlightedItem.data().connections.top,
+                    right: highlightedItem.data().connections.right,
+                    bottom: highlightedItem.data().connections.bottom,
+                    left: highlightedItem.data().connections.left,
+                },
             })
         })
     }
 
-    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Set<Vertex<VertexValue>>, pb: ProtocolBuilder<SearchSimulationStep>) {
+
+    private createStep(vertices: Vertex<VertexDijkstraValue>[], grid: GraphFormGrid, startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid = cloneGrid(grid)
-        this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
+        this.highlightVerticesInGrid(highlightedGrid, vertices)
         pb.step({
             grid: highlightedGrid,
             start: highlightedGrid[startItemCoords.y][startItemCoords.x],
@@ -144,34 +126,38 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         })
     }
 
-    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Set<Vertex<VertexValue>>) {
+    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexDijkstraValue>[]) {
         vertices.forEach(v => {
-            const x = v.getValue().item.data().coords.x
-            const y = v.getValue().item.data().coords.y
-            const item = grid[y][x]
-            grid[y][x] = new GraphFormItem({
-                ...item.data(),
-                highlight: { ...item.data().highlight, center: true },
-            })
+            this.highlightVertex(grid, v)
+            if (v.getValue().predecessor != undefined) {
+                this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexDijkstraValue, EdgeValue>)
+            }
         })
     }
 
     description(): string[] {
         return [`
-            BreadthSearch description
+            Dijkstra description
         `]
     }
 }
 
-class PriorityQueue<T> {
-    private readonly data: { priority: number, value: T }[] = []
+interface VertexDijkstraValue extends VertexValue {
+    completed?: boolean
+    distance?: number
+    predecessor?: Edge<VertexDijkstraValue, EdgeValue>
+}
 
-    public getData(): { priority: number, value: T }[] {
-        return this.data
+class DijkstraQueue {
+
+    private readonly vertices: Vertex<VertexDijkstraValue>[]
+
+    constructor(vertices: Vertex<VertexDijkstraValue>[]) {
+        this.vertices = Array<Vertex<VertexDijkstraValue>>(...vertices)
     }
 
-    public offer(element: T, priority: number) {
-        this.data.push({ priority, value: element })
+    public offer(element: Vertex<VertexDijkstraValue>) {
+        this.vertices.push(element)
     }
 
     public poll() {
@@ -179,14 +165,13 @@ class PriorityQueue<T> {
             return null
         }
         let min = 0
-        this.data.forEach((val, i) => {
-            if (val.priority < this.data[min].priority) {
+        this.vertices.forEach((val, i) => {
+            if ((val.getValue().distance??Infinity) < (this.vertices[min].getValue().distance??Infinity)) {
                 min = i
             }
         })
-
-        let res = this.data[min]
-        this.data.splice(min, 1)
+        let res = this.vertices[min]
+        this.vertices.splice(min, 1)
         return res
     }
 
@@ -195,6 +180,6 @@ class PriorityQueue<T> {
     }
 
     public size(): number {
-        return this.data.length
+        return this.vertices.length
     }
 }
