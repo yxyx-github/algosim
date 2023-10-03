@@ -2,43 +2,10 @@ import { describe, expect, test, vi } from 'vitest'
 import * as expectedResultData from './breadthSearch.test.json'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types'
-import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
-import { Graph } from '@/main/algorithms/search/graph/graph'
-import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
-import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { BreadthSearch } from '@/main/algorithms/search/algorithms/breadthSearch'
-
-type SearchSimulationResultData = {
-    steps: {
-        grid: {
-            itemData: GraphFormItemData,
-        }[][],
-        start: {
-            itemData: GraphFormItemData,
-        },
-        end: {
-            itemData: GraphFormItemData,
-        },
-    }[]
-}
+import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
 
 describe('BreadthSearch', () => {
-    function createSimulationFromResultData(result: SearchSimulationResultData): SearchSimulation {
-        return {
-            steps: result.steps.map(step => ({
-                grid: step.grid.map(row =>
-                    row.map(item =>
-                        new GraphFormItem(item.itemData)
-                    )
-                ),
-                start: new GraphFormItem(step.start.itemData),
-                end: new GraphFormItem(step.end.itemData),
-            }))
-        }
-    }
-
     test('search graph with protocol', () => {
         const gf = new GraphForm([
             [
@@ -62,10 +29,7 @@ describe('BreadthSearch', () => {
         gf.setStartItem(gf.toItems()[0])
         gf.setEndItem(gf.toItems()[5])
 
-        const converter = new GraphFormConverter(gf)
-        const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
-        const startVertex: Vertex<VertexValue> = graph.findVertex(v => v.getValue().item === gf.getStartItem()) as Vertex<VertexValue>
-        const endVertex: Vertex<VertexValue> = graph.findVertex(v => v.getValue().item === gf.getEndItem()) as Vertex<VertexValue>
+        const { graph, startVertex, endVertex } = convertGraphForm(gf)
 
         const result = new BreadthSearch().run(graph, gf.toGrid(), startVertex, endVertex)
         const expectedResult = createSimulationFromResultData(expectedResultData)
