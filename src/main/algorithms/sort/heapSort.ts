@@ -13,7 +13,7 @@ export class HeapSort implements SortAlgorithmImplementation {
 
     private colors: string[] = ['#e89ffa', '#a03cef', '#f323a6', '#fa7a37', '#f4e476', '#c0ed4c', '#6ef6a6', '#3794df', '#283af3', '#0f1e7f']
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(numbers))

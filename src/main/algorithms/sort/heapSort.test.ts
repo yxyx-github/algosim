@@ -42,7 +42,7 @@ describe('HeapSort', () => {
             ]
         }
 
-        const result = new HeapSort().sort(input)
+        const result = new HeapSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -79,7 +79,7 @@ describe('HeapSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new HeapSort().sort(input, mockTracker)
+        const result = new HeapSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()

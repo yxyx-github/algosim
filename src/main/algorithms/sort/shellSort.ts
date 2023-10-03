@@ -5,7 +5,7 @@ import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulation
 
 export class ShellSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(numbers))
