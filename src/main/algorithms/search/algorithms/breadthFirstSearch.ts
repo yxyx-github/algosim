@@ -8,7 +8,7 @@ import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 
-export class BreadthSearch implements SearchAlgorithmImplementation {
+export class BreadthFirstSearch implements SearchAlgorithmImplementation {
     run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
         pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
@@ -133,7 +133,7 @@ export class BreadthSearch implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-            BreadthSearch description
+            BreadthFirstSearch description
         `]
     }
 }

@@ -1,15 +1,15 @@
 <template>
     <Form @submit.prevent="submit">
-        <FContainer :direction="{ mb: 'col', md: 'row' }" alignItems="start">
+        <FContainer :direction="{ mb: 'col', md: 'row' }" :alignItems="{ mb: 'stretch', md: 'start' }">
             <FColumn>
                 <Input label="Algorithm:">
                     <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
                 </Input>
                 <Input label="Start vertex:">
-                    <ToggleButton v-model="enableSelectStart" onLabel="Select" offLabel="Select" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
+                    <ToggleButton v-model="enableSelectStart" v-tooltip.bottom="enableSelectStart ? 'Click any labyrinth item to select' : ''" onLabel="Select" :offLabel="`Selected: ${startItemLabel}`" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
                 </Input>
                 <Input label="End vertex:">
-                    <ToggleButton v-model="enableSelectEnd" onLabel="Select" offLabel="Select" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
+                    <ToggleButton v-model="enableSelectEnd" v-tooltip.bottom="enableSelectEnd ? 'Click any labyrinth item to select' : ''" onLabel="Select" :offLabel="`Selected: ${endItemLabel}`" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
                 </Input>
                 <ButtonBar>
                     <Button label="Search" @click="submit"/>
@@ -32,7 +32,7 @@ import { computed, reactive, ref, watchEffect } from 'vue'
 import { GraphFormConverter } from '@/main/algorithms/search/graphForm/graphFormConverter'
 import { Graph } from '@/main/algorithms/search/graph/graph'
 import type { EdgeValue, VertexValue } from '@/main/algorithms/search/graphForm/types'
-import { EnableSelect } from '@/main/algorithms/search/graphForm/types'
+import { EnableSelect, GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types'
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
@@ -70,13 +70,20 @@ const enableSelectEnd: WritableComputedRef<boolean> = computed({
     set: enable => values.enableSelect = enable ? EnableSelect.END : EnableSelect.NONE,
 })
 
+const startItemLabel = computed(() => (graphForm.value as GraphForm).getStartItem() === null ? '-' : generateItemLabel((graphForm.value as GraphForm).getStartItem() as GraphFormItem))
+const endItemLabel = computed(() => (graphForm.value as GraphForm).getEndItem() === null ? '-' : generateItemLabel((graphForm.value as GraphForm).getEndItem() as GraphFormItem))
+
+function generateItemLabel(item: GraphFormItem) {
+    return `${item.data().type === GraphFormItemType.VERTEX ? 'v' : 'e'}: ${item.data().coords.x} | ${item.data().coords.y}`
+}
+
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SearchFactory.create(values.algorithm).description()))
 watchEffect(() => emit('updateDescription', algorithmDescription.value))
 
 const algorithms = [
     {
-        label: 'Breadthsearch',
-        value: SearchAlgorithm.BREADTH_SEARCH,
+        label: 'Breadth-First search',
+        value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
     },
     {
         label: 'Depth-First search',

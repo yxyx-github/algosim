@@ -1,5 +1,6 @@
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
-import { BreadthSearch } from '@/main/algorithms/search/algorithms/breadthSearch'
+import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
+import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
@@ -14,8 +15,8 @@ export class SearchFactory {
             case SearchAlgorithm.DIJKSTRA:
                 return new Dijkstra()
             default:
-            case SearchAlgorithm.BREADTH_SEARCH:
-                return new BreadthSearch()
+            case SearchAlgorithm.BREADTH_FIRST_SEARCH:
+                return new BreadthFirstSearch()
         }
     }
 }
