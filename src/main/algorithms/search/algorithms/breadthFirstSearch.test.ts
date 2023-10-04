@@ -1,8 +1,8 @@
 import { describe, expect, test, vi } from 'vitest'
-import * as expectedResultData from './breadthSearch.test.json'
+import * as expectedResultData from './breadthFirstSearch.test.json'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { BreadthSearch } from '@/main/algorithms/search/algorithms/breadthSearch'
+import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
 
 describe('BreadthSearch', () => {
@@ -31,7 +31,7 @@ describe('BreadthSearch', () => {
 
         const { graph, startVertex, endVertex } = convertGraphForm(gf)
 
-        const result = new BreadthSearch().run(graph, gf.toGrid(), startVertex, endVertex)
+        const result = new BreadthFirstSearch().run(graph, gf.toGrid(), startVertex, endVertex)
         const expectedResult = createSimulationFromResultData(expectedResultData)
         expect(result).to.deep.equal(expectedResult)
     })

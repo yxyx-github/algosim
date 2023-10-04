@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { BreadthSearch } from '@/main/algorithms/search/algorithms/breadthSearch'
+import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import { cloneGrid, cloneSearchSimulationStep, SearchFactory } from '@/main/algorithms/search/algorithms/index'
@@ -7,9 +7,9 @@ import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 
 describe('SearchFactory', () => {
-    test('can create BreadthSearch', () => {
-        const breadth = SearchFactory.create(SearchAlgorithm.BREADTH_SEARCH)
-        expect(breadth).to.instanceof(BreadthSearch)
+    test('can create BreadthFirstSearch', () => {
+        const breadth = SearchFactory.create(SearchAlgorithm.BREADTH_FIRST_SEARCH)
+        expect(breadth).to.instanceof(BreadthFirstSearch)
     })
 });
 

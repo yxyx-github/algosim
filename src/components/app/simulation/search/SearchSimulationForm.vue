@@ -75,8 +75,8 @@ watchEffect(() => emit('updateDescription', algorithmDescription.value))
 
 const algorithms = [
     {
-        label: 'Breadthsearch',
-        value: SearchAlgorithm.BREADTH_SEARCH,
+        label: 'Breadth-First search',
+        value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
     },
     {
         label: 'Depth-First search',
