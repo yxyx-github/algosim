@@ -1,10 +1,10 @@
 import { describe, expect, test, vi } from 'vitest'
 import type { ProgressHandler, TrackableProgress } from '@/main/progressTracker/types'
-import {GraphForm} from '@/main/algorithms/search/graphForm/graphForm'
-import {GraphFormItem} from '@/main/algorithms/search/graphForm/graphFormItem'
-import {convertGraphForm, createSimulationFromResultData} from '@/main/algorithms/search/algorithms/testHelpers'
+import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
+import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
 import * as expectedResultData from '@/main/algorithms/search/algorithms/depthFirstSearch.test.json'
-import {DepthFirstSearch} from '@/main/algorithms/search/algorithms/depthFirstSearch'
+import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
 
 describe('DepthFirstSearch', () => {
     const mockTracker: TrackableProgress = {

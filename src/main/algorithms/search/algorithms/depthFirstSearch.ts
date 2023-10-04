@@ -6,7 +6,7 @@ import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
-import {cloneGrid, cloneSearchSimulationStep} from '@/main/algorithms/search/algorithms/index'
+import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 
 export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
