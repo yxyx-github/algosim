@@ -3,7 +3,6 @@ import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/t
 import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
-import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 
