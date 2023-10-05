@@ -1,6 +1,6 @@
 <template>
-    <div class="w-72 h-72 border-4 border-red-500">
-        <GraphFormVisualization class="max-w-72 max-h-72 border-4 border-yellow-500" :graphForm="props.graphForm"/>
+    <div class="max-w-72 h-72 border-4 border-red-500">
+        <GraphFormVisualization class="h-72 border-4 border-yellow-500" :graphForm="props.graphForm"/>
     </div>
 </template>
 
