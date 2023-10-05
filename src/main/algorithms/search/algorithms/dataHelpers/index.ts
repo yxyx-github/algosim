@@ -3,6 +3,7 @@ import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 
+// TODO: possible bug: error if start or end item is null
 export function importRawGraphForm(data: RawGraphForm): GraphForm {
     const graphForm = new GraphForm(generateGraphFormGrid(data.grid))
     graphForm.setStartItem(graphForm.toItems().find(item =>
@@ -15,7 +16,7 @@ export function importRawGraphForm(data: RawGraphForm): GraphForm {
     return graphForm
 }
 
-// TODO: test
+// TODO: possible bug: error if start or end item is null
 export function importRawSearchSimulation(data: RawSearchSimulation): SearchSimulation {
     return {
         steps: data.steps.map(step => {
