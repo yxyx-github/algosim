@@ -7,7 +7,7 @@ import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 
-export interface VertexDepthFirstSearchValue extends VertexValue {
+interface VertexDepthFirstSearchValue extends VertexValue {
     visited?: boolean
     predecessor?: Edge<VertexDepthFirstSearchValue, EdgeValue>
 }
