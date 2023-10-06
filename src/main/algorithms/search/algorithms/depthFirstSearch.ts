@@ -1,135 +1,150 @@
 import type { SearchAlgorithmImplementation, SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import type { Graph } from '@/main/algorithms/search/graph/graph'
 import type { Coords, EdgeValue, GraphFormGrid, VertexValue } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItemType } from '@/main/algorithms/search/graphForm/types'
 import type { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 
+export interface VertexDepthFirstSearchValue extends VertexValue {
+    visited?: boolean
+    predecessor?: Edge<VertexDepthFirstSearchValue, EdgeValue>
+}
+
 export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
-    run(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexValue>, end: Vertex<VertexValue>): SearchSimulation {
+    run(graph: Graph<VertexDepthFirstSearchValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexDepthFirstSearchValue>, end: Vertex<VertexDepthFirstSearchValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
         pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
-        const visitedVertices: Vertex<VertexValue>[] = [start]
-        const edgeStack: Edge<VertexValue, EdgeValue>[] = graph.getEdges().filter(e => e.getFrom() === start)
+        const vertexStack: Vertex<VertexDepthFirstSearchValue>[] = [start]
 
-        const path: GraphFormItem[] = [start.getValue().item]
-        this.createStep(graph, grid, start, startItemCoords, endItemCoords, visitedVertices, pb)
+        let highlightedGrid = this.createStep(graph.getVertices(), grid)
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
-        while (edgeStack.length > 0) {
-            const currentEdge: Edge<VertexValue, EdgeValue> = edgeStack.pop() as Edge<VertexValue, EdgeValue>
-            const current: Vertex<VertexValue> = currentEdge.getTo()
+        while (vertexStack.length > 0) {
+            const current: Vertex<VertexDepthFirstSearchValue> = vertexStack.pop() as Vertex<VertexDepthFirstSearchValue>
+            if (current.getValue().visited??false) continue
 
-            if (visitedVertices.includes(current)) continue
+            current.getValue().visited = true
 
-            path.push(...currentEdge.getValue().items)
-            this.createEdgeSteps(graph, grid, currentEdge, startItemCoords, endItemCoords, visitedVertices, pb)
-            visitedVertices.push(current)
-            this.createStep(graph, grid, current, startItemCoords, endItemCoords, visitedVertices, pb)
-            path.push(current.getValue().item)
+            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             if (current === end) break
 
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
-            for (const edge of edgesToNeighbours) {
+            edgesToNeighbours.forEach(edge => {
                 const to = edge.getTo()
-                if (visitedVertices.includes(to)) {
-                    continue
+                if ((to.getValue().visited??false) || vertexStack.includes(to)) {
+                    return
                 }
-                edgeStack.push(edge)
-            }
+                to.getValue().predecessor = edge
+                vertexStack.push(to)
+
+                if (edge.getWeight() <= 1) {
+                    return
+                }
+                this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
+                highlightedGrid = this.createStep(graph.getVertices(), grid)
+            })
         }
 
-        this.createPathStep(graph, grid, path, startItemCoords, endItemCoords, pb)
-
+        this.createPathStep(grid, end, startItemCoords, pb)
         return pb.build()
     }
 
-    private createPathStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, path: GraphFormItem[], startItemCoords: Coords, endItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = cloneGrid(grid)
-        path.forEach((item, index) => {
+    private visualiseEdgeSteps(edge: Edge<VertexDepthFirstSearchValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+        let highlightedGrid = cloneGrid(grid)
+        edge.getValue().items.forEach(item => {
+            highlightedGrid = cloneGrid(highlightedGrid)
             const x = item.data().coords.x
             const y = item.data().coords.y
             const highlightedItem = highlightedGrid[y][x]
-            if (highlightedItem.data().type === GraphFormItemType.EDGE) {
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    connect: {
-                        top: highlightedItem.data().connections.top,
-                        right: highlightedItem.data().connections.right,
-                        bottom: highlightedItem.data().connections.bottom,
-                        left: highlightedItem.data().connections.left,
-                    },
-                    label: index.toString(),
-                })
-            } else {
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    highlight: { ...highlightedItem.data().highlight, center: true },
-                    label: index.toString(),
-                })
-            }
+            highlightedGrid[y][x] = new GraphFormItem({
+                ...highlightedItem.data(),
+                connect: {
+                    top: highlightedItem.data().connections.top,
+                    right: highlightedItem.data().connections.right,
+                    bottom: highlightedItem.data().connections.bottom,
+                    left: highlightedItem.data().connections.left,
+                },
+            })
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
         })
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-        })
+
     }
 
-    private createEdgeSteps(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, edge: Edge<VertexValue, EdgeValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedItems: GraphFormItem[] = []
-        edge.getValue().items.forEach(item => {
-            highlightedItems.push(item)
-            const highlightedGrid = cloneGrid(grid)
-            this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
-            highlightedItems.forEach(item => {
-                const x = item.data().coords.x
-                const y = item.data().coords.y
-                const highlightedItem = highlightedGrid[y][x]
-                highlightedGrid[y][x] = new GraphFormItem({
-                    ...highlightedItem.data(),
-                    connect: {
-                        top: highlightedItem.data().connections.top,
-                        right: highlightedItem.data().connections.right,
-                        bottom: highlightedItem.data().connections.bottom,
-                        left: highlightedItem.data().connections.left,
-                    },
-                })
-            })
+    private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDepthFirstSearchValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+        const highlightedGrid: GraphFormGrid = cloneGrid(grid)
+        if (!(end.getValue().visited??false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-                end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+                end: highlightedGrid[end.getValue().item.data().coords.y][end.getValue().item.data().coords.x],
             })
+            return
+        }
+
+        let current: Vertex<VertexDepthFirstSearchValue> = end;
+        this.highlightVertex(highlightedGrid, end)
+
+        while (current.getValue().predecessor != undefined) {
+            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<VertexDepthFirstSearchValue, EdgeValue>)
+            current = current.getValue().predecessor?.getFrom() as Vertex<VertexDepthFirstSearchValue>
+            this.highlightVertex(highlightedGrid, current)
+
+        }
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[end.getValue().item.data().coords.y][end.getValue().item.data().coords.x] })
+    }
+
+    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDepthFirstSearchValue>) {
+        if (!(vertex.getValue().visited??false)) {
+            return
+        }
+        const x = vertex.getValue().item.data().coords.x
+        const y = vertex.getValue().item.data().coords.y
+        const item = grid[y][x]
+
+        grid[y][x] = new GraphFormItem({
+            ...item.data(),
+            highlight: { ...item.data().highlight, center: true },
         })
     }
 
-    private createStep(graph: Graph<VertexValue, EdgeValue>, grid: GraphFormGrid, current: Vertex<VertexValue>, startItemCoords: Coords, endItemCoords: Coords, visitedVertices: Vertex<VertexValue>[], pb: ProtocolBuilder<SearchSimulationStep>) {
-        const highlightedGrid = cloneGrid(grid)
-        this.highlightVerticesInGrid(highlightedGrid, visitedVertices)
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-        })
-    }
+    private highlightEdge(grid: GraphFormGrid, edge: Edge<VertexDepthFirstSearchValue, EdgeValue>) {
+        edge.getValue().items.forEach(item => {
+            const x = item.data().coords.x
+            const y = item.data().coords.y
+            const highlightedItem = grid[y][x]
 
-    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexValue>[]) {
-        vertices.forEach(v => {
-            const x = v.getValue().item.data().coords.x
-            const y = v.getValue().item.data().coords.y
-            const item = grid[y][x]
             grid[y][x] = new GraphFormItem({
-                ...item.data(),
-                highlight: { ...item.data().highlight, center: true },
+                ...highlightedItem.data(),
+                connect: {
+                    top: highlightedItem.data().connections.top,
+                    right: highlightedItem.data().connections.right,
+                    bottom: highlightedItem.data().connections.bottom,
+                    left: highlightedItem.data().connections.left,
+                },
             })
+        })
+    }
+
+    private createStep(vertices: Vertex<VertexDepthFirstSearchValue>[], grid: GraphFormGrid) {
+        const highlightedGrid = cloneGrid(grid)
+        this.highlightVerticesInGrid(highlightedGrid, vertices)
+        return highlightedGrid
+    }
+
+    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexDepthFirstSearchValue>[]) {
+        vertices.forEach(v => {
+            this.highlightVertex(grid, v)
+            if (v.getValue().predecessor != undefined) {
+                this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexDepthFirstSearchValue, EdgeValue>)
+            }
         })
     }
 
