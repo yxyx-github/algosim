@@ -11,6 +11,13 @@ import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 
+interface AStarDijkstraValue extends VertexValue {
+    completed?: boolean
+    distance?: number
+    heuristicDistance? : number
+    predecessor?: Edge<AStarDijkstraValue, EdgeValue>
+}
+
 export class AStar implements SearchAlgorithmImplementation {
 
     run(graph: Graph<AStarDijkstraValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<AStarDijkstraValue>, end: Vertex<AStarDijkstraValue>): SearchSimulation {
@@ -184,13 +191,6 @@ export class AStar implements SearchAlgorithmImplementation {
             A* description
         `]
     }
-}
-
-interface AStarDijkstraValue extends VertexValue {
-    completed?: boolean
-    distance?: number
-    heuristicDistance? : number
-    predecessor?: Edge<AStarDijkstraValue, EdgeValue>
 }
 
 class AStarQueue {
