@@ -1,4 +1,4 @@
-import type { RawGraphForm, RawGraphFormGrid, RawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers/types'
+import type { RawGraphForm, RawGraphFormGrid, RawItem, RawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers/types'
 import type { SearchSimulation, SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
@@ -7,12 +7,12 @@ export function importRawGraphForm(data: RawGraphForm): GraphForm {
     const graphForm = new GraphForm(generateGraphFormGrid(data.grid))
     if (data.startItem !== null) {
         graphForm.setStartItem(graphForm.toItems().find(item =>
-            item.generateItemId() === new GraphFormItem(data.startItem.itemData).generateItemId()
+            item.generateItemId() === new GraphFormItem((data.startItem as RawItem).itemData).generateItemId()
         ) ?? null)
     }
     if (data.endItem !== null) {
         graphForm.setEndItem(graphForm.toItems().find(item =>
-            item.generateItemId() === new GraphFormItem(data.endItem.itemData).generateItemId()
+            item.generateItemId() === new GraphFormItem((data.endItem as RawItem).itemData).generateItemId()
         ) ?? null)
     }
 
@@ -29,12 +29,12 @@ export function importRawSearchSimulation(data: RawSearchSimulation): SearchSimu
             }
             if (stepData.start !== null) {
                 step.start = gf.toItems().find(item =>
-                    item.generateItemId() === new GraphFormItem(stepData.start.itemData).generateItemId()
+                    item.generateItemId() === new GraphFormItem((stepData.start as RawItem).itemData).generateItemId()
                 )
             }
             if (stepData.end !== null) {
                 step.end = gf.toItems().find(item =>
-                    item.generateItemId() === new GraphFormItem(stepData.end.itemData).generateItemId()
+                    item.generateItemId() === new GraphFormItem((stepData.end as RawItem).itemData).generateItemId()
                 )
             }
             return step

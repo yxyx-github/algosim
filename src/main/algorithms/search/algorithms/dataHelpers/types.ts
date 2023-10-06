@@ -2,26 +2,22 @@ import type { GraphFormItemData } from '@/main/algorithms/search/graphForm/types
 
 export type RawGraphForm = {
     grid: RawGraphFormGrid,
-    startItem: {
-        itemData: GraphFormItemData,
-    } | null,
-    endItem: {
-        itemData: GraphFormItemData,
-    } | null,
+    startItem: RawItem | null,
+    endItem: RawItem | null,
 }
 
 export type RawSearchSimulation = {
     steps: {
         grid: RawGraphFormGrid,
-        start: {
-            itemData: GraphFormItemData,
-        } | null,
-        end: {
-            itemData: GraphFormItemData,
-        } | null,
+        start: RawItem | null,
+        end: RawItem | null,
     }[]
 }
 
 export type RawGraphFormGrid = {
     itemData: GraphFormItemData,
 }[][]
+
+export type RawItem = {
+    itemData: GraphFormItemData,
+}
