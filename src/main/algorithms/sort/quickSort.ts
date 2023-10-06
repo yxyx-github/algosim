@@ -22,20 +22,22 @@ export class QuickSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`Quicksort ist ein rekursiver Sortieralgorithmus, der auf dem Divide-and-Conquer-Prinzip basiert. Die
-        Funktionsweise von Quicksort basiert auf dem Unterteilen der Liste in Teillisten. Diese Unterteilung wird mit
-        einem Pivotelement vorgenommen. Als Pivotelement wird klassischerweise das letzte Element der Liste gewählt.
-        Es gibt allerdings auch alternative Ansätze bei der Wahl des Pivots. Ein anderes Vorgehen bei der Pivotwahl wäre
-        zum Beispiel den Median aus einer Teilmenge der Liste zu wählen. Anschließend müssen alle Elemente, welche
-        kleiner sind als der Pivot, links vom Pivot stehen. Alle Elemente, die größer sind, müssen rechts stehen. Die
-        Elemente mit dem gleichen Wert wie der Pivot haben keine vorgeschriebene Position. Nachdem diese
-        Vorsortierung durchgeführt wurde, müssen nur noch die Teillisten sortiert werden. Diese Sortierung wird durch
-        einen rekursiven Aufruf von Quicksort erreicht. Leere Listen und Listen mit der Länge 1 werden als bereits sortiert
-        gewertet und fungieren somit als Abbruchbedingung. Die Laufzeitkomplexität von Quicksort hängt maßgeblich mit
-        der Wahl des Pivotelements zusammen. Im Worst-Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der
-        durchschnittliche Aufwand O(n*log(n)) ist. Ein Vorteil von Quicksort ist allerdings, dass kein zusätzlicher
-        Speicherplatz benötigt wird, da es sich um ein In-Place-Verfahren handelt. Außerdem lässt es sich sehr
-        einfach parallelisieren.`]
+        return [`
+            Quicksort ist ein rekursiver Sortieralgorithmus, der das Divide-and-Conquer-Prinzip nutzt.
+            Dabei wird die zu sortierende Liste mithilfe eines Pivotelements in Teillisten unterteilt.
+            Als Pivotelement wird klassischerweise das letzte Element der Liste gewählt.
+            Alternative Pivotelemente wie beispielsweise der Median der Listenelemente, sind ebenfalls möglich.
+            Anschließend müssen alle Elemente, welche kleiner sind als der Pivot, links vom Pivot stehen.
+            Größere Elemente müssen rechts stehen.
+            Elemente, die identisch mit dem Pivot sind, können auf einer beliebigen Seite stehen.
+            Nachdem diese Vorsortierung durchgeführt wurde, müssen die Teillisten sortiert werden.
+            Diese Sortierung wird durch einen rekursiven Aufruf von Quicksort erreicht.
+            Leere Listen und Listen mit der Länge 1 werden als bereits sortiert gewertet und fungieren somit als Abbruchbedingung.
+            Die Laufzeitkomplexität von Quicksort hängt maßgeblich von der Wahl des Pivotelements ab.
+            Im Worst Case hat Quicksort eine Laufzeitkomplexität von O(n²), während der durchschnittliche Aufwand O(n*log(n)) beträgt.
+            Ein Vorteil von Quicksort ist, dass kein zusätzlicher Speicherplatz benötigt wird, da es sich um ein In-Place-Verfahren handelt.
+            Außerdem kann der Algorithmus einfach parallelisiert werden.`
+        ]
     }
 
     private quickSort(numbers: number[], begin: number, end: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
