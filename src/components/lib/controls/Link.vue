@@ -1,6 +1,6 @@
 <template>
     <RouterLink :="$props" custom v-slot="{ isActive, href, navigate }">
-        <a :="$attrs" :href="href" @click="navigate">
+        <a :="$attrs" :href="href" @click="navigate" class="underline underline-offset-2">
             <slot/>
         </a>
     </RouterLink>
