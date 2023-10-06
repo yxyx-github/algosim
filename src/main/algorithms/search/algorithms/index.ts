@@ -1,17 +1,11 @@
-import type {SearchSimulationStep} from '@/main/algorithms/search/algorithms/types'
-import {SearchAlgorithm} from '@/main/algorithms/search/algorithms/types'
-import {BreadthFirstSearch} from '@/main/algorithms/search/algorithms/breadthFirstSearch'
-import {DepthFirstSearch} from '@/main/algorithms/search/algorithms/depthFirstSearch'
-import type {GraphFormGrid} from '@/main/algorithms/search/graphForm/types'
-import {GraphFormItem} from '@/main/algorithms/search/graphForm/graphFormItem'
-import {AStar} from '@/main/algorithms/search/algorithms/astar'
-import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
+import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
-import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
+import { AStar } from '@/main/algorithms/search/algorithms/astar'
 
 export class SearchFactory {
     static create(algorithm: SearchAlgorithm) {
@@ -20,6 +14,8 @@ export class SearchFactory {
                 return new AStar()
             case SearchAlgorithm.DEPTH_FIRST_SEARCH:
                 return new DepthFirstSearch()
+            case SearchAlgorithm.DIJKSTRA:
+                return new Dijkstra()
             default:
             case SearchAlgorithm.BREADTH_FIRST_SEARCH:
                 return new BreadthFirstSearch()
