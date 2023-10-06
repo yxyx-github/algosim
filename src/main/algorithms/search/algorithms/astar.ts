@@ -139,7 +139,7 @@ export class AStar implements SearchAlgorithmImplementation {
         grid[y][x] = new GraphFormItem({
             ...item.data(),
             highlight: {...item.data().highlight, center: vertex.getValue().completed??false},
-            label: vertex.getValue().distance?.toString()??""
+            label: "d: " + (vertex.getValue().distance?.toString()??"") + ", h: " + (vertex.getValue().heuristicDistance?.toString()??"")
         })
     }
 
