@@ -8,6 +8,7 @@ import type { AlgorithmImplementation } from '@/main/algorithms/types'
 export enum SearchAlgorithm {
     BREADTH_FIRST_SEARCH,
     DEPTH_FIRST_SEARCH,
+    DIJKSTRA,
 }
 
 export interface SearchAlgorithmImplementation extends AlgorithmImplementation<SearchSimulationStep> {
