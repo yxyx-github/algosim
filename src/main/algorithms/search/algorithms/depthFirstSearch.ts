@@ -37,20 +37,21 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
             if (current === end) break
 
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
-            edgesToNeighbours.forEach(edge => {
+            for (const edge of edgesToNeighbours) {
                 const to = edge.getTo()
                 if ((to.getValue().visited??false) || vertexStack.includes(to)) {
-                    return
+                    continue
                 }
                 to.getValue().predecessor = edge
                 vertexStack.push(to)
 
-                if (edge.getWeight() <= 1) {
-                    return
+                if (edge.getWeight() > 1) {
+                    this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
+                    highlightedGrid = this.createStep(graph.getVertices(), grid)
                 }
-                this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
-                highlightedGrid = this.createStep(graph.getVertices(), grid)
-            })
+
+                if (to == end) break
+            }
         }
 
         this.createPathStep(grid, end, startItemCoords, pb)
