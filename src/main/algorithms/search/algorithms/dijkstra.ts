@@ -26,12 +26,15 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
         start.getValue().distance = 0
 
-        while (!queue.isEmpty()) {
-            highlightedGrid = this.createStep(graph.getVertices(), grid)
-            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+        highlightedGrid = this.createStep(graph.getVertices(), grid)
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
+        while (!queue.isEmpty()) {
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
             current.getValue().completed = true
+
+            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             if (current === end) break
             this.checkEdges(graph, current, startItemCoords, endItemCoords, grid, pb)
@@ -43,21 +46,27 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
     private checkEdges(graph: Graph<VertexDijkstraValue, EdgeValue>, current: Vertex<VertexDijkstraValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
-        pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
 
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
-            this.visualiseEdgeSteps(edge, start, end, highlightedGrid, pb)
             const to = edge.getTo()
             if (to.getValue().completed??false) {
                 return
             }
+
+            this.visualiseEdgeSteps(edge, start, end, highlightedGrid, pb)
+
+            let visualiseStep: boolean = false
+
             const distance = edge.getWeight() + (current.getValue().distance??0)
             if ((to.getValue().distance??Infinity) > distance) {
                 to.getValue().distance = distance
                 to.getValue().predecessor = edge
+                visualiseStep = true
             }
             highlightedGrid = this.createStep(graph.getVertices(), grid)
-            pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
+            if (visualiseStep) {
+                pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
+            }
         })
     }
 
