@@ -1,4 +1,9 @@
 <template>
+    <RouterLink :="$props" custom v-slot="{ isActive, href, navigate }">
+        <a :="$attrs" :href="href" @click="navigate">
+            <slot/>
+        </a>
+    </RouterLink>
 </template>
 
 <script setup lang="ts">
