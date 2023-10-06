@@ -84,7 +84,11 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             }
             highlightedGrid = this.createStep(graph.getVertices(), grid)
             if (visualiseStep) {
-                pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
+                pb.step({
+                    grid: highlightedGrid,
+                    start: highlightedGrid[start.y][start.x],
+                    end: highlightedGrid[end.y][end.x],
+                })
             }
         })
     }
