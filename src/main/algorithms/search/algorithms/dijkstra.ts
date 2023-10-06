@@ -192,10 +192,22 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-        Der Dijkstra Algorithmus versucht den kostengünstigsten Pfaden zwischen den Startknoten und allen anderen
-        Knoten zu finden. Der Algorithmus geht vom Startknoten zu dem nächstlegenden Knoten mit den geringsten kosten.
-        Danach wird der Startknoten, als durchlaufen markiert und es wird der Nächste knoten mit den geringsten kosten
-        angesteuert. Das geht so lange bist du alle Knoten Durchlaufen würden
-        `]
+        Dijkstra ist ein Suchalgorithmus, welcher versucht den kostengünstigsten Pfad zwischen einem Start und einem
+        Endknoten zu bestimmen. Dabei wird jedem Knoten eine Entfernung zum Startknoten zugeordnet. In dieser Implementation
+        handelt es sich dabei um die euklidische Entfernung, da diese optimiert werden soll. Zu beginn werden
+        alle Knoten außer der Startknoten mit der Entfernung "unendlich" beschrieben. Der Startknoten hat selbstverständlich
+        die Entfernung "0" zu sich selbst. Nun wird in jedem Iterationsschritt immer der Knoten gewählt, welcher die kürzeste
+        Entfernung zum Startknoten aufweist und welcher noch nicht als permanent gekennzeichnet wurde. Für dieser Knoten
+        kann nun als permanent gekennzeichnet werden, da der kürzeste Weg zu dem Knoten gefunden wurde und alle seine
+        Nachbarn können betrachtet werden, ob der Weg über den jetzigen Knoten kürzer ist als der Bisherige. Wenn dies
+        der Fall ist, dann wird die Entfernung des benachbarten Knotens aktualisiert und der jetzige Knoten wird als Vorgänger
+        des Nachbarknotens eingetragen. Sobald der Endknoten als permanent gekennzeichnet wurde, wurde der kürzeste
+        Weg vom Start bis zum Ende gefunden. Dieser Pfad kann man über die rekursive Nachverfolgung der Vorgängerknoten
+        des Endknotens rekonstruiert werden.`,
+        `
+        In der hier gewählten Darstellung wird die Entfernung zum Startknoten als Zahl dargestellt. Wenn ein Knoten als
+        permanent gekennzeichnet wurde, dann wird er rot hervorgehoben. Wenn die Entfernung eines Knotens "unendlich"
+        beträgt, dann wird die Entfernung in der Darstellung ausgeblendet.`
+        ]
     }
 }
