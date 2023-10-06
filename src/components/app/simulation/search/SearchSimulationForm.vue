@@ -18,7 +18,7 @@
             </FColumn>
             <GraphFormInput :graphForm="values.graphForm as any" v-model:enableSelect="values.enableSelect"/>
         </FContainer>
-        <PredefinedGraphs v-model:show="values.selectPredefinedGraph"/>
+        <PredefinedGraphs v-model:show="values.selectPredefinedGraph" @select="loadGraphForm"/>
     </Form>
 </template>
 
@@ -97,6 +97,10 @@ const algorithms = [
         value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
     }
 ]
+
+function loadGraphForm(graphForm: GraphForm) {
+    values.graphForm = graphForm
+}
 
 function reset() {
     emit('reset')
