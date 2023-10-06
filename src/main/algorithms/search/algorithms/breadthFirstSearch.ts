@@ -133,7 +133,14 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-            BreadthFirstSearch description
+        BFS steht für "Breadth-First Search" oder Breitensuche und ist ein Suchalgorithmus für ungerichtete oder gerichtete
+        Graphen. Der Algorithmus beginnt bei einem Startknoten und bewegt sich horizontal zum nächsten Knoten in derselben
+        Ebene (Reihe) im Graphen. Erst wenn alle Knoten in der aktuellen horizontalen Ebene besucht wurden, geht der
+        Algorithmus einen Schritt vertikal und beginnt, die Knoten in der nächsten horizontalen Ebene zu besuchen.
+        Dieser Prozess wiederholt sich, bis alle Knoten besucht wurden. Die Laufzeitkomplexität von BFS beträgt in
+        der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die Anzahl der Kanten im Graphen ist. Es ist
+        wichtig zu beachten, dass die Laufzeit von O(|E|) zwischen O(1) und O(|V^2|) variieren kann, abhängig von der
+        Dichte des Graphen. Bei dünnen Graphen ist die Laufzeit näher an O(1), während sie sich bei dichten Graphen O(|V^2|) nähern kann.
         `]
     }
 }
