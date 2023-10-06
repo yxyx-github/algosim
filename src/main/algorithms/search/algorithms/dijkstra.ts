@@ -46,6 +46,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
         while (!queue.isEmpty()) {
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
+            if (current.getValue().distance == undefined) break
+
             current.getValue().completed = true
 
             highlightedGrid = this.createStep(graph.getVertices(), grid)
