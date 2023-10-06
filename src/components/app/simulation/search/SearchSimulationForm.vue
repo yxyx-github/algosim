@@ -13,10 +13,12 @@
                 </Input>
                 <ButtonBar>
                     <Button label="Search" @click="submit"/>
+                    <Button label="Use predefined graph" severity="secondary" @click="values.selectPredefinedGraph = true"/>
                 </ButtonBar>
             </FColumn>
-            <GraphFormInput :graphForm="graphForm as any" v-model:enableSelect="values.enableSelect"/>
+            <GraphFormInput :graphForm="values.graphForm as any" v-model:enableSelect="values.enableSelect"/>
         </FContainer>
+        <PredefinedGraphs v-model:show="values.selectPredefinedGraph" @select="loadGraphForm"/>
     </Form>
 </template>
 
@@ -43,6 +45,7 @@ import ToggleButton from 'primevue/togglebutton'
 import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { useToast } from 'primevue/usetoast'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import PredefinedGraphs from '@/components/app/simulation/search/predefinedGraphs/PredefinedGraphs.vue'
 
 const toast = useToast()
 
@@ -55,9 +58,13 @@ const emit = defineEmits<{
 const values = reactive<{
     algorithm: undefined | SearchAlgorithm
     enableSelect: EnableSelect
+    graphForm: GraphForm
+    selectPredefinedGraph: boolean
 }>({
     algorithm: undefined,
     enableSelect: EnableSelect.NONE,
+    graphForm: new GraphForm(), // typecasts due to TS issue with reactive values necessary
+    selectPredefinedGraph: false,
 })
 
 const enableSelectStart: WritableComputedRef<boolean> = computed({
@@ -70,8 +77,8 @@ const enableSelectEnd: WritableComputedRef<boolean> = computed({
     set: enable => values.enableSelect = enable ? EnableSelect.END : EnableSelect.NONE,
 })
 
-const startItemLabel = computed(() => (graphForm.value as GraphForm).getStartItem() === null ? '-' : generateItemLabel((graphForm.value as GraphForm).getStartItem() as GraphFormItem))
-const endItemLabel = computed(() => (graphForm.value as GraphForm).getEndItem() === null ? '-' : generateItemLabel((graphForm.value as GraphForm).getEndItem() as GraphFormItem))
+const startItemLabel = computed(() => (values.graphForm as GraphForm).getStartItem() === null ? '-' : generateItemLabel((values.graphForm as GraphForm).getStartItem() as GraphFormItem))
+const endItemLabel = computed(() => (values.graphForm as GraphForm).getEndItem() === null ? '-' : generateItemLabel((values.graphForm as GraphForm).getEndItem() as GraphFormItem))
 
 function generateItemLabel(item: GraphFormItem) {
     return `${item.data().type === GraphFormItemType.VERTEX ? 'v' : 'e'}: ${item.data().coords.x} | ${item.data().coords.y}`
@@ -92,10 +99,16 @@ const algorithms = [
     {
         label: 'Depth-First search',
         value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
+    },
+    {
+      label: 'Dijkstra',
+      value: SearchAlgorithm.DIJKSTRA,
     }
 ]
 
-const graphForm = ref(new GraphForm()) // typecasts due to TS issue with reactive values necessary
+function loadGraphForm(graphForm: GraphForm) {
+    values.graphForm = graphForm
+}
 
 function reset() {
     emit('reset')
@@ -104,23 +117,23 @@ function reset() {
 reset()
 
 function submit() {
-    (graphForm.value as GraphForm).validateStartEnd()
+    (values.graphForm as GraphForm).validateStartEnd()
     if (values.algorithm === undefined) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 });
         return
     }
-    if ((graphForm.value as GraphForm).getStartItem() === null || (graphForm.value as GraphForm).getEndItem() === null) {
+    if ((values.graphForm as GraphForm).getStartItem() === null || (values.graphForm as GraphForm).getEndItem() === null) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 });
         return
     }
 
-    const converter = new GraphFormConverter(graphForm.value as GraphForm)
+    const converter = new GraphFormConverter(values.graphForm as GraphForm)
     const graph: Graph<VertexValue, EdgeValue> = converter.toGraph()
-    const startVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (graphForm.value as GraphForm).getStartItem())
-    const endVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (graphForm.value as GraphForm).getEndItem())
+    const startVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (values.graphForm as GraphForm).getStartItem())
+    const endVertex: Vertex<VertexValue> | undefined = graph.findVertex(v => v.getValue().item === (values.graphForm as GraphForm).getEndItem())
 
     if (startVertex !== undefined && endVertex !== undefined) {
-        const searched = SearchFactory.create(values.algorithm).run(graph, (graphForm.value as GraphForm).toGrid(), startVertex, endVertex)
+        const searched = SearchFactory.create(values.algorithm).run(graph, (values.graphForm as GraphForm).toGrid(), startVertex, endVertex)
         emit('submit', searched)
     } else {
         toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });

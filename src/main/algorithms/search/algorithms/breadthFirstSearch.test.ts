@@ -3,7 +3,8 @@ import * as expectedResultData from './breadthFirstSearch.test.json'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
-import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
+import { convertGraphForm } from '@/main/algorithms/search/algorithms/testHelpers'
+import { importRawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers'
 
 describe('BreadthSearch', () => {
     test('search graph with protocol', () => {
@@ -32,7 +33,7 @@ describe('BreadthSearch', () => {
         const { graph, startVertex, endVertex } = convertGraphForm(gf)
 
         const result = new BreadthFirstSearch().run(graph, gf.toGrid(), startVertex, endVertex)
-        const expectedResult = createSimulationFromResultData(expectedResultData)
+        const expectedResult = importRawSearchSimulation(expectedResultData)
         expect(result).to.deep.equal(expectedResult)
     })
 })

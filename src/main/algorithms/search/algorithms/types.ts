@@ -9,6 +9,7 @@ export enum SearchAlgorithm {
     A_STAR,
     BREADTH_FIRST_SEARCH,
     DEPTH_FIRST_SEARCH,
+    DIJKSTRA,
 }
 
 export interface SearchAlgorithmImplementation extends AlgorithmImplementation<SearchSimulationStep> {
