@@ -12,7 +12,7 @@ import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/a
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 
-export interface VertexDijkstraValue extends VertexValue {
+interface VertexDijkstraValue extends VertexValue {
     completed?: boolean
     distance?: number
     predecessor?: Edge<VertexDijkstraValue, EdgeValue>
