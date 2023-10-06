@@ -38,9 +38,10 @@ export class BubbleSort implements SortAlgorithmImplementation {
     description(): string[] {
         return [`
         Der Bubble-Sort-Algorithmus ist ein einfacher Sortieralgorithmus.
-        Im Sortierprozess iteriert Bubblesort mehrfach über die Liste, dabei werden jeweils immer die benachbarten Elemente
-        verglichen. Falls das erste Element das größere ist, werden beide Elemente vertauscht. Nach jeder Iteration wurde
-        das größte Element des noch nicht sortierten Teils der Liste an das Ende dieser Liste befördert. Somit wird in
-        jedem Schleifendurchlauf ein Element sortiert. Man spricht auch von einer Laufzeitkomplexität von O(n²).`]
+        Im Sortierprozess iteriert Bubblesort mehrfach über die Liste, wobei jeweils die benachbarten Elemente verglichen werden.
+        Falls das erste Element größer ist, werden beide vertauscht.
+        Nach jeder Iteration wurde das größte Element des unsortierten Teils der Liste an das Ende befördert.
+        Somit wird in jedem Schleifendurchlauf ein Element sortiert.
+        Dies ergibt eine Laufzeitkomplexität von O(n²).`]
     }
 }
