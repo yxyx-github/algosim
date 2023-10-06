@@ -28,20 +28,32 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         const endItemCoords = end.getValue().item.data().coords
 
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
-        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+        pb.step({
+            grid: highlightedGrid,
+            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+        })
 
         const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
         start.getValue().distance = 0
 
         highlightedGrid = this.createStep(graph.getVertices(), grid)
-        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+        pb.step({
+            grid: highlightedGrid,
+            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+        })
 
         while (!queue.isEmpty()) {
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
             current.getValue().completed = true
 
             highlightedGrid = this.createStep(graph.getVertices(), grid)
-            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+            pb.step({
+                grid: highlightedGrid,
+                start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+                end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+            })
 
             if (current === end) break
             this.checkEdges(graph, current, startItemCoords, endItemCoords, grid, pb)
