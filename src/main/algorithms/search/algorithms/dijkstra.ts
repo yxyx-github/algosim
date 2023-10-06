@@ -49,7 +49,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
             const to = edge.getTo()
-            if (to.getValue().completed??false) {
+            if (to.getValue().completed ?? false) {
                 return
             }
 
@@ -57,8 +57,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
             let visualiseStep: boolean = false
 
-            const distance = edge.getWeight() + (current.getValue().distance??0)
-            if ((to.getValue().distance??Infinity) > distance) {
+            const distance = edge.getWeight() + (current.getValue().distance ?? 0)
+            if ((to.getValue().distance ?? Infinity) > distance) {
                 to.getValue().distance = distance
                 to.getValue().predecessor = edge
                 visualiseStep = true
@@ -93,7 +93,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDijkstraValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
-        if (!(end.getValue().completed??false)) {
+        if (!(end.getValue().completed ?? false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
@@ -119,7 +119,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDijkstraValue>) {
-        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed??false)) {
+        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
@@ -128,8 +128,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
         grid[y][x] = new GraphFormItem({
             ...item.data(),
-            highlight: {...item.data().highlight, center: vertex.getValue().completed??false},
-            label: vertex.getValue().distance?.toString()??""
+            highlight: { ...item.data().highlight, center: vertex.getValue().completed ?? false },
+            label: vertex.getValue().distance?.toString() ?? ""
         })
     }
 
@@ -198,7 +198,7 @@ class DijkstraQueue {
         }
         let min = 0
         this.vertices.forEach((val, i) => {
-            if ((val.getValue().distance??Infinity) < (this.vertices[min].getValue().distance??Infinity)) {
+            if ((val.getValue().distance ?? Infinity) < (this.vertices[min].getValue().distance ?? Infinity)) {
                 min = i
             }
         })

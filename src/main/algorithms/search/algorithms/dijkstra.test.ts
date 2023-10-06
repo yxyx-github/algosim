@@ -1,9 +1,9 @@
-import {describe, expect, test} from 'vitest'
-import {GraphForm} from '@/main/algorithms/search/graphForm/graphForm'
-import {GraphFormItem} from '@/main/algorithms/search/graphForm/graphFormItem'
-import {convertGraphForm, createSimulationFromResultData} from '@/main/algorithms/search/algorithms/testHelpers'
+import { describe, expect, test } from 'vitest'
+import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
+import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
 import * as expectedResultData from '@/main/algorithms/search/algorithms/dijkstra.test.json'
-import {Dijkstra} from '@/main/algorithms/search/algorithms/dijkstra'
+import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 
 describe('Dijkstra', () => {
     test('search graph with protocol', () => {
