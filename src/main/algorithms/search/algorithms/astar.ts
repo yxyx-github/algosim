@@ -10,17 +10,18 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
+import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 
-interface AStarDijkstraValue extends VertexValue {
+interface VertexAStarValue extends VertexValue {
     completed?: boolean
     distance?: number
     heuristicDistance? : number
-    predecessor?: Edge<AStarDijkstraValue, EdgeValue>
+    predecessor?: Edge<VertexAStarValue, EdgeValue>
 }
 
 export class AStar implements SearchAlgorithmImplementation {
 
-    run(graph: Graph<AStarDijkstraValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<AStarDijkstraValue>, end: Vertex<AStarDijkstraValue>): SearchSimulation {
+    run(graph: Graph<VertexAStarValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexAStarValue>, end: Vertex<VertexAStarValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
         pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
 
@@ -30,7 +31,8 @@ export class AStar implements SearchAlgorithmImplementation {
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
-        const queue: AStarQueue = new AStarQueue(graph.getVertices())
+        const queue: PriorityQueue<Vertex<VertexAStarValue>> = new PriorityQueue(graph.getVertices(),
+            (a: Vertex<VertexAStarValue>, b: Vertex<VertexAStarValue>) => ((a.getValue().distance ?? Infinity) + (a.getValue().heuristicDistance??Infinity) < (b.getValue().distance ?? Infinity) + (b.getValue().heuristicDistance??Infinity)))
         start.getValue().distance = 0
         start.getValue().heuristicDistance = 0
 
@@ -38,7 +40,7 @@ export class AStar implements SearchAlgorithmImplementation {
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         while (!queue.isEmpty()) {
-            const current: Vertex<AStarDijkstraValue> = queue.poll() as Vertex<AStarDijkstraValue>
+            const current: Vertex<VertexAStarValue> = queue.poll() as Vertex<VertexAStarValue>
             if (current.getValue().distance == undefined) break
 
             current.getValue().completed = true
@@ -54,7 +56,7 @@ export class AStar implements SearchAlgorithmImplementation {
         return pb.build()
     }
 
-    private checkEdges(graph: Graph<AStarDijkstraValue, EdgeValue>, current: Vertex<AStarDijkstraValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private checkEdges(graph: Graph<VertexAStarValue, EdgeValue>, current: Vertex<VertexAStarValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
 
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
@@ -84,12 +86,12 @@ export class AStar implements SearchAlgorithmImplementation {
         })
     }
 
-    private calculateHeuristicDistance(end: Coords, vertex: Vertex<AStarDijkstraValue>) {
+    private calculateHeuristicDistance(end: Coords, vertex: Vertex<VertexAStarValue>) {
         const vertexCoords = vertex.getValue().item.data().coords
         return Math.abs(vertexCoords.x - end.x) + Math.abs(vertexCoords.y - end.y)
     }
 
-    private visualiseEdgeSteps(edge: Edge<AStarDijkstraValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private visualiseEdgeSteps(edge: Edge<VertexAStarValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
         let highlightedGrid = cloneGrid(grid)
         edge.getValue().items.forEach(item => {
             highlightedGrid = cloneGrid(highlightedGrid)
@@ -110,7 +112,7 @@ export class AStar implements SearchAlgorithmImplementation {
 
     }
 
-    private createPathStep(grid: GraphFormGrid, end: Vertex<AStarDijkstraValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private createPathStep(grid: GraphFormGrid, end: Vertex<VertexAStarValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
         if (!(end.getValue().completed??false)) {
             pb.step({
@@ -121,12 +123,12 @@ export class AStar implements SearchAlgorithmImplementation {
             return
         }
 
-        let current: Vertex<AStarDijkstraValue> = end;
+        let current: Vertex<VertexAStarValue> = end;
         this.highlightVertex(highlightedGrid, end)
 
         while (current.getValue().predecessor != undefined) {
-            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<AStarDijkstraValue, EdgeValue>)
-            current = current.getValue().predecessor?.getFrom() as Vertex<AStarDijkstraValue>
+            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<VertexAStarValue, EdgeValue>)
+            current = current.getValue().predecessor?.getFrom() as Vertex<VertexAStarValue>
             this.highlightVertex(highlightedGrid, current)
 
         }
@@ -137,7 +139,7 @@ export class AStar implements SearchAlgorithmImplementation {
         })
     }
 
-    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<AStarDijkstraValue>) {
+    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexAStarValue>) {
         if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed??false)) {
             return
         }
@@ -152,7 +154,7 @@ export class AStar implements SearchAlgorithmImplementation {
         })
     }
 
-    private highlightEdge(grid: GraphFormGrid, edge: Edge<AStarDijkstraValue, EdgeValue>) {
+    private highlightEdge(grid: GraphFormGrid, edge: Edge<VertexAStarValue, EdgeValue>) {
         edge.getValue().items.forEach(item => {
             const x = item.data().coords.x
             const y = item.data().coords.y
@@ -171,17 +173,17 @@ export class AStar implements SearchAlgorithmImplementation {
     }
 
 
-    private createStep(vertices: Vertex<AStarDijkstraValue>[], grid: GraphFormGrid) {
+    private createStep(vertices: Vertex<VertexAStarValue>[], grid: GraphFormGrid) {
         const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, vertices)
         return highlightedGrid
     }
 
-    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<AStarDijkstraValue>[]) {
+    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexAStarValue>[]) {
         vertices.forEach(v => {
             this.highlightVertex(grid, v)
             if (v.getValue().predecessor != undefined) {
-                this.highlightEdge(grid, v.getValue().predecessor as Edge<AStarDijkstraValue, EdgeValue>)
+                this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexAStarValue, EdgeValue>)
             }
         })
     }
@@ -207,41 +209,5 @@ export class AStar implements SearchAlgorithmImplementation {
         eingeblendet, wenn der Knoten erreicht wurde, um die Übersichtlichkeit zu wahren.
         `
         ]
-    }
-}
-
-class AStarQueue {
-
-    private readonly vertices: Vertex<AStarDijkstraValue>[]
-
-    constructor(vertices: Vertex<AStarDijkstraValue>[]) {
-        this.vertices = Array<Vertex<AStarDijkstraValue>>(...vertices)
-    }
-
-    public offer(element: Vertex<AStarDijkstraValue>) {
-        this.vertices.push(element)
-    }
-
-    public poll() {
-        if (this.isEmpty()) {
-            return null
-        }
-        let min = 0
-        this.vertices.forEach((val, i) => {
-            if ((val.getValue().distance??Infinity) + (val.getValue().heuristicDistance??Infinity) < (this.vertices[min].getValue().distance??Infinity) + (this.vertices[min].getValue().heuristicDistance??Infinity)) {
-                min = i
-            }
-        })
-        let res = this.vertices[min]
-        this.vertices.splice(min, 1)
-        return res
-    }
-
-    public isEmpty(): boolean {
-        return this.size() == 0
-    }
-
-    public size(): number {
-        return this.vertices.length
     }
 }
