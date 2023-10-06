@@ -4,7 +4,10 @@
             <SortSimulationForm @submit="updateSimulation" @reset="() => simulation = null" @updateDescription="updateDescription"/>
         </template>
         <template #simulation>
-            <div v-if="simulation === null" class="self-center">Please sort some numbers first.</div>
+            <div v-if="simulation === null" class="self-center">
+                Please sort some numbers first.
+                Or try the <RouterLink :to="{ name: 'sort.quiz' }">Quiz</RouterLink>.
+            </div>
             <SimulationView v-else :simulation="simulation">
                 <template #step="{ stepData }">
                     <SortVisualization :step="stepData" class="h-full" maxHeight="100vh - 10.9375rem"/>
