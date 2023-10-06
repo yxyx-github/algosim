@@ -32,6 +32,8 @@ export class AStar implements SearchAlgorithmImplementation {
 
         while (!queue.isEmpty()) {
             const current: Vertex<AStarDijkstraValue> = queue.poll() as Vertex<AStarDijkstraValue>
+            if (current.getValue().distance == undefined) break
+
             current.getValue().completed = true
 
             highlightedGrid = this.createStep(graph.getVertices(), grid)
