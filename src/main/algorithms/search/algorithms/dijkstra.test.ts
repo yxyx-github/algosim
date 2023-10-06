@@ -1,9 +1,10 @@
 import { describe, expect, test } from 'vitest'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
-import { convertGraphForm, createSimulationFromResultData } from '@/main/algorithms/search/algorithms/testHelpers'
+import { convertGraphForm } from '@/main/algorithms/search/algorithms/testHelpers'
 import * as expectedResultData from '@/main/algorithms/search/algorithms/dijkstra.test.json'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
+import { importRawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers'
 
 describe('Dijkstra', () => {
     test('search graph with protocol', () => {
@@ -32,7 +33,7 @@ describe('Dijkstra', () => {
         const { graph, startVertex, endVertex } = convertGraphForm(gf)
 
         const result = new Dijkstra().run(graph, gf.toGrid(), startVertex, endVertex)
-        const expectedResult = createSimulationFromResultData(expectedResultData)
+        const expectedResult = importRawSearchSimulation(expectedResultData)
         expect(result.steps[5]).to.deep.equal(expectedResult.steps[5])
     })
 })
