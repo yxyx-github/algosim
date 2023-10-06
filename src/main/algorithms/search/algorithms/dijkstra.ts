@@ -192,7 +192,10 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-            Dijkstra description
+        Der Dijkstra Algorithmus versucht den kostengünstigsten Pfaden zwischen den Startknoten und allen anderen
+        Knoten zu finden. Der Algorithmus geht vom Startknoten zu dem nächstlegenden Knoten mit den geringsten kosten.
+        Danach wird der Startknoten, als durchlaufen markiert und es wird der Nächste knoten mit den geringsten kosten
+        angesteuert. Das geht so lange bist du alle Knoten Durchlaufen würden
         `]
     }
 }
