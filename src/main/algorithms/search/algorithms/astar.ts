@@ -188,8 +188,25 @@ export class AStar implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-            A* description
-        `]
+        A* ist ein informierter Suchalgorithmus, welcher auf Dijkstra aufbaut. Die grundsätzliche Funktionsweise von
+        A* ähnelt der von Dijkstra und A* findet ebenso wie Dijkstra den kürzesten Weg zum Zielknoten.
+        Allerdings möchte man mit A* verhindern, dass Knoten durchsucht werden, welche sich
+        weiter vom Ziel entfernen. Deshalb wird für jeden Knoten ein weiterer Wert eingeführt. Bei diesem Wert handelt es
+        sich um eine Heuristik für die restliche Entfernung dieses Knotens zum Zielknoten. In der hier dargestellten
+        Implementation von A* handelt es sich bei dieser geschätzten Entfernung um das Quadrat der euklidischen Entfernung.
+        Es ist wichtig, dass die Heuristik die Entfernung einen Knotens niemals überschätzt, da sonst möglicherweise nicht
+        der optimale Pfad gefunden wird. Da in dieser Implementation der kürzeste Weg nach euklidischer Distanz gesucht wird,
+        ist die Luftlinie, beziehungsweise hier das Quadrat der Luftlinie, da wir keine Diagonalen Schritte erlauben, sinnvoll.
+        Die Auswahl des nächten Knotens wird nun nicht mehr nur auf der Grundlage der geringsten Entfernung getroffen.
+        Der als nächstes betrachtete Knoten ist immer derjenige, welcher die geringste Summe aus geschätzter Restentfernung
+        und Entfernung zum Startknoten aufweist.`,
+        `
+        In der hier gewählten Darstellung wird die Entfernung zum Startknoten mit "d" und die heuristische Restentfernung
+        als "h" bezeichnet. Ähnlich wie bei der Darstellung vom Dijkstra-Algorithmus werden die Knoten, zu welchen der
+        kürzeste Weg bereits gefunden wurde, rot hervorgehoben. Die Enterung und Heuristik eines Knotens werden erst
+        eingeblendet, wenn der Knoten erreicht wurde, um die Übersichtlichkeit zu wahren.
+        `
+        ]
     }
 }
 
