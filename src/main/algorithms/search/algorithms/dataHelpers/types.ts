@@ -4,10 +4,10 @@ export type RawGraphForm = {
     grid: RawGraphFormGrid,
     startItem: {
         itemData: GraphFormItemData,
-    },
+    } | null,
     endItem: {
         itemData: GraphFormItemData,
-    }
+    } | null,
 }
 
 export type RawSearchSimulation = {
@@ -15,10 +15,10 @@ export type RawSearchSimulation = {
         grid: RawGraphFormGrid,
         start: {
             itemData: GraphFormItemData,
-        },
+        } | null,
         end: {
             itemData: GraphFormItemData,
-        },
+        } | null,
     }[]
 }
 
