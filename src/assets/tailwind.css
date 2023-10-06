@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        font-size: 100%
+    }
+
     * {
         @apply text-base
     }
@@ -30,5 +34,9 @@
 
     h6 {
         @apply text-base font-bold
+    }
+
+    .p-inputnumber-input {
+        @apply text-end
     }
 }

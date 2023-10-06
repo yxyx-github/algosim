@@ -12,10 +12,14 @@
   },
   "dependencies": {
     "pinia": "^2.1.6",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.32.1",
+    "uuid": "^9.0.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
     "@tsconfig/node18": "^18.2.0",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^18.17.5",
