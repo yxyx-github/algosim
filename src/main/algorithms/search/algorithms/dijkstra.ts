@@ -10,7 +10,7 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
-import { DijkstraQueue } from '@/main/dataStructures/DijkstraQueue'
+import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 
 export interface VertexDijkstraValue extends VertexValue {
     completed?: boolean
@@ -34,7 +34,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             end: highlightedGrid[endItemCoords.y][endItemCoords.x],
         })
 
-        const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
+        const queue: PriorityQueue<Vertex<VertexDijkstraValue>> = new PriorityQueue(graph.getVertices(),
+            (a: Vertex<VertexDijkstraValue>, b: Vertex<VertexDijkstraValue>) => ((a.getValue().distance ?? Infinity) < (b.getValue().distance ?? Infinity)))
         start.getValue().distance = 0
 
         highlightedGrid = this.createStep(graph.getVertices(), grid)
