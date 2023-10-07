@@ -135,12 +135,13 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
     description(): string[] {
         return [`
-        DFS steht für "Depth-First-Search" oder Tiefensuche und ist ein Suchalgorithmus für ungerichtete oder
-        gerichtete Graphen. Der Algorithmus beginnt bei einem Startknoten und bewegt sich vertikal zum nächsten Knoten.
-        Dabei werden alle besuchten Knoten als besucht markiert, um doppelte Abläufe zu vermeiden. DFS geht bis zum
-        letzten Knoten eines Zweiges, bevor er zurückkehrt, um einen anderen unerforschten Zweig zu durchlaufen.
-        Dieser Suchalgorithmus eignet sich gut für die Erkennung von Pfaden. Die Laufzeitkomplexität von DFS
-        beträgt in der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die Anzahl der Kanten im Graphen ist.
-        `]
+        Die Depth-First search auch DFS oder Tiefensuche ist eine Suchalgorithmus zur Durchsuchung von Graphen.
+        Es handelt sich bei der Depth-First search um eine uninformierte Suche. Der Algorithmus beginnt beim Startknoten
+        und durchsucht einen der Nachbarknoten. Dabei werden alle besuchten Knoten als besucht markiert, um doppelte
+        Abläufe zu vermeiden. DFS geht bis zum letzten Knoten eines Zweiges, bevor er zurückkehrt, um einen anderen
+        unerforschten Zweig zu durchlaufen, dabei wird sich das Speicherprinzip eines Stacks (Datenstruktur) zu nutze gemacht.
+        Die Laufzeitkomplexität von DFS beträgt in der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die
+        Anzahl der Kanten im Graphen ist.`
+        ]
     }
 }
