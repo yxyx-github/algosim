@@ -23,14 +23,14 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
 
         const vertexQueue: Vertex<VertexBreathFirstSearchValue>[] = [start]
 
-        let highlightedGrid = this.createStep(graph.getVertices(), grid)
+        let highlightedGrid = this.calculateStep(graph.getVertices(), grid)
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         while (vertexQueue.length > 0) {
             const current: Vertex<VertexBreathFirstSearchValue> = vertexQueue.shift() as Vertex<VertexBreathFirstSearchValue>
             current.getValue().visited = true
 
-            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            highlightedGrid = this.calculateStep(graph.getVertices(), grid)
             pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             if (current === end) break
@@ -47,7 +47,7 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
 
                 if (edge.getWeight() > 1) {
                     this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
-                    highlightedGrid = this.createStep(graph.getVertices(), grid)
+                    highlightedGrid = this.calculateStep(graph.getVertices(), grid)
                 }
 
                 if (to === end) break
@@ -77,7 +77,6 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
             })
             pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
         })
-
     }
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexBreathFirstSearchValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
@@ -135,7 +134,7 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
         })
     }
 
-    private createStep(vertices: Vertex<VertexBreathFirstSearchValue>[], grid: GraphFormGrid) {
+    private calculateStep(vertices: Vertex<VertexBreathFirstSearchValue>[], grid: GraphFormGrid) {
         const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, vertices)
         return highlightedGrid
