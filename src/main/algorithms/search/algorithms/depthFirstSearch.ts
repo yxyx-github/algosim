@@ -27,7 +27,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
         while (vertexStack.length > 0) {
             const current: Vertex<VertexDepthFirstSearchValue> = vertexStack.pop() as Vertex<VertexDepthFirstSearchValue>
-            if (current.getValue().visited??false) continue
+            if (current.getValue().visited ?? false) continue
 
             current.getValue().visited = true
 
@@ -39,7 +39,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
             for (const edge of edgesToNeighbours) {
                 const to = edge.getTo()
-                if ((to.getValue().visited??false) || vertexStack.includes(to)) {
+                if ((to.getValue().visited ?? false) || vertexStack.includes(to)) {
                     continue
                 }
                 to.getValue().predecessor = edge
@@ -81,7 +81,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDepthFirstSearchValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
-        if (!(end.getValue().visited??false)) {
+        if (!(end.getValue().visited ?? false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
@@ -103,7 +103,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDepthFirstSearchValue>) {
-        if (!(vertex.getValue().visited??false)) {
+        if (!(vertex.getValue().visited ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
