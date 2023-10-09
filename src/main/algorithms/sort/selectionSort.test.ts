@@ -32,7 +32,7 @@ describe('SelectionSort', () => {
             ]
         }
 
-        const result = new SelectionSort().sort(input)
+        const result = new SelectionSort().run(input)
         expect(result).to.deep.equal(expected)
     })
 
@@ -59,7 +59,7 @@ describe('SelectionSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new SelectionSort().sort(input, mockTracker)
+        const result = new SelectionSort().run(input, mockTracker)
         expect(result).to.deep.equal(expected)
 
         expect(spyInit).toHaveBeenCalledOnce()

@@ -91,7 +91,7 @@ describe('QuickSort', () => {
             ]
         }
 
-        const result = new QuickSort().sort(input)
+        const result = new QuickSort().run(input)
         expect(result).toEqual(expected)
     })
 
@@ -178,7 +178,7 @@ describe('QuickSort', () => {
         const spyTrack = vi.spyOn(mockTracker, 'track')
         const spyTrackNext = vi.spyOn(mockTracker, 'trackNext')
 
-        const result = new QuickSort().sort(input, mockTracker)
+        const result = new QuickSort().run(input, mockTracker)
         expect(result).toEqual(expected)
 
 

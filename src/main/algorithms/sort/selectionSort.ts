@@ -6,7 +6,7 @@ import { SortColor } from '@/main/algorithms/sort/types'
 
 export class SelectionSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length * ((numbers.length - 1) / 2))
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(numbers))

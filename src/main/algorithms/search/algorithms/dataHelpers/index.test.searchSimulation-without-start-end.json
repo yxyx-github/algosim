@@ -1,0 +1,384 @@
+{
+    "steps": [
+        {
+            "grid": [
+                [
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 1,
+                            "label": "",
+                            "coords": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    }
+                ]
+            ],
+            "start": null,
+            "end": null
+        },
+        {
+            "grid": [
+                [
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 1,
+                            "label": "",
+                            "coords": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    }
+                ]
+            ],
+            "start": null,
+            "end": null
+        },
+        {
+            "grid": [
+                [
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 1,
+                            "label": "",
+                            "coords": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "",
+                            "coords": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    }
+                ]
+            ],
+            "start": null,
+            "end": null
+        },
+        {
+            "grid": [
+                [
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "0",
+                            "coords": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 1,
+                            "label": "1",
+                            "coords": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": true,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": false
+                            }
+                        }
+                    },
+                    {
+                        "itemData": {
+                            "type": 0,
+                            "label": "2",
+                            "coords": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "connections": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": true
+                            },
+                            "connect": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false
+                            },
+                            "highlight": {
+                                "top": false,
+                                "right": false,
+                                "bottom": false,
+                                "left": false,
+                                "center": true
+                            }
+                        }
+                    }
+                ]
+            ],
+            "start": null,
+            "end": null
+        }
+    ]
+}

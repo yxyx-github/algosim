@@ -1,5 +1,6 @@
 import type { Simulation, SimulationStep } from '@/main/simulation/types'
 import type { TrackableProgress, ProgressProvider, ProgressTrackerConfig } from '@/main/progressTracker/types'
+import type { AlgorithmImplementation } from '@/main/algorithms/types'
 
 export type HighlightedIndex = {
     color: string
@@ -14,6 +15,7 @@ export enum SortAlgorithm {
     MERGESORT,
     QUICKSORT,
     SELECTION,
+    SHELLSORT,
 }
 
 export enum SortColor {
@@ -38,9 +40,8 @@ export type SortWorkerResponse =
     { name: 'progress', value: ProgressProvider } |
     { name: 'resultCount', value: number }
 
-export interface SortAlgorithmImplementation {
-    sort: (values: number[], progressTracker?: TrackableProgress) => SortSimulation,
-    description: () => string[],
+export interface SortAlgorithmImplementation extends AlgorithmImplementation<SortSimulationStep> {
+    run: (values: number[], progressTracker?: TrackableProgress) => SortSimulation,
 }
 
 export interface SortedValue {

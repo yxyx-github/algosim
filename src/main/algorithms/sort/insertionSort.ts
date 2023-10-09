@@ -5,7 +5,7 @@ import { SortSimulationStepFactory } from '@/main/algorithms/sort/sortSimulation
 import { SortColor } from '@/main/algorithms/sort/types'
 
 export class InsertionSort implements SortAlgorithmImplementation {
-    sort(values: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(values: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(values.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
         pB.step(SortSimulationStepFactory.create(values))

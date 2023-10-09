@@ -10,7 +10,7 @@ import { SortColor } from '@/main/algorithms/sort/types'
 
 export class MergeSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         progressTracker?.init(numbers.length)
         const pB = new ProtocolBuilder<SortSimulationStep>()
 

@@ -10,7 +10,7 @@ import { SortColor } from '@/main/algorithms/sort/types'
 
 export class QuickSort implements SortAlgorithmImplementation {
 
-    sort(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
+    run(numbers: number[], progressTracker?: TrackableProgress): SortSimulation {
         const pB = new ProtocolBuilder<SortSimulationStep>()
         progressTracker?.init(numbers.length)
 
