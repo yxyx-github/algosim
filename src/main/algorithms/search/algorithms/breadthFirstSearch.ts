@@ -38,7 +38,7 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
             for (const edge of edgesToNeighbours) {
                 const to = edge.getTo()
-                if ((to.getValue().visited??false) || vertexQueue.includes(to)) {
+                if ((to.getValue().visited ?? false) || vertexQueue.includes(to)) {
                     continue
                 }
 
@@ -81,7 +81,7 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexBreathFirstSearchValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
-        if (!(end.getValue().visited??false)) {
+        if (!(end.getValue().visited ?? false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
@@ -103,7 +103,7 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexBreathFirstSearchValue>) {
-        if (!(vertex.getValue().visited??false)) {
+        if (!(vertex.getValue().visited ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
