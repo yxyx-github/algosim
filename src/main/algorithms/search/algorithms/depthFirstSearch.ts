@@ -20,17 +20,31 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
         const startItemCoords = start.getValue().item.data().coords
         const endItemCoords = end.getValue().item.data().coords
 
-        const vertexStack: Vertex<VertexDepthFirstSearchValue>[] = [start]
+        const edgeStack: Edge<VertexDepthFirstSearchValue, EdgeValue>[] = []
 
         let highlightedGrid = this.calculateStep(graph.getVertices(), grid)
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
-        while (vertexStack.length > 0) {
-            const current: Vertex<VertexDepthFirstSearchValue> = vertexStack.pop() as Vertex<VertexDepthFirstSearchValue>
-            if (current.getValue().visited ?? false) continue
+        start.getValue().visited = true
 
+        highlightedGrid = this.calculateStep(graph.getVertices(), grid)
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+
+        const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === start)
+        for (const edge of edgesToNeighbours) {
+            const to = edge.getTo()
+            to.getValue().predecessor = edge
+            edgeStack.push(edge)
+        }
+
+        while (edgeStack.length > 0) {
+            const currentEdge: Edge<VertexDepthFirstSearchValue, EdgeValue> = edgeStack.pop() as Edge<VertexDepthFirstSearchValue, EdgeValue>
+            const current: Vertex<VertexDepthFirstSearchValue> = currentEdge.getTo()
+
+            if (current.getValue().visited ?? false) continue
             current.getValue().visited = true
 
+            this.visualiseEdgeSteps(currentEdge, startItemCoords, endItemCoords, highlightedGrid, pb)
             highlightedGrid = this.calculateStep(graph.getVertices(), grid)
             pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
@@ -39,18 +53,11 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
             const edgesToNeighbours = graph.getEdges().filter(e => e.getFrom() === current)
             for (const edge of edgesToNeighbours) {
                 const to = edge.getTo()
-                if ((to.getValue().visited ?? false) || vertexStack.includes(to)) {
+                if ((to.getValue().visited ?? false) || edgeStack.includes(edge)) {
                     continue
                 }
                 to.getValue().predecessor = edge
-                vertexStack.push(to)
-
-                if (edge.getWeight() > 1) {
-                    this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
-                    highlightedGrid = this.calculateStep(graph.getVertices(), grid)
-                }
-
-                if (to == end) break
+                edgeStack.push(edge)
             }
         }
 
@@ -143,7 +150,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
     private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexDepthFirstSearchValue>[]) {
         vertices.forEach(v => {
             this.highlightVertex(grid, v)
-            if (v.getValue().predecessor != undefined) {
+            if (v.getValue().predecessor != undefined && (v.getValue().visited ?? false)) {
                 this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexDepthFirstSearchValue, EdgeValue>)
             }
         })

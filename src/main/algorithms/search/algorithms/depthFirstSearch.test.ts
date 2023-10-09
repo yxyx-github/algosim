@@ -4,7 +4,7 @@ import { convertGraphForm } from '@/main/algorithms/search/algorithms/testHelper
 import * as expectedResultData from '@/main/algorithms/search/algorithms/depthFirstSearch.test.result.json'
 import * as rawGraphForm from '@/main/algorithms/search/algorithms/depthFirstSearch.test.input.json'
 import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
-import {importRawGraphForm, importRawSearchSimulation} from '@/main/algorithms/search/algorithms/dataHelpers'
+import { importRawGraphForm, importRawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers'
 
 describe('DepthFirstSearch', () => {
     const mockTracker: TrackableProgress = {
