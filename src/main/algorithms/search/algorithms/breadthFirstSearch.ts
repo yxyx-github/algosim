@@ -132,19 +132,19 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-        Die Breath-First search, auch BFS oder Breitensuche genannt, ist ein uninformierter Suchalgorithmus, welcher zum
-        durchsuchen von Graphen verwendet wird. Der Algorithmus beginnt beim Startknoten und alle benachbarten Knoten in ein
-        Warteschlange (Queue Datenstruktur) eingereiht. Aus der Warteschlange werden nun nacheinander Knoten entnommen und
-        durchsucht, dabei werden ihre Nachbarn wiederum wieder in die Warteschlange eingereiht. Da bereits durchsuchte Knoten
-        markiert werden, kommt es nicht dazu, dass ein Knoten mehrfach durchsucht wird. Aufgrund der Funktionsweise einer
-        Warteschlange werden diejenigen Knoten, die zuerst angetroffen werden auch zuerst durchsucht. Der von der Breitensuche
-        gefunden Pfad ist immer der kürzeste im Bezug auf die benötigen Schritte. Wenn die Kantengewicht nicht einheitlich
-        sind, dann muss dieser Pfad nicht mit dem Pfad mit den niedrigsten Gesamtkosten übereinstimmen. Da in der hier
-        dargestellten Implementation, die Entfernungen der Knoten durch die Kantengewichte ausgedrückt werden, stimmt der
-        gefundene Pfad nicht zwingend mit dem kürzesten Pfad bezüglich der euklidischen Distanz überein.
-        Die Laufzeitkomplexität von BFS beträgt in der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die
-        Anzahl der Kanten im Graphen ist.`
+        return [
+            `Die Breath-First search, auch BFS oder Breitensuche genannt, ist ein uninformierter Suchalgorithmus, welcher zum
+            durchsuchen von Graphen verwendet wird. Der Algorithmus beginnt beim Startknoten und alle benachbarten Knoten in ein
+            Warteschlange (Queue Datenstruktur) eingereiht. Aus der Warteschlange werden nun nacheinander Knoten entnommen und
+            durchsucht, dabei werden ihre Nachbarn wiederum wieder in die Warteschlange eingereiht. Da bereits durchsuchte Knoten
+            markiert werden, kommt es nicht dazu, dass ein Knoten mehrfach durchsucht wird. Aufgrund der Funktionsweise einer
+            Warteschlange werden diejenigen Knoten, die zuerst angetroffen werden auch zuerst durchsucht. Der von der Breitensuche
+            gefunden Pfad ist immer der kürzeste im Bezug auf die benötigen Schritte. Wenn die Kantengewicht nicht einheitlich
+            sind, dann muss dieser Pfad nicht mit dem Pfad mit den niedrigsten Gesamtkosten übereinstimmen. Da in der hier
+            dargestellten Implementation, die Entfernungen der Knoten durch die Kantengewichte ausgedrückt werden, stimmt der
+            gefundene Pfad nicht zwingend mit dem kürzesten Pfad bezüglich der euklidischen Distanz überein.
+            Die Laufzeitkomplexität von BFS beträgt in der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die
+            Anzahl der Kanten im Graphen ist.`
         ]
     }
 }
