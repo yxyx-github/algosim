@@ -22,7 +22,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
         const vertexStack: Vertex<VertexDepthFirstSearchValue>[] = [start]
 
-        let highlightedGrid = this.createStep(graph.getVertices(), grid)
+        let highlightedGrid = this.calculateStep(graph.getVertices(), grid)
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         while (vertexStack.length > 0) {
@@ -31,7 +31,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
             current.getValue().visited = true
 
-            highlightedGrid = this.createStep(graph.getVertices(), grid)
+            highlightedGrid = this.calculateStep(graph.getVertices(), grid)
             pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             if (current === end) break
@@ -47,7 +47,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
 
                 if (edge.getWeight() > 1) {
                     this.visualiseEdgeSteps(edge, startItemCoords, endItemCoords, highlightedGrid, pb)
-                    highlightedGrid = this.createStep(graph.getVertices(), grid)
+                    highlightedGrid = this.calculateStep(graph.getVertices(), grid)
                 }
 
                 if (to == end) break
@@ -134,7 +134,7 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
         })
     }
 
-    private createStep(vertices: Vertex<VertexDepthFirstSearchValue>[], grid: GraphFormGrid) {
+    private calculateStep(vertices: Vertex<VertexDepthFirstSearchValue>[], grid: GraphFormGrid) {
         const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, vertices)
         return highlightedGrid
