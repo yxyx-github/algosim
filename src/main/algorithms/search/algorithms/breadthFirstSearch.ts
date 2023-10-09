@@ -132,8 +132,19 @@ export class BreadthFirstSearch implements SearchAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-            BreadthFirstSearch description
-        `]
+        return [
+            `Die Breath-First search, auch BFS oder Breitensuche genannt, ist ein uninformierter Suchalgorithmus, welcher zum
+            Durchsuchen von Graphen verwendet wird. Der Algorithmus beginnt beim Startknoten. Alle benachbarten Knoten werden in eine
+            Warteschlange (Datenstruktur "Queue") eingereiht. Aus der Warteschlange werden nun nacheinander Knoten entnommen und
+            durchsucht, dabei werden ihre Nachbarn wiederum wieder in die Warteschlange eingereiht. Da bereits durchsuchte Knoten
+            markiert werden, kommt es nicht dazu, dass ein Knoten mehrfach durchsucht wird. Aufgrund der Funktionsweise einer
+            Warteschlange werden diejenigen Knoten, die zuerst angetroffen werden auch zuerst durchsucht. Der von der Breitensuche
+            gefunde Pfad ist immer der kürzeste in Bezug auf die benötigen Schritte. Wenn sich die Kantengewichte im Graph unterscheiden,
+            dann muss dieser Pfad nicht mit dem Pfad mit den niedrigsten Gesamtkosten übereinstimmen. Da in der hier
+            dargestellten Implementierung, die Entfernungen der Knoten durch die Kantengewichte ausgedrückt werden, stimmt der
+            gefundene Pfad nicht zwingend mit dem kürzesten Pfad bezüglich der euklidischen Distanz überein.
+            Die Laufzeitkomplexität von BFS beträgt in der Regel O(|V| + |E|), wobei |V| die Anzahl der Knoten und |E| die
+            Anzahl der Kanten im Graphen ist.`
+        ]
     }
 }
