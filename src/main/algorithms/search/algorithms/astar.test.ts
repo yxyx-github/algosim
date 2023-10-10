@@ -3,8 +3,8 @@ import * as expectedResultData from './astar.test.json'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { convertGraphForm } from '@/main/algorithms/search/algorithms/testHelpers'
-import {AStar} from '@/main/algorithms/search/algorithms/astar'
-import {importRawSearchSimulation} from '@/main/algorithms/search/algorithms/dataHelpers'
+import { AStar } from '@/main/algorithms/search/algorithms/astar'
+import { importRawSearchSimulation } from '@/main/algorithms/search/algorithms/dataHelpers'
 
 describe('A*', () => {
     test('search graph with protocol', () => {
