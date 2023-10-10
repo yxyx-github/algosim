@@ -15,7 +15,7 @@ import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 interface VertexAStarValue extends VertexValue {
     completed?: boolean
     distance?: number
-    heuristicDistance? : number
+    heuristicDistance?: number
     predecessor?: Edge<VertexAStarValue, EdgeValue>
 }
 
@@ -32,7 +32,7 @@ export class AStar implements SearchAlgorithmImplementation {
         pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         const queue: PriorityQueue<Vertex<VertexAStarValue>> = new PriorityQueue(graph.getVertices(),
-            (a: Vertex<VertexAStarValue>, b: Vertex<VertexAStarValue>) => ((a.getValue().distance ?? Infinity) + (a.getValue().heuristicDistance??Infinity) < (b.getValue().distance ?? Infinity) + (b.getValue().heuristicDistance??Infinity)))
+            (a: Vertex<VertexAStarValue>, b: Vertex<VertexAStarValue>) => ((a.getValue().distance ?? Infinity) + (a.getValue().heuristicDistance ?? Infinity) < (b.getValue().distance ?? Infinity) + (b.getValue().heuristicDistance ?? Infinity)))
         start.getValue().distance = 0
         start.getValue().heuristicDistance = 0
 
@@ -41,7 +41,7 @@ export class AStar implements SearchAlgorithmImplementation {
 
         while (!queue.isEmpty()) {
             const current: Vertex<VertexAStarValue> = queue.poll() as Vertex<VertexAStarValue>
-            if (current.getValue().distance == undefined) break
+            if (current.getValue().distance === undefined) break
 
             current.getValue().completed = true
 
@@ -61,7 +61,7 @@ export class AStar implements SearchAlgorithmImplementation {
 
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
             const to = edge.getTo()
-            if (to.getValue().completed??false) {
+            if (to.getValue().completed ?? false) {
                 return
             }
 
@@ -69,12 +69,12 @@ export class AStar implements SearchAlgorithmImplementation {
 
             let visualiseStep: boolean = false
 
-            const distance = edge.getWeight() + (current.getValue().distance??0)
+            const distance = edge.getWeight() + (current.getValue().distance ?? 0)
             if (to.getValue().heuristicDistance == undefined) {
                 to.getValue().heuristicDistance = this.calculateHeuristicDistance(end, to)
             }
 
-            if ((to.getValue().distance??Infinity) > distance) {
+            if ((to.getValue().distance ?? Infinity) > distance) {
                 to.getValue().distance = distance
                 to.getValue().predecessor = edge
                 visualiseStep = true
@@ -114,7 +114,7 @@ export class AStar implements SearchAlgorithmImplementation {
 
     private createPathStep(grid: GraphFormGrid, end: Vertex<VertexAStarValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
-        if (!(end.getValue().completed??false)) {
+        if (!(end.getValue().completed ?? false)) {
             pb.step({
                 grid: highlightedGrid,
                 start: highlightedGrid[startItemCoords.y][startItemCoords.x],
@@ -140,7 +140,7 @@ export class AStar implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexAStarValue>) {
-        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed??false)) {
+        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
@@ -149,8 +149,8 @@ export class AStar implements SearchAlgorithmImplementation {
 
         grid[y][x] = new GraphFormItem({
             ...item.data(),
-            highlight: {...item.data().highlight, center: vertex.getValue().completed??false},
-            label: "d: " + (vertex.getValue().distance?.toString()??"") + ", h: " + (vertex.getValue().heuristicDistance?.toString()??"")
+            highlight: { ...item.data().highlight, center: vertex.getValue().completed ?? false },
+            label: "d: " + (vertex.getValue().distance?.toString() ?? "") + ", h: " + (vertex.getValue().heuristicDistance?.toString() ?? "")
         })
     }
 
@@ -189,25 +189,24 @@ export class AStar implements SearchAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-        A* ist ein informierter Suchalgorithmus, welcher auf Dijkstra aufbaut. Die grundsätzliche Funktionsweise von
-        A* ähnelt der von Dijkstra und A* findet ebenso wie Dijkstra den kürzesten Weg zum Zielknoten.
-        Allerdings möchte man mit A* verhindern, dass Knoten durchsucht werden, welche sich
-        weiter vom Ziel entfernen. Deshalb wird für jeden Knoten ein weiterer Wert eingeführt. Bei diesem Wert handelt es
-        sich um eine Heuristik für die restliche Entfernung dieses Knotens zum Zielknoten. In der hier dargestellten
-        Implementation von A* handelt es sich bei dieser geschätzten Entfernung um das Quadrat der euklidischen Entfernung.
-        Es ist wichtig, dass die Heuristik die Entfernung einen Knotens niemals überschätzt, da sonst möglicherweise nicht
-        der optimale Pfad gefunden wird. Da in dieser Implementation der kürzeste Weg nach euklidischer Distanz gesucht wird,
-        ist die Luftlinie, beziehungsweise hier das Quadrat der Luftlinie, da wir keine Diagonalen Schritte erlauben, sinnvoll.
-        Die Auswahl des nächten Knotens wird nun nicht mehr nur auf der Grundlage der geringsten Entfernung getroffen.
-        Der als nächstes betrachtete Knoten ist immer derjenige, welcher die geringste Summe aus geschätzter Restentfernung
-        und Entfernung zum Startknoten aufweist.`,
-        `
-        In der hier gewählten Darstellung wird die Entfernung zum Startknoten mit "d" und die heuristische Restentfernung
-        als "h" bezeichnet. Ähnlich wie bei der Darstellung vom Dijkstra-Algorithmus werden die Knoten, zu welchen der
-        kürzeste Weg bereits gefunden wurde, rot hervorgehoben. Die Enterung und Heuristik eines Knotens werden erst
-        eingeblendet, wenn der Knoten erreicht wurde, um die Übersichtlichkeit zu wahren.
-        `
+        return [
+            `A* ist ein informierter Suchalgorithmus, welcher auf Dijkstra aufbaut. Die grundsätzliche Funktionsweise von
+            A* ähnelt der von Dijkstra und A* findet ebenso wie Dijkstra den kürzesten Weg zum Zielknoten.
+            Allerdings möchte man mit A* verhindern, dass Knoten durchsucht werden, welche sich
+            weiter vom Ziel entfernen. Deshalb wird für jeden Knoten ein weiterer Wert eingeführt. Bei diesem Wert handelt es
+            sich um eine Heuristik für die restliche Entfernung dieses Knotens zum Zielknoten. In der hier dargestellten
+            Implementation von A* handelt es sich bei dieser geschätzten Entfernung um das Quadrat der euklidischen Entfernung.
+            Es ist wichtig, dass die Heuristik die Entfernung einen Knotens niemals überschätzt, da sonst möglicherweise nicht
+            der optimale Pfad gefunden wird. Da in dieser Implementation der kürzeste Weg nach euklidischer Distanz gesucht wird,
+            ist die Luftlinie, beziehungsweise hier das Quadrat der Luftlinie, da wir keine Diagonalen Schritte erlauben, sinnvoll.
+            Die Auswahl des nächten Knotens wird nun nicht mehr nur auf der Grundlage der geringsten Entfernung getroffen.
+            Der als nächstes betrachtete Knoten ist immer derjenige, welcher die geringste Summe aus geschätzter Restentfernung
+            und Entfernung zum Startknoten aufweist.`,
+            `
+            In der hier gewählten Darstellung wird die Entfernung zum Startknoten mit "d" und die heuristische Restentfernung
+            als "h" bezeichnet. Ähnlich wie bei der Darstellung vom Dijkstra-Algorithmus werden die Knoten, zu welchen der
+            kürzeste Weg bereits gefunden wurde, rot hervorgehoben. Die Enterung und Heuristik eines Knotens werden erst
+            eingeblendet, wenn der Knoten erreicht wurde, um die Übersichtlichkeit zu wahren.`
         ]
     }
 }
