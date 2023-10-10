@@ -54,6 +54,14 @@ describe('GraphFormItem', () => {
         expect(graphFormItem.data()).to.deep.equal(expectedItemData)
     })
 
+    test('can clone GraphFormItem', () => {
+        const item = new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 0, 'y': 0 }, 'connections': { 'top': false, 'right': true, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } })
+        const clonedItem = item.clone()
+
+        expect(clonedItem).to.not.equal(item)
+        expect(clonedItem).to.deep.equal(item)
+    })
+
     test('GraphFormItem hasConnections', () => {
         expect(GraphFormItem.createBlank(3, 4).hasConnections()).to.false
         expect(getItemWithConnections({ top: false, right: false, bottom: false, left: false }).hasConnections()).to.false
