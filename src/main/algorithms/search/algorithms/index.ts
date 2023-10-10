@@ -6,6 +6,7 @@ import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 import { AStar } from '@/main/algorithms/search/algorithms/astar'
+import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
 
 export class SearchFactory {
     static create(algorithm: SearchAlgorithm) {
@@ -26,9 +27,28 @@ export class SearchFactory {
 export function cloneGrid(grid: GraphFormGrid): GraphFormGrid {
     return grid.map(row =>
         row.map(item =>
-            new GraphFormItem(JSON.parse(JSON.stringify(item.data())))
+            cloneGraphFormItem(item)
         )
     )
+}
+
+export function cloneGraphForm(graphForm: GraphForm): GraphForm {
+    const cloned = new GraphForm(cloneGrid(graphForm.toGrid()))
+    cloned.setStartItem(
+        cloned.toItems().find(item =>
+            item.generateItemId() === graphForm.getStartItem()?.generateItemId()
+        ) ?? null
+    )
+    cloned.setEndItem(
+        cloned.toItems().find(item =>
+            item.generateItemId() === graphForm.getEndItem()?.generateItemId()
+        ) ?? null
+    )
+    return cloned
+}
+
+export function cloneGraphFormItem(item: GraphFormItem) {
+    return new GraphFormItem(JSON.parse(JSON.stringify(item.data())))
 }
 
 export function cloneSearchSimulationStep(step: SearchSimulationStep): SearchSimulationStep {

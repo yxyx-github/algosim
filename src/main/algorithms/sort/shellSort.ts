@@ -37,7 +37,7 @@ export class ShellSort implements SortAlgorithmImplementation {
     }
 
     private insertCurrentElement(numbers: number[], currentElement: number, stepWidth: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
-        if (stepWidth == 1){
+        if (stepWidth === 1){
             progressTracker?.trackNext()
         }
         for (let pointer = currentElement - stepWidth; pointer >= 0; pointer -= stepWidth) {

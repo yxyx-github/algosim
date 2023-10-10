@@ -14,6 +14,7 @@ import { rawGraphFormInputs } from '@/main/algorithms/search/predefinedGraphs'
 import FRow from '@/components/lib/layout/FRow.vue'
 import PredefinedGraph from '@/components/app/simulation/search/predefinedGraphs/PredefinedGraph.vue'
 import { GraphForm } from '@/main/algorithms/search/graphForm/graphForm'
+import { cloneGraphForm } from '@/main/algorithms/search/algorithms'
 
 const emit = defineEmits<{
     'update:show': [value: boolean],
@@ -33,7 +34,7 @@ const graphForms = computed(() => rawGraphFormInputs.map(rawGraphForm => importR
 
 function select(graphForm: GraphForm) {
     visible.value = false
-    emit('select', graphForm)
+    emit('select', cloneGraphForm(graphForm))
 }
 </script>
 
