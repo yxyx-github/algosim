@@ -3,7 +3,6 @@ import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
 import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirstSearch'
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
-import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 import { AStar } from '@/main/algorithms/search/algorithms/astar'
 
@@ -25,9 +24,7 @@ export class SearchFactory {
 
 export function cloneGrid(grid: GraphFormGrid): GraphFormGrid {
     return grid.map(row =>
-        row.map(item =>
-            new GraphFormItem(JSON.parse(JSON.stringify(item.data())))
-        )
+        row.map(item => item.clone())
     )
 }
 

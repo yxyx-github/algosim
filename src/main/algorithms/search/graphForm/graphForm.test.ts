@@ -33,6 +33,32 @@ describe('GraphForm', () => {
         expect(graphForm.toGrid()).to.deep.equal(expectedGrid)
     })
 
+    test('can clone GraphForm', () => {
+        const graphForm = new GraphForm([
+            [
+                new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 0, 'y': 0 }, 'connections': { 'top': false, 'right': true, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+                new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 1, 'y': 0 }, 'connections': { 'top': false, 'right': true, 'bottom': true, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+                new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 2, 'y': 0 }, 'connections': { 'top': false, 'right': false, 'bottom': false, 'left': true }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+            ], [
+                new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 0, 'y': 1 }, 'connections': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+                new GraphFormItem({ 'type': 1, 'label': '', 'coords': { 'x': 1, 'y': 1 }, 'connections': { 'top': true, 'right': false, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+                new GraphFormItem({ 'type': 0, 'label': '', 'coords': { 'x': 2, 'y': 1 }, 'connections': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'connect': { 'top': false, 'right': false, 'bottom': false, 'left': false }, 'highlight': { 'top': false, 'right': false, 'bottom': false, 'left': false, 'center': false } }),
+            ],
+        ])
+        graphForm.setStartItem(graphForm.toGrid()[0][0])
+        graphForm.setEndItem(graphForm.toGrid()[0][2])
+        const clonedGraphForm = graphForm.clone()
+
+        expect(clonedGraphForm).to.not.equal(graphForm)
+        clonedGraphForm.toGrid().forEach((row, index) => {
+            expect(graphForm.toGrid()).to.not.include(row)
+            row.forEach(item =>
+                expect(graphForm.toGrid()[index]).to.not.include(item)
+            )
+        })
+        expect(clonedGraphForm).to.deep.equal(graphForm)
+    })
+
     test('can add rows and columns', () => {
         const graphForm = new GraphForm()
         graphForm.addRow()

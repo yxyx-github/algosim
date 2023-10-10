@@ -1,6 +1,7 @@
 import type { Coords, GraphFormGrid, TRBL } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItemType, Side } from '@/main/algorithms/search/graphForm/types'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
+import { cloneGrid } from '@/main/algorithms/search/algorithms'
 
 export class GraphForm {
     private grid: GraphFormGrid = [[]]
@@ -13,6 +14,21 @@ export class GraphForm {
         } else {
             this.grid = grid
         }
+    }
+
+    clone(): GraphForm {
+        const cloned = new GraphForm(cloneGrid(this.toGrid()))
+        cloned.setStartItem(
+            cloned.toItems().find(item =>
+                item.generateItemId() === this.getStartItem()?.generateItemId()
+            ) ?? null
+        )
+        cloned.setEndItem(
+            cloned.toItems().find(item =>
+                item.generateItemId() === this.getEndItem()?.generateItemId()
+            ) ?? null
+        )
+        return cloned
     }
 
     toItems(): GraphFormItem[] {
