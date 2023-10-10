@@ -103,7 +103,7 @@ const algorithms = [
     {
       label: 'Dijkstra',
       value: SearchAlgorithm.DIJKSTRA,
-    }
+    },
 ]
 
 function loadGraphForm(graphForm: GraphForm) {

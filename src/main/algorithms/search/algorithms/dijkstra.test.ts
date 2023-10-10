@@ -7,7 +7,7 @@ import { importRawGraphForm, importRawSearchSimulation } from '@/main/algorithms
 
 describe('Dijkstra', () => {
     test('search graph with protocol', () => {
-        const gf= importRawGraphForm(rawGraphForm)
+        const gf = importRawGraphForm(rawGraphForm)
         const { graph, startVertex, endVertex } = convertGraphForm(gf)
 
         const result = new Dijkstra().run(graph, gf.toGrid(), startVertex, endVertex)

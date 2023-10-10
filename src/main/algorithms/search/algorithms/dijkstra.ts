@@ -47,7 +47,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
         while (!queue.isEmpty()) {
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
-            if (current.getValue().distance == undefined) break
+            if (current.getValue().distance === undefined) break
 
             current.getValue().completed = true
 
@@ -145,7 +145,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDijkstraValue>) {
-        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed ?? false)) {
+        if ((vertex.getValue().distance === undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
@@ -194,8 +194,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-            Dijkstra ist ein Suchalgorithmus, welcher versucht den kostengünstigsten Pfad zwischen einem Start und einem
+        return [
+            `Dijkstra ist ein Suchalgorithmus, welcher versucht den kostengünstigsten Pfad zwischen einem Start und einem
             Endknoten zu bestimmen. Dabei wird jedem Knoten eine Entfernung zum Startknoten zugeordnet. In dieser Implementation
             handelt es sich dabei um die euklidische Entfernung, da diese optimiert werden soll. Zu Beginn werden
             alle Knoten außer der Startknoten mit der Entfernung "unendlich" initialisiert. Der Startknoten hat selbstverständlich

@@ -70,7 +70,7 @@ export class AStar implements SearchAlgorithmImplementation {
             let visualiseStep: boolean = false
 
             const distance = edge.getWeight() + (current.getValue().distance ?? 0)
-            if (to.getValue().heuristicDistance == undefined) {
+            if (to.getValue().heuristicDistance === undefined) {
                 to.getValue().heuristicDistance = this.calculateHeuristicDistance(end, to)
             }
 
@@ -140,7 +140,7 @@ export class AStar implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexAStarValue>) {
-        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed ?? false)) {
+        if ((vertex.getValue().distance === undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
