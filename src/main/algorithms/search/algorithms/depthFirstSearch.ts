@@ -23,7 +23,11 @@ export class DepthFirstSearch implements SearchAlgorithmImplementation {
         const edgeStack: Edge<VertexDepthFirstSearchValue, EdgeValue>[] = []
 
         let highlightedGrid = this.calculateStep(graph.getVertices(), grid)
-        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
+        pb.step({
+            grid: highlightedGrid,
+            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
+            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
+        })
 
         start.getValue().visited = true
 
