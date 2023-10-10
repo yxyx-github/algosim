@@ -66,8 +66,8 @@ export class ShellSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-            Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus.
+        return [
+            `Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus.
             Die Grundidee ist es, eine unsortierte Liste in mehrere Teillisten zu unterteilen und diese mit Insertionsort zu sortieren.
             Elemente der einzelnen Teillisten liegen jedoch nicht gruppiert hintereinander, sondern sind gleichmäßig in einem gewissen Abstand über die Liste verteilt.
             Dieser Abstand ist gleich der Anzahl an Teillisten.

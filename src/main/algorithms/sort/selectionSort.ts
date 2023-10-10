@@ -32,17 +32,6 @@ export class SelectionSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
-    description(): string[] {
-        return [
-            `Selectionsort ist ein einfacher, iterativer Sortieralgorithmus.
-            Die zu sortierende Liste wird dabei mehrfach durchlaufen, um in jeder Iteration das kleinste Element zu ermitteln.
-            Dieses wird anschließend an den Beginn der unsortierten Liste verschoben und als sortiert gekennzeichnet.
-            Dadurch entsteht eine Unterteilung in eine sortierte und eine unsortierte Liste.
-            Da in jedem Durchlauf ein Element sortiert wird, ergibt sich eine Laufzeitkomplexität von O(n²).
-            Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch mit der Größenordnung O(1).`
-        ]
-    }
-
     private createCompareStep(numbers: number[], i: number, j: number, minIndex: number): SortSimulationStep {
         return SortSimulationStepFactory.create(numbers,
             [
@@ -58,5 +47,16 @@ export class SelectionSort implements SortAlgorithmImplementation {
                 { color: SortColor.CURRENT, index: i },
                 ...(i === minIndex ? [] : [{ color: SortColor.CURRENT, index: minIndex }]),
             ])
+    }
+
+    description(): string[] {
+        return [
+            `Selectionsort ist ein einfacher, iterativer Sortieralgorithmus.
+            Die zu sortierende Liste wird dabei mehrfach durchlaufen, um in jeder Iteration das kleinste Element zu ermitteln.
+            Dieses wird anschließend an den Beginn der unsortierten Liste verschoben und als sortiert gekennzeichnet.
+            Dadurch entsteht eine Unterteilung in eine sortierte und eine unsortierte Liste.
+            Da in jedem Durchlauf ein Element sortiert wird, ergibt sich eine Laufzeitkomplexität von O(n²).
+            Ein Vorteil von Selectionsort ist hingegen sein Speicherverbrauch mit der Größenordnung O(1).`
+        ]
     }
 }

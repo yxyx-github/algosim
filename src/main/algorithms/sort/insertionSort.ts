@@ -28,9 +28,18 @@ export class InsertionSort implements SortAlgorithmImplementation {
         return pB.build()
     }
 
+    private createStep(values: number[], pointer: number, currentElement: number): SortSimulationStep {
+        return SortSimulationStepFactory.create(values,
+            [
+                { color: SortColor.CURRENT, index: pointer },
+                { color: SortColor.CURRENT, index: pointer + 1 },
+                ...(pointer + 1 === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
+            ])
+    }
+
     description(): string[] {
-        return [`
-            Insertionsort ist ein einfacher, stabiler Sortieralgorithmus, bei dem die Sortierung durch Einfügung erfolgt.
+        return [
+            `Insertionsort ist ein einfacher, stabiler Sortieralgorithmus, bei dem die Sortierung durch Einfügung erfolgt.
             Das erste Element der Liste wird als bereits sortierter Teil betrachtet.
             Der Algorithmus wählt nun immer das erste Element des unsortierten Teils aus und vergleicht es mit dem bereits sortieren Abschnitt der Liste.
             Wurde eine passende Stelle gefunden, wird das Element eingefügt.
@@ -40,14 +49,5 @@ export class InsertionSort implements SortAlgorithmImplementation {
             Da der Algorithmus In-Place arbeitet, liegt die Speicherkomplexität bei O(1).
             Einige andere Sortierverfahren, wie beispielsweise Shellsort, bauen auf Insertionsort auf.`
         ]
-    }
-
-    private createStep(values: number[], pointer: number, currentElement: number): SortSimulationStep {
-        return SortSimulationStepFactory.create(values,
-            [
-                { color: SortColor.CURRENT, index: pointer },
-                { color: SortColor.CURRENT, index: pointer + 1 },
-                ...(pointer + 1 === currentElement ? [] : [{ color: SortColor.THRESHOLD, index: currentElement }]),
-            ])
     }
 }

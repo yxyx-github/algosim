@@ -103,8 +103,8 @@ export class HeapSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-            Heapsort ist ein Sortierverfahren, welches auf dem binären Heap als zentrale Datenstruktur aufbaut.
+        return [
+            `Heapsort ist ein Sortierverfahren, welches auf dem binären Heap als zentrale Datenstruktur aufbaut.
             Im ersten Schritt wird die Liste in einen binären Max-Heap (siehe Absatz 2) umgewandelt.
             Danach wird die Wurzel des Heaps als größtes Element entfernt und an das Ende des unsortierten Teils der Liste bewegt.
             Da der Heap nun kein Max-Heap mehr ist, muss er heapified (siehe Absatz 3) werden.
