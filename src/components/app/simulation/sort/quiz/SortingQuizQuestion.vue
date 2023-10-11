@@ -10,8 +10,12 @@
                 <SortVisualization :step="stepData" class="h-full" maxHeight="100vh - 20rem"/>
             </template>
         </SimulationView>
-        <Dialog v-model:visible="showEvalDialog" modal header="Evaluation">
-            EvaluationDialog
+        <!--TODO: override default close-->
+        <Dialog v-model:visible="evaluation.showDialog" modal header="Evaluation">
+            {{ answerIsCorrect ? 'Your answer is correct.' : 'Your answer is wrong.' }}
+            <template #footer>
+                <Button @click="init" label="New question" aria-label="New question"/>
+            </template>
         </Dialog>
     </FColumn>
 </template>
@@ -21,7 +25,7 @@ import FColumn from '@/components/lib/layout/FColumn.vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import type { Ref } from 'vue'
 import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import { SortAlgorithm, SortSimulation, SortSimulationStep, SortWorkerResponse } from '@/main/algorithms/sort/types'
@@ -41,7 +45,16 @@ const question = reactive<{
 })
 
 const predictedAlgorithm: Ref<SearchAlgorithm | undefined> = ref()
-const showEvalDialog = ref(false)
+
+const evaluation = reactive<{
+    showDialog: boolean,
+    trialCount: number,
+}>({
+    showDialog: false,
+    trialCount: 0,
+})
+
+const answerIsCorrect = computed(() => predictedAlgorithm.value === question.algorithm)
 
 // TODO: extract somewhere else
 const algorithms = [
@@ -73,10 +86,16 @@ const algorithms = [
 ]
 
 function evaluate() {
-    showEvalDialog.value = true
+    evaluation.trialCount++
+    evaluation.showDialog = true
 }
 
-function initQuestion() {
+function init() {
+    evaluation.showDialog = false
+    evaluation.trialCount = 0
+    predictedAlgorithm.value = undefined
+    question.simulation = undefined
+
     const numbersToSort = generateNumbers(100, 0, 100)
     question.algorithm = algorithms[getRandomIntBetween(0, algorithms.length - 1)].value
 
@@ -91,7 +110,7 @@ function initQuestion() {
     }
     sortWorker.postMessage({ algorithm: question.algorithm, numbersToSort: numbersToSort })
 }
-initQuestion()
+init()
 </script>
 
 <style scoped>
