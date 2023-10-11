@@ -31,6 +31,9 @@
             </template>
         </Dialog>
     </FColumn>
+    <div v-else>
+        Preparing question...
+    </div>
 </template>
 
 <script setup lang="ts">
