@@ -11,15 +11,18 @@
             </template>
         </SimulationView>
         <!--TODO: override default close-->
-        <Dialog v-model:visible="evaluation.showDialog" modal :header="`Evaluation: Trial number ${evaluation.trialCount}`">
+        <Dialog v-model:visible="evaluation.showDialog" modal header="Evaluation">
             <div v-if="answerIsCorrect" class="text-green-600">
                 Your answer is correct.
             </div>
             <div v-else class="text-red-600">
                 Your answer is wrong.
             </div>
+            <div>
+                Trial number: {{ evaluation.trialCount }}
+            </div>
             <div v-if="evaluation.showSolution">
-                {{ solutionAlgorithmLabel }}
+                Solution: {{ solutionAlgorithmLabel }}
             </div>
             <template #footer>
                 <Button v-if="!answerIsCorrect" @click="retry" label="Retry" aria-label="Retry"/>
