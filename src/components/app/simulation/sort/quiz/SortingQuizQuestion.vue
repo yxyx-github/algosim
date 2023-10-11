@@ -13,7 +13,10 @@
         <!--TODO: override default close-->
         <Dialog v-model:visible="evaluation.showDialog" modal header="Evaluation">
             {{ answerIsCorrect ? 'Your answer is correct.' : 'Your answer is wrong.' }}
+            {{ evaluation.showSolution ? 'solution' : '' }}<!--TODO: show solution-->
             <template #footer>
+                <Button v-if="!answerIsCorrect" @click="evaluation.showDialog = false" label="Retry" aria-label="Retry"/>
+                <Button v-if="!answerIsCorrect" :disabled="evaluation.showSolution" @click="evaluation.showSolution = true" label="Show solution" aria-label="Show solution"/>
                 <Button @click="init" label="New question" aria-label="New question"/>
             </template>
         </Dialog>
@@ -48,9 +51,11 @@ const predictedAlgorithm: Ref<SearchAlgorithm | undefined> = ref()
 
 const evaluation = reactive<{
     showDialog: boolean,
+    showSolution: boolean,
     trialCount: number,
 }>({
     showDialog: false,
+    showSolution: false,
     trialCount: 0,
 })
 
@@ -91,7 +96,9 @@ function evaluate() {
 }
 
 function init() {
+    // TODO: extract into separate methods, e.g.: initEvaluation, initQuestion
     evaluation.showDialog = false
+    evaluation.showSolution = false
     evaluation.trialCount = 0
     predictedAlgorithm.value = undefined
     question.simulation = undefined
