@@ -12,15 +12,16 @@ import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/a
 import type { Edge } from '@/main/algorithms/search/graph/edge'
 import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 
-interface VertexDijkstraValue extends VertexValue {
+interface VertexAStarValue extends VertexValue {
     completed?: boolean
     distance?: number
-    predecessor?: Edge<VertexDijkstraValue, EdgeValue>
+    heuristicDistance?: number
+    predecessor?: Edge<VertexAStarValue, EdgeValue>
 }
 
-export class Dijkstra implements SearchAlgorithmImplementation {
+export class AStar implements SearchAlgorithmImplementation {
 
-    run(graph: Graph<VertexDijkstraValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexDijkstraValue>, end: Vertex<VertexDijkstraValue>): SearchSimulation {
+    run(graph: Graph<VertexAStarValue, EdgeValue>, grid: GraphFormGrid, start: Vertex<VertexAStarValue>, end: Vertex<VertexAStarValue>): SearchSimulation {
         const pb = new ProtocolBuilder<SearchSimulationStep>()
         pb.setStepCloner((step: SearchSimulationStep) => cloneSearchSimulationStep(step))
 
@@ -28,35 +29,24 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         const endItemCoords = end.getValue().item.data().coords
 
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-        })
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
-        const queue: PriorityQueue<Vertex<VertexDijkstraValue>> = new PriorityQueue(graph.getVertices(),
-            (a: Vertex<VertexDijkstraValue>, b: Vertex<VertexDijkstraValue>) => ((a.getValue().distance ?? Infinity) < (b.getValue().distance ?? Infinity)))
+        const queue: PriorityQueue<Vertex<VertexAStarValue>> = new PriorityQueue(graph.getVertices(),
+            (a: Vertex<VertexAStarValue>, b: Vertex<VertexAStarValue>) => ((a.getValue().distance ?? Infinity) + (a.getValue().heuristicDistance ?? Infinity) < (b.getValue().distance ?? Infinity) + (b.getValue().heuristicDistance ?? Infinity)))
         start.getValue().distance = 0
+        start.getValue().heuristicDistance = 0
 
         highlightedGrid = this.createStep(graph.getVertices(), grid)
-        pb.step({
-            grid: highlightedGrid,
-            start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-            end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-        })
+        pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
         while (!queue.isEmpty()) {
-            const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
+            const current: Vertex<VertexAStarValue> = queue.poll() as Vertex<VertexAStarValue>
             if (current.getValue().distance === undefined) break
 
             current.getValue().completed = true
 
             highlightedGrid = this.createStep(graph.getVertices(), grid)
-            pb.step({
-                grid: highlightedGrid,
-                start: highlightedGrid[startItemCoords.y][startItemCoords.x],
-                end: highlightedGrid[endItemCoords.y][endItemCoords.x],
-            })
+            pb.step({ grid: highlightedGrid, start: highlightedGrid[startItemCoords.y][startItemCoords.x], end: highlightedGrid[endItemCoords.y][endItemCoords.x] })
 
             if (current === end) break
             this.checkEdges(graph, current, startItemCoords, endItemCoords, grid, pb)
@@ -66,7 +56,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         return pb.build()
     }
 
-    private checkEdges(graph: Graph<VertexDijkstraValue, EdgeValue>, current: Vertex<VertexDijkstraValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private checkEdges(graph: Graph<VertexAStarValue, EdgeValue>, current: Vertex<VertexAStarValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
         let highlightedGrid = this.createStep(graph.getVertices(), grid)
 
         graph.getEdges().filter(e => e.getFrom() === current).forEach(edge => {
@@ -80,6 +70,10 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             let visualiseStep: boolean = false
 
             const distance = edge.getWeight() + (current.getValue().distance ?? 0)
+            if (to.getValue().heuristicDistance === undefined) {
+                to.getValue().heuristicDistance = this.calculateHeuristicDistance(end, to)
+            }
+
             if ((to.getValue().distance ?? Infinity) > distance) {
                 to.getValue().distance = distance
                 to.getValue().predecessor = edge
@@ -87,16 +81,17 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             }
             highlightedGrid = this.createStep(graph.getVertices(), grid)
             if (visualiseStep) {
-                pb.step({
-                    grid: highlightedGrid,
-                    start: highlightedGrid[start.y][start.x],
-                    end: highlightedGrid[end.y][end.x],
-                })
+                pb.step({ grid: highlightedGrid, start: highlightedGrid[start.y][start.x], end: highlightedGrid[end.y][end.x] })
             }
         })
     }
 
-    private visualiseEdgeSteps(edge: Edge<VertexDijkstraValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private calculateHeuristicDistance(end: Coords, vertex: Vertex<VertexAStarValue>) {
+        const vertexCoords = vertex.getValue().item.data().coords
+        return Math.abs(vertexCoords.x - end.x) + Math.abs(vertexCoords.y - end.y)
+    }
+
+    private visualiseEdgeSteps(edge: Edge<VertexAStarValue, EdgeValue>, start: Coords, end: Coords, grid: GraphFormGrid, pb: ProtocolBuilder<SearchSimulationStep>) {
         let highlightedGrid = cloneGrid(grid)
         edge.getValue().items.forEach(item => {
             highlightedGrid = cloneGrid(highlightedGrid)
@@ -117,7 +112,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
     }
 
-    private createPathStep(grid: GraphFormGrid, end: Vertex<VertexDijkstraValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
+    private createPathStep(grid: GraphFormGrid, end: Vertex<VertexAStarValue>, startItemCoords: Coords, pb: ProtocolBuilder<SearchSimulationStep>) {
         const highlightedGrid: GraphFormGrid = cloneGrid(grid)
         if (!(end.getValue().completed ?? false)) {
             pb.step({
@@ -128,12 +123,12 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             return
         }
 
-        let current: Vertex<VertexDijkstraValue> = end;
+        let current: Vertex<VertexAStarValue> = end;
         this.highlightVertex(highlightedGrid, end)
 
         while (current.getValue().predecessor != undefined) {
-            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<VertexDijkstraValue, EdgeValue>)
-            current = current.getValue().predecessor?.getFrom() as Vertex<VertexDijkstraValue>
+            this.highlightEdge(highlightedGrid, current.getValue().predecessor as Edge<VertexAStarValue, EdgeValue>)
+            current = current.getValue().predecessor?.getFrom() as Vertex<VertexAStarValue>
             this.highlightVertex(highlightedGrid, current)
 
         }
@@ -144,7 +139,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         })
     }
 
-    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDijkstraValue>) {
+    private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexAStarValue>) {
         if ((vertex.getValue().distance === undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
@@ -155,11 +150,11 @@ export class Dijkstra implements SearchAlgorithmImplementation {
         grid[y][x] = new GraphFormItem({
             ...item.data(),
             highlight: { ...item.data().highlight, center: vertex.getValue().completed ?? false },
-            label: vertex.getValue().distance?.toString() ?? ""
+            label: "d: " + (vertex.getValue().distance?.toString() ?? "") + ", h: " + (vertex.getValue().heuristicDistance?.toString() ?? "")
         })
     }
 
-    private highlightEdge(grid: GraphFormGrid, edge: Edge<VertexDijkstraValue, EdgeValue>) {
+    private highlightEdge(grid: GraphFormGrid, edge: Edge<VertexAStarValue, EdgeValue>) {
         edge.getValue().items.forEach(item => {
             const x = item.data().coords.x
             const y = item.data().coords.y
@@ -178,39 +173,40 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
 
-    private createStep(vertices: Vertex<VertexDijkstraValue>[], grid: GraphFormGrid) {
+    private createStep(vertices: Vertex<VertexAStarValue>[], grid: GraphFormGrid) {
         const highlightedGrid = cloneGrid(grid)
         this.highlightVerticesInGrid(highlightedGrid, vertices)
         return highlightedGrid
     }
 
-    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexDijkstraValue>[]) {
+    private highlightVerticesInGrid(grid: GraphFormGrid, vertices: Vertex<VertexAStarValue>[]) {
         vertices.forEach(v => {
             this.highlightVertex(grid, v)
             if (v.getValue().predecessor != undefined) {
-                this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexDijkstraValue, EdgeValue>)
+                this.highlightEdge(grid, v.getValue().predecessor as Edge<VertexAStarValue, EdgeValue>)
             }
         })
     }
 
     description(): string[] {
         return [
-            `Dijkstra ist ein Suchalgorithmus, welcher versucht den kostengünstigsten Pfad zwischen einem Start und einem
-            Endknoten zu bestimmen. Dabei wird jedem Knoten eine Entfernung zum Startknoten zugeordnet. In dieser Implementation
-            handelt es sich dabei um die euklidische Entfernung, da diese optimiert werden soll. Zu Beginn werden
-            alle Knoten außer der Startknoten mit der Entfernung "unendlich" initialisiert. Der Startknoten hat selbstverständlich
-            die Entfernung "0" zu sich selbst. Nun wird in jedem Iterationsschritt immer der Knoten gewählt, welcher die kürzeste
-            Entfernung zum Startknoten aufweist und welcher noch nicht als permanent gekennzeichnet wurde. Dieser Knoten
-            kann nun als permanent gekennzeichnet werden, da der kürzeste Weg zu dem Knoten bereits gefunden wurde. Damit können nun alle seine
-            Nachbarn können betrachtet werden um zu schauen, ob der Weg über den jetzigen Knoten kürzer ist als der Bisherige. Wenn dies
-            der Fall ist, dann wird die Entfernung des benachbarten Knotens aktualisiert und der jetzige Knoten als Vorgänger
-            des Nachbarknotens eingetragen. Sobald der Endknoten als permanent gekennzeichnet wurde, wurde der kürzeste
-            Weg vom Start bis zum Ende gefunden. Diesen Pfad kann man über die rekursive Nachverfolgung der Vorgängerknoten
-            des Endknotens rekonstruiert werden.`,
+            `A* ist ein informierter Suchalgorithmus, welcher auf Dijkstra aufbaut. Die grundsätzliche Funktionsweise von
+            A* ähnelt der von Dijkstra und A* findet ebenso wie Dijkstra den kürzesten Weg zum Zielknoten.
+            Allerdings möchte man mit A* verhindern, dass Knoten durchsucht werden, welche sich
+            weiter vom Ziel entfernen. Deshalb wird für jeden Knoten ein weiterer Wert eingeführt. Bei diesem Wert handelt es
+            sich um eine Heuristik für die restliche Entfernung dieses Knotens zum Zielknoten. In der hier dargestellten
+            Implementation von A* handelt es sich bei dieser geschätzten Entfernung um das Quadrat der euklidischen Entfernung.
+            Es ist wichtig, dass die Heuristik die Entfernung einen Knotens niemals überschätzt, da sonst möglicherweise nicht
+            der optimale Pfad gefunden wird. Da in dieser Implementation der kürzeste Weg nach euklidischer Distanz gesucht wird,
+            ist die Luftlinie, beziehungsweise hier das Quadrat der Luftlinie, da wir keine Diagonalen Schritte erlauben, sinnvoll.
+            Die Auswahl des nächten Knotens wird nun nicht mehr nur auf der Grundlage der geringsten Entfernung getroffen.
+            Der als nächstes betrachtete Knoten ist immer derjenige, welcher die geringste Summe aus geschätzter Restentfernung
+            und Entfernung zum Startknoten aufweist.`,
             `
-            In der hier gewählten Darstellung wird die Entfernung zum Startknoten als Zahl dargestellt. Wenn ein Knoten als
-            permanent gekennzeichnet wurde, dann wird er rot hervorgehoben. Wenn die Entfernung eines Knotens "unendlich"
-            beträgt, dann wird die Entfernung in der Darstellung ausgeblendet.`
+            In der hier gewählten Darstellung wird die Entfernung zum Startknoten mit "d" und die heuristische Restentfernung
+            als "h" bezeichnet. Ähnlich wie bei der Darstellung vom Dijkstra-Algorithmus werden die Knoten, zu welchen der
+            kürzeste Weg bereits gefunden wurde, rot hervorgehoben. Die Enterung und Heuristik eines Knotens werden erst
+            eingeblendet, wenn der Knoten erreicht wurde, um die Übersichtlichkeit zu wahren.`
         ]
     }
 }

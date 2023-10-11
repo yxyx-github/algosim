@@ -33,7 +33,7 @@ const graphForms = computed(() => rawGraphFormInputs.map(rawGraphForm => importR
 
 function select(graphForm: GraphForm) {
     visible.value = false
-    emit('select', graphForm)
+    emit('select', graphForm.clone())
 }
 </script>
 

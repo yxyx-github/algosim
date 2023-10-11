@@ -6,6 +6,7 @@ import type { GraphFormItem } from '@/main/algorithms/search/graphForm/graphForm
 import type { AlgorithmImplementation } from '@/main/algorithms/types'
 
 export enum SearchAlgorithm {
+    A_STAR,
     BREADTH_FIRST_SEARCH,
     DEPTH_FIRST_SEARCH,
     DIJKSTRA,

@@ -89,6 +89,10 @@ watchEffect(() => emit('updateDescription', algorithmDescription.value))
 
 const algorithms = [
     {
+        label: 'A*',
+        value: SearchAlgorithm.A_STAR,
+    },
+    {
         label: 'Breadth-First search',
         value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
     },
@@ -99,7 +103,7 @@ const algorithms = [
     {
       label: 'Dijkstra',
       value: SearchAlgorithm.DIJKSTRA,
-    }
+    },
 ]
 
 function loadGraphForm(graphForm: GraphForm) {
