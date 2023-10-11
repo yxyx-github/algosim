@@ -119,11 +119,11 @@ reset()
 function submit() {
     (values.graphForm as GraphForm).validateStartEnd()
     if (values.algorithm === undefined) {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 })
         return
     }
     if ((values.graphForm as GraphForm).getStartItem() === null || (values.graphForm as GraphForm).getEndItem() === null) {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 })
         return
     }
 
@@ -136,7 +136,7 @@ function submit() {
         const searched = SearchFactory.create(values.algorithm).run(graph, (values.graphForm as GraphForm).toGrid(), startVertex, endVertex)
         emit('submit', searched)
     } else {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 })
     }
 }
 </script>
