@@ -3,13 +3,16 @@
         Below you can see a simulation of a sort algorithm. Please select the correct algorithm.
         <ButtonBar :direction="{ mb: 'col', md: 'row' }">
             <Dropdown v-model="predictedAlgorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select the algorithm you guess is correct"/>
-            <Button icon="pi pi-check" label="Check your answer" aria-label="Check your answer"/>
+            <Button @click="evaluate" icon="pi pi-check" label="Check your answer" aria-label="Check your answer"/>
         </ButtonBar>
         <SimulationView :simulation="question.simulation">
             <template #step="{ stepData }">
                 <SortVisualization :step="stepData" class="h-full" maxHeight="100vh - 20rem"/>
             </template>
         </SimulationView>
+        <Dialog v-model:visible="showEvalDialog" modal header="Evaluation">
+            EvaluationDialog
+        </Dialog>
     </FColumn>
 </template>
 
@@ -23,12 +26,11 @@ import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import { SortAlgorithm, SortSimulation, SortSimulationStep, SortWorkerResponse } from '@/main/algorithms/sort/types'
 import { generateNumbers, getRandomIntBetween } from '@/main/algorithms/sort'
-import { TrackableProgress } from '@/main/progressTracker/types'
-import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 import SortWorker from '@/main/algorithms/sort/sortWorker?worker'
 import { simulationFromStream } from '@/main/simulation/stream'
 import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
+import Dialog from 'primevue/dialog'
 
 const question = reactive<{
     algorithm: SearchAlgorithm | undefined,
@@ -39,6 +41,7 @@ const question = reactive<{
 })
 
 const predictedAlgorithm: Ref<SearchAlgorithm | undefined> = ref()
+const showEvalDialog = ref(false)
 
 // TODO: extract somewhere else
 const algorithms = [
@@ -68,6 +71,10 @@ const algorithms = [
         value: SortAlgorithm.SHELLSORT,
     }
 ]
+
+function evaluate() {
+    showEvalDialog.value = true
+}
 
 function initQuestion() {
     const numbersToSort = generateNumbers(100, 0, 100)
