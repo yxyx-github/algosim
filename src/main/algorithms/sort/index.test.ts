@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { generateNumbers, SortFactory } from '@/main/algorithms/sort/index'
+import { generateNumbers, getRandomIntBetween, SortFactory } from '@/main/algorithms/sort/index'
 import { SortAlgorithm } from '@/main/algorithms/sort/types'
 import { BubbleSort } from '@/main/algorithms/sort/bubbleSort'
 
@@ -22,5 +22,18 @@ describe('generateNumbers', () => {
                 .greaterThanOrEqual(min)
                 .lessThanOrEqual(max)
         )
+    })
+})
+
+describe('getRandomIntBetween', () => {
+    test('can get random int between', () => {
+        const min = 3
+        const max = 6
+        for (let i = 0; i < 10; i++) {
+            const number = getRandomIntBetween(min, max)
+            expect(number).to
+                .greaterThanOrEqual(min)
+                .lessThanOrEqual(max)
+        }
     })
 })

@@ -40,7 +40,6 @@ export function generateNumbers(count: number, min: number, max: number): number
     return numbers
 }
 
-// TODO: test
 export function getRandomIntBetween(min: number, max: number): number {
     min = Math.ceil(min)
     max = Math.floor(max)
