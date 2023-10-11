@@ -18,7 +18,9 @@
             <div v-else class="text-red-600">
                 Your answer is wrong.
             </div>
-            {{ evaluation.showSolution ? 'solution' : '' }}<!--TODO: show solution-->
+            <div v-if="evaluation.showSolution">
+                {{ solutionAlgorithmLabel }}
+            </div>
             <template #footer>
                 <Button v-if="!answerIsCorrect" @click="retry" label="Retry" aria-label="Retry"/>
                 <Button v-if="!answerIsCorrect" :disabled="evaluation.showSolution" @click="evaluation.showSolution = true" label="Show solution" aria-label="Show solution"/>
@@ -32,7 +34,6 @@
 import FColumn from '@/components/lib/layout/FColumn.vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import type { Ref } from 'vue'
-import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import { computed, reactive, ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
@@ -48,14 +49,14 @@ import { useToast } from 'primevue/usetoast'
 const toast = useToast()
 
 const question = reactive<{
-    algorithm: SearchAlgorithm | undefined,
+    algorithm: SortAlgorithm | undefined,
     simulation: SortSimulation | undefined,
 }>({
     algorithm: undefined,
     simulation: undefined,
 })
 
-const predictedAlgorithm: Ref<SearchAlgorithm | undefined> = ref()
+const predictedAlgorithm: Ref<SortAlgorithm | undefined> = ref()
 
 const evaluation = reactive<{
     showDialog: boolean,
@@ -68,6 +69,7 @@ const evaluation = reactive<{
 })
 
 const answerIsCorrect = computed(() => predictedAlgorithm.value === question.algorithm)
+const solutionAlgorithmLabel = computed(() => algorithms.filter(algorithm => algorithm.value === question.algorithm).map(algorithm => algorithm.label)[0] ?? '')
 
 // TODO: extract somewhere else
 const algorithms = [
