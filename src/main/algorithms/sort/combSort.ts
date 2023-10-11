@@ -59,7 +59,7 @@ export class CombSort implements SortAlgorithmImplementation {
         return [
             `Combsort ist ein In-Place Sortieralgorithmus, der auf Bubblesort basiert.
             Anders als bei diesem Algorithmus vergleicht und tauscht Combsort aber nicht nur benachbarte Elemente.
-            Stattdessen nutzt er Elemente mit einer bestimmten Entfernung zueinander, der sogenannten Gap.
+            Stattdessen vergleicht er Elemente mit einer bestimmten Entfernung zueinander, der sogenannten Gap.
             Nach jeder Iteration wird die Gap durch 1,3 dividiert.
             Wenn die Gap 1 beträgt, werden wie beim Bubblesort-Algorithmus direkt benachbarte Elemente betrachtet.
             Als sortiert gilt die Liste, sobald ein Durchlauf mit Gap = 1 keine Elemente vertauscht hat.

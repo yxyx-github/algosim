@@ -90,7 +90,7 @@ export class QuickSort implements SortAlgorithmImplementation {
             `Quicksort ist ein rekursiver Sortieralgorithmus, der das Divide-and-Conquer-Prinzip nutzt.
             Dabei wird die zu sortierende Liste mithilfe eines Pivotelements in Teillisten unterteilt.
             Als Pivotelement wird klassischerweise das letzte Element der Liste gewählt.
-            Alternative Pivotelemente wie beispielsweise der Median der Listenelemente, sind ebenfalls möglich.
+            Alternative Pivotelemente wie beispielsweise der Median einer Teilliste der Listenelemente, sind ebenfalls möglich.
             Anschließend müssen alle Elemente, welche kleiner sind als der Pivot, links vom Pivot stehen.
             Größere Elemente müssen rechts stehen.
             Elemente, die identisch mit dem Pivot sind, können auf einer beliebigen Seite stehen.

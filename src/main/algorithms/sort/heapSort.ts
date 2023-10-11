@@ -106,17 +106,17 @@ export class HeapSort implements SortAlgorithmImplementation {
         return [
             `Heapsort ist ein Sortierverfahren, welches auf dem binären Heap als zentrale Datenstruktur aufbaut.
             Im ersten Schritt wird die Liste in einen binären Max-Heap (siehe Absatz 2) umgewandelt.
-            Danach wird die Wurzel des Heaps als größtes Element entfernt und an das Ende des unsortierten Teils der Liste bewegt.
+            Danach wird die Wurzel des Heaps als größtes Element entfernt und an das Ende des unsortierten Teils der Liste verschoben.
             Da der Heap nun kein Max-Heap mehr ist, muss er heapified (siehe Absatz 3) werden.
-            Dieser Schritt wird wiederholt, bis der Heap keine Elemente mehr enthält, dadurch ist die Liste sortiert.
+            Dieser Schritt wird wiederholt, bis der Heap keine Elemente mehr enthält, wodurch die Liste sortiert ist.
             In dieser Hinsicht lässt sich eine Parallele zu Selectionsort erkennen.
             Heapsort hat eine Laufzeitkomplexität von O(n*log(n)) und benötigt keinen zusätzlichen Speicherplatz.`,
 
             `Ein binärer Heap ist ein Binärbaum, bei dem alle Ebenen bis auf die unterste vollständig ausgefüllt sind.
             Man unterscheidet zwischen Max- und Min-Heaps.
-            Der Max-Heap hat zusätzlich die Bedingung, dass alle Kinder eines Knotens kleiner oder gleich dem Knoten selbst sind.
+            Bei einem Max-Heap gilt zusätzlich die Bedingung, dass alle Kinder eines Knotens kleiner oder gleich dem Knoten selbst sind.
             Die Wurzel ist hier also das größte Element des Baumes.
-            Der Min-Heap hat eine analoge Bedingung.
+            Für einen Min-Heap gilt analog, dass alle Kinder größer oder gleich dem Knoten sein müssen.
             Ein Heap kann als Liste dargestellt werden, dabei werden die Ebenen des Heaps hintereinander von links nach rechts gelesen dargestellt.
             Das bedeutet, dass die Wurzel eines Heaps immer den Index 0 trägt.`,
 
