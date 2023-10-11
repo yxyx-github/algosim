@@ -3,7 +3,7 @@
         <FContainer :direction="{ mb: 'col', md: 'row' }" :alignItems="{ mb: 'stretch', md: 'start' }">
             <FColumn>
                 <Input label="Algorithm:">
-                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
+                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="searchAlgorithmData" placeholder="Select an algorithm"/>
                 </Input>
                 <Input label="Start vertex:">
                     <ToggleButton v-model="enableSelectStart" v-tooltip.bottom="enableSelectStart ? 'Click any labyrinth item to select' : ''" onLabel="Select" :offLabel="`Selected: ${startItemLabel}`" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
@@ -46,6 +46,7 @@ import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { useToast } from 'primevue/usetoast'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import PredefinedGraphs from '@/components/app/simulation/search/predefinedGraphs/PredefinedGraphs.vue'
+import { searchAlgorithmData } from '@/main/algorithms/search/algorithms'
 
 const toast = useToast()
 
@@ -86,25 +87,6 @@ function generateItemLabel(item: GraphFormItem) {
 
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SearchFactory.create(values.algorithm).description()))
 watchEffect(() => emit('updateDescription', algorithmDescription.value))
-
-const algorithms = [
-    {
-        label: 'A*',
-        value: SearchAlgorithm.A_STAR,
-    },
-    {
-        label: 'Breadth-First search',
-        value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
-    },
-    {
-        label: 'Depth-First search',
-        value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
-    },
-    {
-      label: 'Dijkstra',
-      value: SearchAlgorithm.DIJKSTRA,
-    },
-]
 
 function loadGraphForm(graphForm: GraphForm) {
     values.graphForm = graphForm

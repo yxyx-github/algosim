@@ -1,7 +1,7 @@
 <template>
     <Form @submit.prevent="submit">
         <Input label="Algorithm:">
-            <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
+            <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="sortAlgorithmData" placeholder="Select an algorithm"/>
         </Input>
         <template v-if="values.algorithm !== undefined">
             <Input label="Items to sort:">
@@ -56,6 +56,7 @@ import type { ProgressProvider, ProgressTrackerConfig, TrackableProgress } from 
 import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 import { simulationFromStream } from '@/main/simulation/stream'
+import { sortAlgorithmData } from '@/main/algorithms/sort'
 
 const emit = defineEmits<{
     submit: [simulation: SortSimulation],
@@ -81,34 +82,6 @@ const values = reactive<{
 
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SortFactory.create(values.algorithm).description()))
 watchEffect(() => emit('updateDescription', algorithmDescription.value))
-
-const algorithms = [
-    {
-        label: 'Bubblesort',
-        value: SortAlgorithm.BUBBLE,
-    }, {
-        label: 'Combsort',
-        value: SortAlgorithm.COMBSORT,
-    }, {
-        label: 'Heapsort',
-        value: SortAlgorithm.HEAPSORT,
-    }, {
-        label: 'Insertionsort',
-        value: SortAlgorithm.INSERTION,
-    }, {
-        label: 'Mergesort',
-        value: SortAlgorithm.MERGESORT,
-    }, {
-        label: 'Quicksort',
-        value: SortAlgorithm.QUICKSORT,
-    }, {
-        label: 'Selectionsort',
-        value: SortAlgorithm.SELECTION,
-    }, {
-        label: 'Shellsort',
-        value: SortAlgorithm.SHELLSORT,
-    }
-]
 
 const sortInputModes = [
     {

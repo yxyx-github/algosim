@@ -22,6 +22,25 @@ export class SearchFactory {
     }
 }
 
+export const searchAlgorithmData = [
+    {
+        label: 'A*',
+        value: SearchAlgorithm.A_STAR,
+    },
+    {
+        label: 'Breadth-First search',
+        value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
+    },
+    {
+        label: 'Depth-First search',
+        value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
+    },
+    {
+        label: 'Dijkstra',
+        value: SearchAlgorithm.DIJKSTRA,
+    },
+]
+
 export function cloneGrid(grid: GraphFormGrid): GraphFormGrid {
     return grid.map(row =>
         row.map(item => item.clone())

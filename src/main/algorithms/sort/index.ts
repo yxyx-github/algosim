@@ -32,6 +32,34 @@ export class SortFactory {
     }
 }
 
+export const sortAlgorithmData = [
+    {
+        label: 'Bubblesort',
+        value: SortAlgorithm.BUBBLE,
+    }, {
+        label: 'Combsort',
+        value: SortAlgorithm.COMBSORT,
+    }, {
+        label: 'Heapsort',
+        value: SortAlgorithm.HEAPSORT,
+    }, {
+        label: 'Insertionsort',
+        value: SortAlgorithm.INSERTION,
+    }, {
+        label: 'Mergesort',
+        value: SortAlgorithm.MERGESORT,
+    }, {
+        label: 'Quicksort',
+        value: SortAlgorithm.QUICKSORT,
+    }, {
+        label: 'Selectionsort',
+        value: SortAlgorithm.SELECTION,
+    }, {
+        label: 'Shellsort',
+        value: SortAlgorithm.SHELLSORT,
+    }
+]
+
 export function generateNumbers(count: number, min: number, max: number): number[] {
     const numbers: number[] = []
     for (let i = 0; i < count; i++) {
