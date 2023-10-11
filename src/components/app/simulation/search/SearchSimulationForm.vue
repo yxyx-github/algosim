@@ -3,7 +3,7 @@
         <FContainer :direction="{ mb: 'col', md: 'row' }" :alignItems="{ mb: 'stretch', md: 'start' }">
             <FColumn>
                 <Input label="Algorithm:">
-                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
+                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
                 </Input>
                 <Input label="Start vertex:">
                     <ToggleButton v-model="enableSelectStart" v-tooltip.bottom="enableSelectStart ? 'Click any labyrinth item to select' : ''" onLabel="Select" :offLabel="`Selected: ${startItemLabel}`" onIcon="pi pi-plus" offIcon="pi pi-plus"/>

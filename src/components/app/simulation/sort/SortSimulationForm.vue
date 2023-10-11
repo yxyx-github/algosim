@@ -1,7 +1,7 @@
 <template>
     <Form @submit.prevent="submit">
         <Input label="Algorithm:">
-            <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
+            <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm"/>
         </Input>
         <template v-if="values.algorithm !== undefined">
             <Input label="Items to sort:">
