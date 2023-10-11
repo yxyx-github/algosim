@@ -10,8 +10,7 @@
                 <SortVisualization :step="stepData" class="h-full" maxHeight="100vh - 20rem"/>
             </template>
         </SimulationView>
-        <!--TODO: override default close-->
-        <Dialog v-model:visible="evaluation.showDialog" modal header="Evaluation">
+        <Dialog v-model:visible="evaluation.showDialog" modal header="Evaluation" :closable="false">
             <div v-if="answerIsCorrect" class="text-green-600">
                 Your answer is correct.
             </div>
