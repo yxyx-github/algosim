@@ -92,14 +92,15 @@ function retry() {
     evaluation.showDialog = false
 }
 
-function init() {
-    // TODO: extract into separate methods, e.g.: initEvaluation, initQuestion
+function reset() {
     evaluation.showDialog = false
     evaluation.showSolution = false
     evaluation.trialCount = 0
     predictedAlgorithm.value = undefined
     question.simulation = undefined
+}
 
+function generateQuestion() {
     const numbersToSort = generateNumbers(100, 0, 100)
     question.algorithm = sortAlgorithmData[getRandomIntBetween(0, sortAlgorithmData.length - 1)].value
 
@@ -113,6 +114,11 @@ function init() {
         }
     }
     sortWorker.postMessage({ algorithm: question.algorithm, numbersToSort: numbersToSort })
+}
+
+function init() {
+    reset()
+    generateQuestion()
 }
 init()
 </script>
