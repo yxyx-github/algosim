@@ -5,6 +5,7 @@ import { DepthFirstSearch } from '@/main/algorithms/search/algorithms/depthFirst
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'
 import { Dijkstra } from '@/main/algorithms/search/algorithms/dijkstra'
 import { AStar } from '@/main/algorithms/search/algorithms/astar'
+import type { AlgorithmData } from '@/main/algorithms/types'
 
 export class SearchFactory {
     static create(algorithm: SearchAlgorithm) {
@@ -22,7 +23,7 @@ export class SearchFactory {
     }
 }
 
-export const searchAlgorithmData = [
+export const searchAlgorithmData: AlgorithmData<SearchAlgorithm>[] = [
     {
         label: 'A*',
         value: SearchAlgorithm.A_STAR,
