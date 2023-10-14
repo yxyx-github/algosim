@@ -7,6 +7,7 @@ import { InsertionSort } from '@/main/algorithms/sort/insertionSort'
 import { HeapSort } from '@/main/algorithms/sort/heapSort'
 import { CombSort } from '@/main/algorithms/sort/combSort'
 import { ShellSort } from '@/main/algorithms/sort/shellSort'
+import type { AlgorithmData } from '@/main/algorithms/types'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
@@ -32,7 +33,7 @@ export class SortFactory {
     }
 }
 
-export const sortAlgorithmData = [
+export const sortAlgorithmData: AlgorithmData<SortAlgorithm>[] = [
     {
         label: 'Bubblesort',
         value: SortAlgorithm.BUBBLE,
