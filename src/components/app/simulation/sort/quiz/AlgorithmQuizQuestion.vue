@@ -38,8 +38,6 @@ import type { Ref } from 'vue'
 import { computed, reactive, ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
-import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
-import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import Dialog from 'primevue/dialog'
 import { useToast } from 'primevue/usetoast'
 import { sortAlgorithmData } from '@/main/algorithms/sort'
@@ -49,7 +47,7 @@ import type { AlgorithmData } from '@/main/algorithms/types'
 const toast = useToast()
 
 const props = defineProps<{
-    generateQuestion: (completed: (algorithm: A, simulation: Simulation<S>) => void) => void,
+    generateQuestion: () => Promise<{ algorithm: A, simulation: Simulation<S> }>,
     algorithms: AlgorithmData<A>[],
 }>()
 
@@ -100,7 +98,7 @@ function reset() {
 
 function init() {
     reset()
-    props.generateQuestion((algorithm: A, simulation: Simulation<S>) => {
+    props.generateQuestion().then(({ algorithm, simulation }) => {
         // @ts-ignore
         question.algorithm = algorithm
         // @ts-ignore

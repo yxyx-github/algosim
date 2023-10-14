@@ -20,20 +20,22 @@ import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
 
 
-function generateQuestion(completed: (algorithm: SortAlgorithm, simulation: SortSimulation) => void) {
-    const numbersToSort = generateNumbers(100, 0, 100)
-    const algorithm = sortAlgorithmData[getRandomIntBetween(0, sortAlgorithmData.length - 1)].value
+function generateQuestion(): Promise<{ algorithm: SortAlgorithm, simulation: SortSimulation }> {
+    return new Promise(resolve => {
+        const numbersToSort = generateNumbers(100, 0, 100)
+        const algorithm = sortAlgorithmData[getRandomIntBetween(0, sortAlgorithmData.length - 1)].value
 
-    const sortWorker = new SortWorker()
-    sortWorker.onmessage = (e: MessageEvent<SortWorkerResponse>) => {
-        if (e.data.name === 'sorted') {
-            simulationFromStream<SortSimulation, SortSimulationStep>(e.data.value).then((simulation: SortSimulation) => {
-                completed(algorithm, simulation)
-                sortWorker.terminate()
-            })
+        const sortWorker = new SortWorker()
+        sortWorker.onmessage = (e: MessageEvent<SortWorkerResponse>) => {
+            if (e.data.name === 'sorted') {
+                simulationFromStream<SortSimulation, SortSimulationStep>(e.data.value).then((simulation: SortSimulation) => {
+                    resolve({ algorithm, simulation })
+                    sortWorker.terminate()
+                })
+            }
         }
-    }
-    sortWorker.postMessage({ algorithm: algorithm, numbersToSort: numbersToSort })
+        sortWorker.postMessage({ algorithm: algorithm, numbersToSort: numbersToSort })
+    })
 }
 </script>
 
