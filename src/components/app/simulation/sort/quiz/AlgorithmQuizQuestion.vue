@@ -1,8 +1,8 @@
 <template>
     <FColumn v-if="![question.algorithm, question.simulation].includes(undefined)">
-        Below you can see a simulation of a sort algorithm. Please select the correct algorithm.
+        {{ props.label }}
         <ButtonBar :direction="{ mb: 'col', md: 'row' }">
-            <Dropdown v-model="predictedAlgorithm" optionLabel="label" optionValue="value" :options="sortAlgorithmData" placeholder="Select the algorithm you guess is correct"/>
+            <Dropdown v-model="predictedAlgorithm" optionLabel="label" optionValue="value" :options="props.algorithms" placeholder="Select the algorithm you guess is correct"/>
             <Button @click="evaluate" icon="pi pi-check" label="Check your answer" aria-label="Check your answer"/>
         </ButtonBar>
         <slot :simulation="question.simulation as Simulation<S>"/>
@@ -49,6 +49,7 @@ const toast = useToast()
 const props = defineProps<{
     generateQuestion: () => Promise<{ algorithm: A, simulation: Simulation<S> }>,
     algorithms: AlgorithmData<A>[],
+    label: string,
 }>()
 
 const question = reactive<{
