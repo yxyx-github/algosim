@@ -30,6 +30,9 @@
             </ButtonBar>
             <FProgressBar v-if="progress.sort !== null" :value="progress.sort.currentInterval" :label="`Sort: ${progress.sort.current}/${progress.sort.overall}`"/>
             <FProgressBar v-if="progress.transfer !== null" :value="progress.transfer.currentInterval" :label="`Transfer: ${progress.transfer.current}/${progress.transfer.overall}`"/>
+            <div>
+                Or try the <Link :to="{ name: 'sort.quiz' }">Quiz</Link>.
+            </div>
         </template>
     </Form>
 </template>
@@ -57,6 +60,7 @@ import FProgressBar from '@/components/lib/controls/FProgressBar.vue'
 import { ProgressTracker } from '@/main/progressTracker/progressTracker'
 import { simulationFromStream } from '@/main/simulation/stream'
 import { sortAlgorithmData } from '@/main/algorithms/sort'
+import Link from '@/components/lib/controls/Link.vue'
 
 const emit = defineEmits<{
     submit: [simulation: SortSimulation],
