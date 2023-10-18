@@ -1,7 +1,7 @@
 <template>
     <Form @submit.prevent="submit">
         <FContainer :direction="{ mb: 'col', md: 'row' }" :alignItems="{ mb: 'stretch', md: 'start' }">
-            <FColumn>
+            <FColumn :gap="2">
                 <Input label="Algorithm:">
                     <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="searchAlgorithmData" placeholder="Select an algorithm"/>
                 </Input>
@@ -15,6 +15,9 @@
                     <Button label="Search" @click="submit"/>
                     <Button label="Use predefined graph" severity="secondary" @click="values.selectPredefinedGraph = true"/>
                 </ButtonBar>
+                <div>
+                    Or try the <Link :to="{ name: 'search.quiz' }">Quiz</Link>.
+                </div>
             </FColumn>
             <GraphFormInput :graphForm="values.graphForm as any" v-model:enableSelect="values.enableSelect"/>
         </FContainer>
@@ -47,6 +50,7 @@ import { useToast } from 'primevue/usetoast'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import PredefinedGraphs from '@/components/app/simulation/search/predefinedGraphs/PredefinedGraphs.vue'
 import { searchAlgorithmData } from '@/main/algorithms/search/algorithms'
+import Link from '@/components/lib/controls/Link.vue'
 
 const toast = useToast()
 
