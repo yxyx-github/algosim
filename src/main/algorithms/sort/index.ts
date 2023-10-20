@@ -72,5 +72,5 @@ export function generateNumbers(count: number, min: number, max: number): number
 export function getRandomIntBetween(min: number, max: number): number {
     min = Math.ceil(min)
     max = Math.floor(max)
-    return Math.ceil(Math.random() * (max - min) + min)
+    return Math.floor(Math.random() * (max + 1 - min)) + min
 }
