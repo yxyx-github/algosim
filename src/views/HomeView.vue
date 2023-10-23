@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="bg-primary rounded-[3.125rem] flex flex-row justify-center">
-            <img src="../assets/Algosim.png" alt="Algosim Logo" class="max-h-[calc(100vh-6.5rem)]">
+            <img src="../assets/algosim-logo-with-label.png" alt="Algosim Logo" class="max-h-[calc(100vh-6.5rem)]">
         </div>
         <ContentSection>
             <h1>Algosim</h1>
