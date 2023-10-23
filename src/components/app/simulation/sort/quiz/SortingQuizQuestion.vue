@@ -1,5 +1,10 @@
 <template>
-    <AlgorithmQuizQuestion :generateQuestion="generateQuestion" :algorithms="sortAlgorithmData" v-slot="{ simulation }">
+    <AlgorithmQuizQuestion
+        :generateQuestion="generateQuestion"
+        label="Below you can see a simulation of a sort algorithm. Please select the correct algorithm."
+        :algorithms="sortAlgorithmData"
+        v-slot="{ simulation }"
+    >
         <SimulationView :simulation="simulation">
             <template #step="{ stepData }">
                 <SortVisualization :step="stepData" class="h-full" maxHeight="100vh - 20rem"/>
@@ -18,7 +23,6 @@ import AlgorithmQuizQuestion from '@/components/app/simulation/sort/quiz/Algorit
 import { SortAlgorithm } from '@/main/algorithms/sort/types'
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
-
 
 function generateQuestion(): Promise<{ algorithm: SortAlgorithm, simulation: SortSimulation }> {
     return new Promise(resolve => {

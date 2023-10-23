@@ -13,8 +13,6 @@ import * as raw_5x5_2 from './data/5x5_2.json'
 import * as raw_11x9_0 from './data/11x9_0.json'
 
 export const rawGraphFormInputs: RawGraphForm[] = [
-    raw_3x1_0,
-    raw_5x1_0,
     raw_3x4_0,
     raw_5x5_0,
     raw_5x6_0,
@@ -23,6 +21,10 @@ export const rawGraphFormInputs: RawGraphForm[] = [
     raw_10x10_0,
     raw_6x6_0,
     raw_5x5_1,
-    raw_5x5_2,
     raw_11x9_0,
+    ...(import.meta.env.VITE_INCLUDE_DEBUG_PREDEFINED_GRAPH_SELECTION === 'true' ? [
+        raw_3x1_0,
+        raw_5x1_0,
+        raw_5x5_2,
+    ] : []),
 ]
