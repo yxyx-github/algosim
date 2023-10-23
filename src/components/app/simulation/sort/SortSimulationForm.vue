@@ -8,7 +8,11 @@
                 <SelectButton v-model="values.mode" optionLabel="label" optionValue="value" :options="sortInputModes" :pt="{ root: () => ({ class: 'flex flex-row' }), button: () => ({ class: 'flex-grow' }) }"/>
             </Input>
             <template v-if="values.mode === SortInputMode.GENERATE">
-                <Input label="Number of items:">
+                <Input>
+                    <template #label>
+                        Number of items:
+                        <p v-if="values.count > 300" class="text-red-600">(Too large values can cause crashes!)</p>
+                    </template>
                     <InputNumber inputClass="w-20" v-model="values.count" showButtons buttonLayout="horizontal" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" :min="0" :max="1000" :step="10"/>
                 </Input>
                 <Input label="Minimum value:">
