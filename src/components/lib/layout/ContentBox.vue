@@ -1,5 +1,5 @@
 <template>
-    <component :is="is" class="p-2 bg-bg">
+    <component :is="is" class="p-6 bg-bg">
         <slot/>
     </component>
 </template>
