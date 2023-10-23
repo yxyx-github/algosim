@@ -10,9 +10,9 @@ import { ProtocolBuilder } from '@/main/simulation/protocolBuilder'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import { cloneGrid, cloneSearchSimulationStep } from '@/main/algorithms/search/algorithms/index'
 import type { Edge } from '@/main/algorithms/search/graph/edge'
-import { DijkstraQueue } from '@/main/dataStructures/DijkstraQueue'
+import { PriorityQueue } from '@/main/dataStructures/PriorityQueue'
 
-export interface VertexDijkstraValue extends VertexValue {
+interface VertexDijkstraValue extends VertexValue {
     completed?: boolean
     distance?: number
     predecessor?: Edge<VertexDijkstraValue, EdgeValue>
@@ -34,7 +34,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
             end: highlightedGrid[endItemCoords.y][endItemCoords.x],
         })
 
-        const queue: DijkstraQueue = new DijkstraQueue(graph.getVertices())
+        const queue: PriorityQueue<Vertex<VertexDijkstraValue>> = new PriorityQueue(graph.getVertices(),
+            (a: Vertex<VertexDijkstraValue>, b: Vertex<VertexDijkstraValue>) => ((a.getValue().distance ?? Infinity) < (b.getValue().distance ?? Infinity)))
         start.getValue().distance = 0
 
         highlightedGrid = this.createStep(graph.getVertices(), grid)
@@ -46,6 +47,8 @@ export class Dijkstra implements SearchAlgorithmImplementation {
 
         while (!queue.isEmpty()) {
             const current: Vertex<VertexDijkstraValue> = queue.poll() as Vertex<VertexDijkstraValue>
+            if (current.getValue().distance === undefined) break
+
             current.getValue().completed = true
 
             highlightedGrid = this.createStep(graph.getVertices(), grid)
@@ -142,7 +145,7 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
     private highlightVertex(grid: GraphFormGrid, vertex: Vertex<VertexDijkstraValue>) {
-        if ((vertex.getValue().distance == undefined) && !(vertex.getValue().completed ?? false)) {
+        if ((vertex.getValue().distance === undefined) && !(vertex.getValue().completed ?? false)) {
             return
         }
         const x = vertex.getValue().item.data().coords.x
@@ -191,8 +194,23 @@ export class Dijkstra implements SearchAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-            Dijkstra description
-        `]
+        return [
+            `Dijkstra ist ein Suchalgorithmus, welcher versucht den kostengünstigsten Pfad zwischen einem Start und einem
+            Endknoten zu bestimmen. Dabei wird jedem Knoten eine Entfernung zum Startknoten zugeordnet. In dieser Implementation
+            handelt es sich dabei um die euklidische Entfernung, da diese optimiert werden soll. Zu Beginn werden
+            alle Knoten außer der Startknoten mit der Entfernung "unendlich" initialisiert. Der Startknoten hat selbstverständlich
+            die Entfernung "0" zu sich selbst. Nun wird in jedem Iterationsschritt immer der Knoten gewählt, welcher die kürzeste
+            Entfernung zum Startknoten aufweist und welcher noch nicht als permanent gekennzeichnet wurde. Dieser Knoten
+            kann nun als permanent gekennzeichnet werden, da der kürzeste Weg zu dem Knoten bereits gefunden wurde. Damit können nun alle seine
+            Nachbarn können betrachtet werden um zu schauen, ob der Weg über den jetzigen Knoten kürzer ist als der Bisherige. Wenn dies
+            der Fall ist, dann wird die Entfernung des benachbarten Knotens aktualisiert und der jetzige Knoten als Vorgänger
+            des Nachbarknotens eingetragen. Sobald der Endknoten als permanent gekennzeichnet wurde, wurde der kürzeste
+            Weg vom Start bis zum Ende gefunden. Diesen Pfad kann man über die rekursive Nachverfolgung der Vorgängerknoten
+            des Endknotens rekonstruiert werden.`,
+            `
+            In der hier gewählten Darstellung wird die Entfernung zum Startknoten als Zahl dargestellt. Wenn ein Knoten als
+            permanent gekennzeichnet wurde, dann wird er rot hervorgehoben. Wenn die Entfernung eines Knotens "unendlich"
+            beträgt, dann wird die Entfernung in der Darstellung ausgeblendet.`
+        ]
     }
 }

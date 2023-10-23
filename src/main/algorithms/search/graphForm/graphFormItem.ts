@@ -10,6 +10,10 @@ export class GraphFormItem {
         this.updateType()
     }
 
+    clone() {
+        return new GraphFormItem(JSON.parse(JSON.stringify(this.data())))
+    }
+
     static createBlank(x: number, y: number): GraphFormItem {
         return new GraphFormItem({
             type: GraphFormItemType.VERTEX,

@@ -37,7 +37,7 @@ export class ShellSort implements SortAlgorithmImplementation {
     }
 
     private insertCurrentElement(numbers: number[], currentElement: number, stepWidth: number, pB: ProtocolBuilder<SortSimulationStep>, progressTracker?: TrackableProgress) {
-        if (stepWidth == 1){
+        if (stepWidth === 1){
             progressTracker?.trackNext()
         }
         for (let pointer = currentElement - stepWidth; pointer >= 0; pointer -= stepWidth) {
@@ -66,21 +66,23 @@ export class ShellSort implements SortAlgorithmImplementation {
     }
 
     description(): string[] {
-        return [`
-        Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus. Die Grundidee ist, die unsortierte Liste in
-        mehrere Teillisten zu unterteilen und diese dann mit Insertionsort zu sortieren. Es wird ein gewisser Abstand
-        gewählt, der zwischen den Elementen bestehen muss und somit die Teilliste erzeugt. Dabei wird beim ersten Element
-        der Liste angefangen und jedes weitere Element der Teilliste ergibt sich durch das Aufsummieren des Abstandes,
-        solange dieser Wert noch innerhalb der Liste liegt. Ist die Teilliste sortiert, wird das zweite Element der Liste
-        genommen und das Verfahren wiederholt. Dies wird so oft wiederholt, wie der Abstand groß ist, damit jedes Element
-        einmal mit dem Abstand sortiert wurde. Danach wird der Abstand verringert und das Verfahren wiederholt. Dies geschieht
-        so lange, bis der Abstand 1 beträgt. Es gibt viele Möglichkeiten, die Abstände zu bestimmen. In dem hier gezeigten
-        Verfahren wird am Anfang die 1 genommen und für die weiteren Abstände die Formel 'Abstand = 4^(i + 1) + 3 * 2^i + 1'
-        verwendet, wobei i im ersten Schritt 0 ist und bei jedem Schritt um 1 erhöht wird. So kommt die Folge 1, 8, 23, 77, 281, ...
-        zustande, die dann rückwärts durchgegangen wird. Diesem Vorgehen konnte eine Laufzeitkomplexität von O(n^(4/3))
-        nachgewiesen werden. Die mathematisch beste Distanzfolge für Shellsort konnte bisher nicht gefunden werden, man
-        geht jedoch nicht davon aus, dass eine Laufzeitkomplexität von O(n * log(n)) erreicht werden kann. Die
-        Speicherkomplexität liegt bei O(1), da das Verfahren in-place sortiert.`
+        return [
+            `Shellsort ist ein auf Insertionsort basierender Sortieralgorithmus.
+            Die Grundidee ist es, eine unsortierte Liste in mehrere Teillisten zu unterteilen und diese mit Insertionsort zu sortieren.
+            Die Elemente der einzelnen Teillisten liegen jedoch nicht gruppiert hintereinander, sondern sind gleichmäßig in einem gewissen Abstand über die Liste verteilt.
+            Dieser Abstand ist gleich der Anzahl an Teillisten.
+            Die erste Teilliste mit einem Abstand von 4 beinhaltet beispielsweise die Indizes 0, 0+4=4, 0+4+4=8, 0+4+4+4=12, ... bis zum Ende der Liste.
+            Analog dazu beginnen die Teillisten 2, 3 und 4 bei den Indizes 1, 2 und 3.
+            Zu Beginn des Algorithmus wird ein möglichst hoher Abstand gewählt.
+            Wurde jede der Teillisten sortiert, wird der Abstand verringert und das Verfahren wiederholt.
+            Dies geschieht so lange, bis der Abstand 1 beträgt.
+            Um die Abstände zu bestimmen, wird in dem hier implementierten Verfahren die Formel 'Abstand = 4^(i + 1) + 3 * 2^i + 1' verwendet.
+            Die Variable i ist im ersten Schritt 0 und wird bei jedem Schritt um 1 erhöht, wodurch sich die Folge 8, 23, 77, 281, ... ergibt.
+            Am Anfang der Folge wird die 1 eingefügt (1, 8, 23, ...).
+            Die Abstände erhält man, indem die Folge rückwärts durchlaufen wird.
+            Diesem Vorgehen konnte eine Laufzeitkomplexität von O(n^(4/3)) nachgewiesen werden.
+            Die mathematisch beste Distanzfolge für Shellsort konnte bisher nicht gefunden werden, man geht jedoch nicht davon aus, dass eine Laufzeitkomplexität von O(n * log(n)) erreicht werden kann.
+            Die Speicherkomplexität liegt bei O(1), da das Verfahren In-Place sortiert.`
         ]
     }
 }

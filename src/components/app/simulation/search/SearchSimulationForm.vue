@@ -1,9 +1,9 @@
 <template>
     <Form @submit.prevent="submit">
         <FContainer :direction="{ mb: 'col', md: 'row' }" :alignItems="{ mb: 'stretch', md: 'start' }">
-            <FColumn>
+            <FColumn :gap="2">
                 <Input label="Algorithm:">
-                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="algorithms" placeholder="Select an algorithm" size="small"/>
+                    <Dropdown v-model="values.algorithm" optionLabel="label" optionValue="value" :options="searchAlgorithmData" placeholder="Select an algorithm"/>
                 </Input>
                 <Input label="Start vertex:">
                     <ToggleButton v-model="enableSelectStart" v-tooltip.bottom="enableSelectStart ? 'Click any labyrinth item to select' : ''" onLabel="Select" :offLabel="`Selected: ${startItemLabel}`" onIcon="pi pi-plus" offIcon="pi pi-plus"/>
@@ -15,6 +15,9 @@
                     <Button label="Search" @click="submit"/>
                     <Button label="Use predefined graph" severity="secondary" @click="values.selectPredefinedGraph = true"/>
                 </ButtonBar>
+                <div>
+                    Or try the <Link :to="{ name: 'search.quiz' }">Quiz</Link>.
+                </div>
             </FColumn>
             <GraphFormInput :graphForm="values.graphForm as any" v-model:enableSelect="values.enableSelect"/>
         </FContainer>
@@ -46,6 +49,8 @@ import { Vertex } from '@/main/algorithms/search/graph/vertex'
 import { useToast } from 'primevue/usetoast'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import PredefinedGraphs from '@/components/app/simulation/search/predefinedGraphs/PredefinedGraphs.vue'
+import { searchAlgorithmData } from '@/main/algorithms/search/algorithms'
+import Link from '@/components/lib/controls/Link.vue'
 
 const toast = useToast()
 
@@ -87,21 +92,6 @@ function generateItemLabel(item: GraphFormItem) {
 const algorithmDescription: ComputedRef<string[]> = computed(() => (values.algorithm === undefined ? [] : SearchFactory.create(values.algorithm).description()))
 watchEffect(() => emit('updateDescription', algorithmDescription.value))
 
-const algorithms = [
-    {
-        label: 'Breadth-First search',
-        value: SearchAlgorithm.BREADTH_FIRST_SEARCH,
-    },
-    {
-        label: 'Depth-First search',
-        value: SearchAlgorithm.DEPTH_FIRST_SEARCH,
-    },
-    {
-      label: 'Dijkstra',
-      value: SearchAlgorithm.DIJKSTRA,
-    }
-]
-
 function loadGraphForm(graphForm: GraphForm) {
     values.graphForm = graphForm
 }
@@ -115,11 +105,11 @@ reset()
 function submit() {
     (values.graphForm as GraphForm).validateStartEnd()
     if (values.algorithm === undefined) {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify an algorithm', life: 4000 })
         return
     }
     if ((values.graphForm as GraphForm).getStartItem() === null || (values.graphForm as GraphForm).getEndItem() === null) {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'You must specify a start and end vertex', life: 4000 })
         return
     }
 
@@ -132,7 +122,7 @@ function submit() {
         const searched = SearchFactory.create(values.algorithm).run(graph, (values.graphForm as GraphForm).toGrid(), startVertex, endVertex)
         emit('submit', searched)
     } else {
-        toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 });
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Start and end vertex are invalid', life: 4000 })
     }
 }
 </script>

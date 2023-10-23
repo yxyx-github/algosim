@@ -1,0 +1,944 @@
+{
+    "grid": [
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 0
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 0
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 0
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 1,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 0
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": false,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 1
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 1
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 1
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 1
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": false,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 2
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 2
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 2
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 2
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 2
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": false,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 3
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 3
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 3
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 3
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 3
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": false,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 4
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 4
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 4
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 4
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 4
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": false,
+                        "bottom": true,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ],
+        [
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 0,
+                        "y": 5
+                    },
+                    "connections": {
+                        "top": false,
+                        "right": true,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 1,
+                        "y": 5
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": false,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 2,
+                        "y": 5
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": false,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 0,
+                    "label": "",
+                    "coords": {
+                        "x": 3,
+                        "y": 5
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": true,
+                        "bottom": false,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            },
+            {
+                "itemData": {
+                    "type": 1,
+                    "label": "",
+                    "coords": {
+                        "x": 4,
+                        "y": 5
+                    },
+                    "connections": {
+                        "top": true,
+                        "right": false,
+                        "bottom": false,
+                        "left": true
+                    },
+                    "connect": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false
+                    },
+                    "highlight": {
+                        "top": false,
+                        "right": false,
+                        "bottom": false,
+                        "left": false,
+                        "center": false
+                    }
+                }
+            }
+        ]
+    ],
+    "startItem": {
+        "itemData": {
+            "type": 0,
+            "label": "",
+            "coords": {
+                "x": 0,
+                "y": 0
+            },
+            "connections": {
+                "top": false,
+                "right": true,
+                "bottom": false,
+                "left": false
+            },
+            "connect": {
+                "top": false,
+                "right": false,
+                "bottom": false,
+                "left": false
+            },
+            "highlight": {
+                "top": false,
+                "right": false,
+                "bottom": false,
+                "left": false,
+                "center": false
+            }
+        }
+    },
+    "endItem": {
+        "itemData": {
+            "type": 0,
+            "label": "",
+            "coords": {
+                "x": 0,
+                "y": 5
+            },
+            "connections": {
+                "top": false,
+                "right": true,
+                "bottom": false,
+                "left": false
+            },
+            "connect": {
+                "top": false,
+                "right": false,
+                "bottom": false,
+                "left": false
+            },
+            "highlight": {
+                "top": false,
+                "right": false,
+                "bottom": false,
+                "left": false,
+                "center": false
+            }
+        }
+    }
+}

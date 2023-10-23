@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { BreadthFirstSearch } from '@/main/algorithms/search/algorithms/breadthFirstSearch'
-import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import type { SearchSimulationStep } from '@/main/algorithms/search/algorithms/types'
+import { SearchAlgorithm } from '@/main/algorithms/search/algorithms/types'
 import { cloneGrid, cloneSearchSimulationStep, SearchFactory } from '@/main/algorithms/search/algorithms/index'
 import { GraphFormItem } from '@/main/algorithms/search/graphForm/graphFormItem'
 import type { GraphFormGrid } from '@/main/algorithms/search/graphForm/types'

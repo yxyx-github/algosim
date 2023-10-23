@@ -7,6 +7,7 @@ import { InsertionSort } from '@/main/algorithms/sort/insertionSort'
 import { HeapSort } from '@/main/algorithms/sort/heapSort'
 import { CombSort } from '@/main/algorithms/sort/combSort'
 import { ShellSort } from '@/main/algorithms/sort/shellSort'
+import type { AlgorithmData } from '@/main/algorithms/types'
 
 export class SortFactory {
     static create(algorithm: SortAlgorithm) {
@@ -32,6 +33,34 @@ export class SortFactory {
     }
 }
 
+export const sortAlgorithmData: AlgorithmData<SortAlgorithm>[] = [
+    {
+        label: 'Bubblesort',
+        value: SortAlgorithm.BUBBLE,
+    }, {
+        label: 'Combsort',
+        value: SortAlgorithm.COMBSORT,
+    }, {
+        label: 'Heapsort',
+        value: SortAlgorithm.HEAPSORT,
+    }, {
+        label: 'Insertionsort',
+        value: SortAlgorithm.INSERTION,
+    }, {
+        label: 'Mergesort',
+        value: SortAlgorithm.MERGESORT,
+    }, {
+        label: 'Quicksort',
+        value: SortAlgorithm.QUICKSORT,
+    }, {
+        label: 'Selectionsort',
+        value: SortAlgorithm.SELECTION,
+    }, {
+        label: 'Shellsort',
+        value: SortAlgorithm.SHELLSORT,
+    }
+]
+
 export function generateNumbers(count: number, min: number, max: number): number[] {
     const numbers: number[] = []
     for (let i = 0; i < count; i++) {
@@ -40,8 +69,8 @@ export function generateNumbers(count: number, min: number, max: number): number
     return numbers
 }
 
-function getRandomIntBetween(min: number, max: number): number {
+export function getRandomIntBetween(min: number, max: number): number {
     min = Math.ceil(min)
     max = Math.floor(max)
-    return Math.ceil(Math.random() * (max - min) + min)
+    return Math.floor(Math.random() * (max + 1 - min)) + min
 }
