@@ -1,9 +1,9 @@
 <template>
-    <div class="content">
-        <div class="logo">
-            <img src="../assets/Algosim.png" alt="Algosim" class="image">
+    <div>
+        <div class="bg-primary rounded-[3.125rem] flex flex-row justify-center">
+            <img src="../assets/Algosim.png" alt="Algosim Logo" class="max-h-[calc(100vh-6.5rem)]">
         </div>
-        <div class="algosim">
+        <ContentSection>
             <h1>Algosim</h1>
             <p>
                 Algosim ist eine Webseite, die Sortier- und Suchalgorithmen erklärt, indem diese grafisch visualisiert
@@ -15,8 +15,8 @@
                 Algorithmen gezeigt,
                 welche anschließend benannt werden müssen.
             </p>
-        </div>
-        <div class="sortingAlgorithms">
+        </ContentSection>
+        <ContentSection highlight>
             <h1>Sortieralgorithmen</h1>
             <p>
                 Ein Sortieralgorithmus soll eine Liste aus Elementen ordnen. Dazu hat der Algorithmus die Möglichkeit diese
@@ -26,8 +26,8 @@
                 Algorithmen
                 sinnvoll darstellen lassen.
             </p>
-        </div>
-        <div class="searchAlgorithms">
+        </ContentSection>
+        <ContentSection>
             <h1>Suchalgorithmen</h1>
             <p>
                 Ein Suchalgorithmus hat das Ziel einen möglichst kurzen Weg durch ein Graphen zu finden.<br>
@@ -38,8 +38,8 @@
                 zwangsläufig
                 planar sind und die Visualisierungen somit anschaulich bleiben.
             </p>
-        </div>
-        <div class="supportedAlgorithms">
+        </ContentSection>
+        <ContentSection highlight>
             <h1>Unterstützte Algorithmen</h1>
             <p>Die von uns unterstützen Sortieralgorithmen sind:</p>
             <ul class="list-inside list-disc">
@@ -60,8 +60,8 @@
                 <li>Depth-First-Search (DFS)</li>
                 <li>Dijkstra</li>
             </ul>
-        </div>
-        <div class="aboutUs">
+        </ContentSection>
+        <ContentSection>
             <h1>Über uns und unsere Motivation</h1>
             <p>
                 Wir sind eine Gruppe von Studenten der HWR-Berlin und wollen mit Algosim das lernen von Algorithmen
@@ -75,64 +75,22 @@
                 immer klar sind,
                 möchten wir mit Algosim eine Möglichkeit bieten, um ihre Ansätze und Verschiedenheiten zu verstehen.
             </p>
-        </div>
+        </ContentSection>
 
     </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '@/components/app/ContentSection.vue'
 </script>
 
 <style scoped>
-
-h1{
-    font-size: 2,5rem;
-}
-
-p{
+p {
     font-size: 1.625rem;
     line-height: 1.5;
 }
 
-li{
+li {
     font-size: 1.5rem;
 }
-
-.content{
-    background-color: white;
-}
-
-.logo {
-    display: flex;
-    border-radius: 3.125rem;
-    justify-content: center;
-    background-color: #3B82F6;
-}
-
-.algosim{
-    font-size: larger;
-    padding: 8%;
-}
-
-.sortingAlgorithms{
-    padding: 8%;
-    background-color: #3B82F6;
-    border-radius: 3.125rem;
-
-}
-
-.searchAlgorithms{
-    padding: 8%;
-}
-
-.supportedAlgorithms{
-    padding: 8%;
-    border-radius: 3.125rem;
-    background-color: #3B82F6;
-}
-
-.aboutUs{
-    padding: 8%;
-}
-
 </style>

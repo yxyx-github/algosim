@@ -15,7 +15,7 @@
             </SimulationView>
         </template>
         <template #description>
-            <TextViewer :text="description"/>
+            <DescriptionViewer :text="description"/>
         </template>
     </SimulationLayout>
 </template>
@@ -28,8 +28,8 @@ import type { Ref } from 'vue'
 import type { SortSimulation } from '@/main/algorithms/sort/types'
 import SortVisualization from '@/components/app/simulation/sort/visualization/SortVisualization.vue'
 import SortSimulationForm from '@/components/app/simulation/sort/SortSimulationForm.vue'
-import TextViewer from '@/components/lib/TextViewer.vue'
 import Link from '@/components/lib/controls/Link.vue'
+import DescriptionViewer from '@/components/app/simulation/DescriptionViewer.vue'
 
 const simulation: Ref<SortSimulation | null> = ref(null)
 const description: Ref<string[]> = ref([])

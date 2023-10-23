@@ -16,7 +16,7 @@
             </SimulationView>
         </template>
         <template #description>
-            <TextViewer :text="description"/>
+            <DescriptionViewer :text="description"/>
         </template>
     </SimulationLayout>
 </template>
@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import SimulationView from '@/components/app/simulation/SimulationView.vue'
 import SimulationLayout from '@/components/app/simulation/SimulationLayout.vue'
-import TextViewer from '@/components/lib/TextViewer.vue'
 import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 import type { SearchSimulation } from '@/main/algorithms/search/algorithms/types'
@@ -32,6 +31,7 @@ import SearchSimulationForm from '@/components/app/simulation/search/SearchSimul
 import SearchSimulationStepVisualization from '@/components/app/simulation/search/visualization/SearchSimulationStepVisualization.vue'
 import ButtonBar from '@/components/lib/controls/ButtonBar.vue'
 import Button from 'primevue/button'
+import DescriptionViewer from '@/components/app/simulation/DescriptionViewer.vue'
 
 const simulation: Ref<SearchSimulation | null> = ref(null)
 const description: Ref<string[]> = ref([])

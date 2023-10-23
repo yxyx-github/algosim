@@ -1,8 +1,6 @@
 <template>
     <FColumn :gap="0">
-        <div class="textBox">
-            <div v-for="(fragment, index) in props.text" :key="index" class="text">{{ fragment }}</div>
-        </div>
+        <div v-for="(fragment, index) in props.text" :key="index">{{ fragment }}</div>
     </FColumn>
 </template>
 
@@ -15,20 +13,4 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-.textBox{
-    padding: 2%;
-    margin-left: 5%;
-    margin-right: 5%;
-    border: 0.8rem solid #3B82F6;
-    border-radius: 0.625rem;
-    
-}
-
-.textBox:empty{
-    border: none;
-}
-
-.text{
-    font-size: 20px;
-}
 </style>

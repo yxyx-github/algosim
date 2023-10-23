@@ -15,10 +15,3 @@ import MainNavigation from '@/components/app/MainNavigation.vue'
 import ContentBox from '@/components/lib/layout/ContentBox.vue'
 import Toast from 'primevue/toast'
 </script>
-
-<style >
-#app {
-    font-family: monospace;
-    font-size: 1.625rem;
-}
-</style>

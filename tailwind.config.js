@@ -27,7 +27,11 @@ module.exports = {
         },
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: '#3B82F6',
+            }
+        },
         screens: {
             'mb': '0px',
             'xs': '480px',
