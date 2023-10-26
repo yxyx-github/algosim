@@ -9,7 +9,7 @@
                 Algosim ist eine Webseite, die Sortier- und Suchalgorithmen erklärt, indem diese grafisch visualisiert
                 werden.<br>
                 Dabei kann der Benutzer die Eingabewerte, mit welchen der Algorithmus ausgeführt wird, frei wählen.<br>
-                Zusätzlich bietet Algosim ein Quiz, welches dem Benutzer erlaubt, sein Wissen über Sortier- und
+                Zusätzlich bietet Algosim ein Quiz, welches dem Benutzer erlaubt sein Wissen über Sortier- und
                 Suchalgorithmen
                 spielerisch zu testen. Im Rahmen des Quiz werden dem Spieler Visualisierungen verschiedener
                 Algorithmen gezeigt,
@@ -30,7 +30,7 @@
         <ContentSection>
             <h1>Suchalgorithmen</h1>
             <p>
-                Ein Suchalgorithmus hat das Ziel, einen möglichst kurzen Weg durch einen Graphen zu finden.<br>
+                Ein Suchalgorithmus hat das Ziel einen möglichst kurzen Weg durch einen Graphen zu finden.<br>
                 Ein Graph besteht dabei immer aus Knoten und Kanten, welche die Knoten verbinden. Die Kanten können ein
                 Gewicht
                 beinhalten, welches die Strecke zwischen den verbundenen Knoten symbolisiert.<br>
@@ -66,9 +66,8 @@
             <p>
                 Wir sind eine Gruppe von Studenten der HWR-Berlin und wollen mit Algosim das Lernen von Algorithmen
                 erleichtern.<br>
-                An vielen Schulen werden Sortieralgorithmen als Einstieg in die Informatik genutzt, daher ist es sinnvoll,
-                den
-                Schülern eine Möglichkeit zu geben, das Gelernte grafisch und anschaulich nachvollziehen zu können.<br>
+                An vielen Schulen werden Sortieralgorithmen als Einstieg in die Informatik genutzt.
+                Daher ist es sinnvoll, den Schülern eine Möglichkeit zu geben, das Gelernte grafisch und anschaulich nachvollziehen zu können.<br>
                 Suchalgorithmen (Wegfindungsalgortihmen) begegnen einem im Bereich der Graphentheorie und werden für viele
                 praktische Anwendungen
                 wie Navigationssysteme benötigt. Da die Ansätze und Motivationen eines bestimmten Suchalgorithmus nicht
